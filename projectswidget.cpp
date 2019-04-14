@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QMenu>
 
 ProjectsWidget::ProjectsWidget (QWidget *parent)
     : QWidget (parent)
@@ -22,6 +23,9 @@ ProjectsWidget::ProjectsWidget (QWidget *parent)
 
     _view = new QTreeView (this);
     _view->header ()->hide ();
+    _view->setContextMenuPolicy (Qt::CustomContextMenu);
+    connect (_view, SIGNAL(customContextMenuRequested(QPoint)),
+             this, SLOT(slotCustomContextMenu(QPoint)));
     vbl->addWidget (_view);
 
     _model = new QStandardItemModel (0, 1);
@@ -30,8 +34,13 @@ ProjectsWidget::ProjectsWidget (QWidget *parent)
 
 void ProjectsWidget::slotInitProjectsList ()
 {
+    if (!RedmineInstance::instance ().loadIssueStatuses ()) {
+        qCritical () << "[ProjectsWidget][slotInitProjectsList] Could not load issue statuses";
+        return;
+    }
+
     if (!RedmineInstance::instance ().loadProjects ()) {
-        qCritical () << "[ProjectsWidget][slotInitProjectsList]";
+        qCritical () << "[ProjectsWidget][slotInitProjectsList] Could not load projects list";
         return;
     }
 
@@ -92,6 +101,38 @@ void ProjectsWidget::slotInitProjectsList ()
     //        f.write ("\n");
     //    }
     //    f.close ();
+}
+
+void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
+{
+    QModelIndex index = _view->indexAt (pos);
+    if (!index.isValid ())
+        return;
+
+    QString prjid = index.data (Qt::UserRole + 1).toString ();
+    if (prjid.isEmpty ())
+        return;
+
+    QMenu menu;
+    menu.addAction (trUtf8 ("Задачи"));
+    QAction *act = menu.exec (_view->viewport ()->mapToGlobal (pos));
+    if (!act) return;
+
+    if (act->text () == trUtf8 ("Задачи"))
+    {
+        if (!RedmineInstance::instance ().loadIssues (prjid)) {
+            qCritical () << "[ProjectsWidget][slotCustomContextMenu]";
+            return;
+        } else {
+            QSharedPointer<RedmineProject> project =
+                RedmineInstance::instance ().projects ().value (prjid);
+            if (project.isNull ())
+                return;
+            for (int i = 0; i < project->_issues.size (); ++i)
+                qDebug () << project->_issues[i]->_subject
+                          << RedmineInstance::instance ().statuses ()[project->_issues[i]->_status_id]->_name;
+        }
+    }
 }
 
 void ProjectsWidget::showEvent (QShowEvent */*ev*/)

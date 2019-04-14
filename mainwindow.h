@@ -24,19 +24,18 @@ protected:
     void showEvent (QShowEvent *ev);
 
 private slots:
-    void newFile();
-    void open();
-    void save();
-    void saveAs();
-    void cut();
-    void copy();
-    void paste();
-    void about();
-    void updateMenus();
-    void updateWindowMenu();
-    MdiChild *createMdiChild();
-    void switchLayoutDirection();
-    void setActiveSubWindow(QWidget *window);
+    void newFile ();
+    void open ();
+    void save ();
+    void saveAs ();
+    void cut ();
+    void copy ();
+    void paste ();
+    void about ();
+    void updateMenus ();
+    void updateWindowMenu ();
+    MdiChild *createMdiChild ();
+    void setActiveSubWindow (QWidget *window);
 
     //! Инициализация соединений с БД
     void initConnections ();
@@ -46,41 +45,42 @@ private slots:
 
 private:
 
-    void createActions();
-    void createMenus();
-    void createToolBars();
-    void createStatusBar();
-    void readSettings();
-    void writeSettings();
-    MdiChild *activeMdiChild();
-    QMdiSubWindow *findMdiChild(const QString &fileName);
+    void createActions ();
+    void createMenus ();
+    void createToolBars ();
+    void createStatusBar ();
+    void readSettings ();
+    void writeSettings ();
+
+    MdiChild *activeMdiChild ();
+    QMdiSubWindow *findMdiChild (const QString &fileName);
 
     QMdiArea *_mdiArea;
-    QSignalMapper *windowMapper;
+    QSignalMapper *_windowMapper;
 
-    QMenu *fileMenu;
-    QMenu *editMenu;
-    QMenu *windowMenu;
-    QMenu *helpMenu;
-    QToolBar *fileToolBar;
-    QToolBar *editToolBar;
-    QAction *newAct;
-    QAction *openAct;
-    QAction *saveAct;
-    QAction *saveAsAct;
-    QAction *exitAct;
-    QAction *cutAct;
-    QAction *copyAct;
-    QAction *pasteAct;
-    QAction *closeAct;
-    QAction *closeAllAct;
-    QAction *tileAct;
-    QAction *cascadeAct;
-    QAction *nextAct;
-    QAction *previousAct;
-    QAction *separatorAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
+    QMenu *_fileMenu;
+    QMenu *_editMenu;
+    QMenu *_windowMenu;
+    QMenu *_helpMenu;
+    QToolBar *_fileToolBar;
+    QToolBar *_editToolBar;
+    QAction *_newAct;
+    QAction *_openAct;
+    QAction *_saveAct;
+    QAction *_saveAsAct;
+    QAction *_exitAct;
+    QAction *_cutAct;
+    QAction *_copyAct;
+    QAction *_pasteAct;
+    QAction *_closeAct;
+    QAction *_closeAllAct;
+    QAction *_tileAct;
+    QAction *_cascadeAct;
+    QAction *_nextAct;
+    QAction *_previousAct;
+    QAction *_separatorAct;
+    QAction *_aboutAct;
+    QAction *_aboutQtAct;
 };
 
 #endif

@@ -15,8 +15,8 @@ public:
     explicit ProjectsWidget (QWidget *parent = nullptr);
 
 protected slots:
-    //! Чтение списка проектов
     void slotInitProjectsList ();
+    void slotCustomContextMenu (const QPoint &pos);
 
 protected:
     void showEvent (QShowEvent *ev);
