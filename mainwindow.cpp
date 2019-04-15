@@ -17,11 +17,13 @@
 #include "connectiondialog.h"
 #include "projectswidget.h"
 #include "redmineinstance.h"
+#include "onechartwidget.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
 
 MainWindow::MainWindow ()
+    : _projectsWidget (nullptr)
 {
     RedmineInstance::instance ();
 
@@ -288,7 +290,7 @@ void MainWindow::createActions()
 
     //---------------------------------------------------
 
-    _oneAct = new QAction (QIcon(":/images/cut.png"), tr ("One"), this);
+    _oneAct = new QAction (QIcon(":/images/chart.png"), tr ("One"), this);
     connect (_oneAct, SIGNAL(triggered()), this, SLOT(one()));
 }
 
@@ -393,12 +395,20 @@ void MainWindow::initConnections ()
 
 void MainWindow::initProjectList ()
 {
+    _projectsWidget = new ProjectsWidget (nullptr);
     QDockWidget *doc = new QDockWidget ();
-    doc->setWidget (new ProjectsWidget (nullptr));
+    doc->setWidget (_projectsWidget);
     addDockWidget (Qt::LeftDockWidgetArea, doc);
 }
 
 void MainWindow::one ()
 {
-    int ind = 0;
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    OneChartWidget *w = new OneChartWidget (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
 }

@@ -13,10 +13,12 @@ class ProjectsWidget : public QWidget
 
 public:
     explicit ProjectsWidget (QWidget *parent = nullptr);
+    QString selectedProject () const;
 
 protected slots:
     void slotInitProjectsList ();
     void slotCustomContextMenu (const QPoint &pos);
+    void slotSelectionChanged (const QItemSelection &selected, const QItemSelection &deselected);
 
 protected:
     void showEvent (QShowEvent *ev);
@@ -26,6 +28,7 @@ protected:
 
     QTreeView *_view;
     QStandardItemModel *_model;
+    QModelIndex _currentIndex;
 };
 
 #endif // PROJECTSWIDGET_H

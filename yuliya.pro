@@ -1,4 +1,4 @@
-QT += widgets gui sql
+QT += widgets gui sql charts
 
 HEADERS       = mainwindow.h \
                 mdichild.h \
@@ -6,7 +6,8 @@ HEADERS       = mainwindow.h \
     projectswidget.h \
     redmineinstance.h \
     redmineobjects.h \
-    projectsettingsdialog.h
+    projectsettingsdialog.h \
+    onechartwidget.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
@@ -14,7 +15,8 @@ SOURCES       = main.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \
-    projectsettingsdialog.cpp
+    projectsettingsdialog.cpp \
+    onechartwidget.cpp
 RESOURCES     = yuliya.qrc
 
 # install

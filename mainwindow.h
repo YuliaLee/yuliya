@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "projectswidget.h"
 
 class MdiChild;
 QT_BEGIN_NAMESPACE
@@ -87,6 +88,8 @@ private:
     QToolBar *_internalToolBar;
     QAction *_oneAct;
     QToolBar *_externalToolBar;
+
+    ProjectsWidget *_projectsWidget;
 };
 
 #endif

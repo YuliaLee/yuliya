@@ -25,12 +25,25 @@ ProjectsWidget::ProjectsWidget (QWidget *parent)
     _view = new QTreeView (this);
     _view->header ()->hide ();
     _view->setContextMenuPolicy (Qt::CustomContextMenu);
-    connect (_view, SIGNAL(customContextMenuRequested(QPoint)),
-             this, SLOT(slotCustomContextMenu(QPoint)));
-    vbl->addWidget (_view);
+    _view->setSelectionMode (QAbstractItemView::SingleSelection);
+    _view->setEditTriggers (QAbstractItemView::NoEditTriggers);
 
     _model = new QStandardItemModel (0, 1);
     _view->setModel (_model);
+
+    connect (_view, SIGNAL(customContextMenuRequested(QPoint)),
+             this, SLOT(slotCustomContextMenu(QPoint)));
+    connect (_view->selectionModel (), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+             SLOT(slotSelectionChanged(QItemSelection,QItemSelection)));
+    vbl->addWidget (_view);
+}
+
+QString ProjectsWidget::selectedProject () const
+{
+    if (_currentIndex.isValid ())
+        return _currentIndex.data (Qt::UserRole + 1).toString ();
+    else
+        return QString::null;
 }
 
 void ProjectsWidget::slotInitProjectsList ()
@@ -145,6 +158,16 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
             dlg->exec ();
         }
     }
+}
+
+void ProjectsWidget::slotSelectionChanged (const QItemSelection &selected, const QItemSelection &deselected)
+{
+    (void)deselected;
+
+    if (selected.isEmpty ())
+        _currentIndex = QModelIndex ();
+    else
+        _currentIndex = selected.indexes ()[0];
 }
 
 void ProjectsWidget::showEvent (QShowEvent */*ev*/)
