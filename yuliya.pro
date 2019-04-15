@@ -5,14 +5,16 @@ HEADERS       = mainwindow.h \
     connectiondialog.h \
     projectswidget.h \
     redmineinstance.h \
-    redmineobjects.h
+    redmineobjects.h \
+    projectsettingsdialog.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
     connectiondialog.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
-    redmineobjects.cpp
+    redmineobjects.cpp \
+    projectsettingsdialog.cpp
 RESOURCES     = yuliya.qrc
 
 # install
@@ -28,4 +30,5 @@ RESOURCES     = yuliya.qrc
 #simulator: warning(This example might not fully work on Simulator platform)
 
 FORMS += \
-    connectiondialog.ui
+    connectiondialog.ui \
+    projectsettingsdialog.ui

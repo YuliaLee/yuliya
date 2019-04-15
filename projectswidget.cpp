@@ -1,4 +1,5 @@
 #include "projectswidget.h"
+#include "projectsettingsdialog.h"
 
 #include <QFile>
 #include <QTimer>
@@ -115,6 +116,7 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
 
     QMenu menu;
     menu.addAction (trUtf8 ("Задачи"));
+    menu.addAction (trUtf8 ("Настройки"));
     QAction *act = menu.exec (_view->viewport ()->mapToGlobal (pos));
     if (!act) return;
 
@@ -131,6 +133,16 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
             for (int i = 0; i < project->_issues.size (); ++i)
                 qDebug () << project->_issues[i]->_subject
                           << RedmineInstance::instance ().statuses ()[project->_issues[i]->_status_id]->_name;
+        }
+    }
+    else if (act->text () == trUtf8 ("Настройки"))
+    {
+        if (!RedmineInstance::instance ().loadIssues (prjid)) {
+            qCritical () << "[ProjectsWidget][slotCustomContextMenu]";
+            return;
+        } else {
+            auto *dlg = new ProjectSettingsDialog (prjid, this);
+            dlg->exec ();
         }
     }
 }

@@ -43,6 +43,8 @@ private slots:
     //! Инициализация панли со списокм проектов
     void initProjectList ();
 
+    void one ();
+
 private:
 
     void createActions ();
@@ -81,6 +83,10 @@ private:
     QAction *_separatorAct;
     QAction *_aboutAct;
     QAction *_aboutQtAct;
+
+    QToolBar *_internalToolBar;
+    QAction *_oneAct;
+    QToolBar *_externalToolBar;
 };
 
 #endif

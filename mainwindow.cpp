@@ -285,6 +285,11 @@ void MainWindow::createActions()
     _aboutQtAct = new QAction(tr("About &Qt"), this);
     _aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
     connect(_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+
+    //---------------------------------------------------
+
+    _oneAct = new QAction (QIcon(":/images/cut.png"), tr ("One"), this);
+    connect (_oneAct, SIGNAL(triggered()), this, SLOT(one()));
 }
 
 void MainWindow::createMenus()
@@ -324,6 +329,10 @@ void MainWindow::createToolBars()
     _editToolBar->addAction(_cutAct);
     _editToolBar->addAction(_copyAct);
     _editToolBar->addAction(_pasteAct);
+
+    _internalToolBar = addToolBar (tr ("Internal"));
+    _internalToolBar->addAction (_oneAct);
+    _externalToolBar = addToolBar (tr ("External"));
 }
 
 void MainWindow::createStatusBar()
@@ -387,4 +396,9 @@ void MainWindow::initProjectList ()
     QDockWidget *doc = new QDockWidget ();
     doc->setWidget (new ProjectsWidget (nullptr));
     addDockWidget (Qt::LeftDockWidgetArea, doc);
+}
+
+void MainWindow::one ()
+{
+    int ind = 0;
 }
