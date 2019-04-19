@@ -64,6 +64,8 @@ bool RedmineInstance::loadProjects ()
         project->_default_version_id = query.record ().value ("default_version_id").toString ();
         project->_default_assigned_to_id = query.record ().value ("default_assigned_to_id").toString ();
 
+        project->readSettings ();
+
         _projects.insert (project->_id, project);
     }
 
@@ -152,7 +154,7 @@ bool RedmineInstance::loadIssueStatuses ()
                      << query.lastError ().databaseText ();
         qCritical () << "[RedmineInstance][loadIssueStatuses]" <<
                         query.lastError ().driverText ();
-        qCritical () << "[RedmineInstance][loadIssueStatuses`]" <<
+        qCritical () << "[RedmineInstance][loadIssueStatuses]" <<
                         query.lastError ().text ();
 
         return false;
@@ -176,6 +178,91 @@ bool RedmineInstance::loadIssueStatuses ()
 
 const QMap<QString, QSharedPointer<RedmineIssueStatuses> > &RedmineInstance::statuses () {
     return _statuses;
+}
+
+bool RedmineInstance::loadIssueCategories ()
+{
+    QSqlDatabase db = QSqlDatabase::database ("yuliya");
+    if (!db.isValid () || !db.isOpen ()) {
+        qCritical () << "[RedmineInstance][loadIssueCategories] Could not find 'yuliya' database";
+        return false;
+    }
+
+    QSqlQuery query (db);
+    if (!query.exec ("SELECT * FROM issue_categories;"))
+    {
+        qCritical () << "[RedmineInstance][loadIssueCategories] Connection error";
+        qCritical () << "[RedmineInstance][loadIssueCategories]"
+                     << query.lastError ().databaseText ();
+        qCritical () << "[RedmineInstance][loadIssueCategories]" <<
+                        query.lastError ().driverText ();
+        qCritical () << "[RedmineInstance][loadIssueCategories]" <<
+                        query.lastError ().text ();
+
+        return false;
+    }
+
+    while (query.next ())
+    {
+        QSharedPointer<RedmineIssueCategories> cat
+                = QSharedPointer<RedmineIssueCategories> (new RedmineIssueCategories);
+        cat->_id = query.record ().value ("id").toString ();
+        cat->_project_id = query.record ().value ("project_id").toString ();
+        cat->_name = query.record ().value ("name").toString ();
+        cat->_assigned_to_id = query.record ().value ("assigned_to_id").toString ();
+
+        _categories.insert (cat->_id, cat);
+    }
+
+    return true;
+}
+
+const QMap<QString, QSharedPointer<RedmineIssueCategories> > &RedmineInstance::categories () {
+    return _categories;
+}
+
+bool RedmineInstance::loadTrackers ()
+{
+    QSqlDatabase db = QSqlDatabase::database ("yuliya");
+    if (!db.isValid () || !db.isOpen ()) {
+        qCritical () << "[RedmineInstance][loadTrackers] Could not find 'yuliya' database";
+        return false;
+    }
+
+    QSqlQuery query (db);
+    if (!query.exec ("SELECT * FROM trackers;"))
+    {
+        qCritical () << "[RedmineInstance][loadTrackers] Connection error";
+        qCritical () << "[RedmineInstance][loadTrackers]"
+                     << query.lastError ().databaseText ();
+        qCritical () << "[RedmineInstance][loadTrackers]" <<
+                        query.lastError ().driverText ();
+        qCritical () << "[RedmineInstance][loadTrackers]" <<
+                        query.lastError ().text ();
+
+        return false;
+    }
+
+    while (query.next ())
+    {
+        QSharedPointer<RedmineTrackers> tracker
+                = QSharedPointer<RedmineTrackers> (new RedmineTrackers);
+        tracker->_id = query.record ().value ("id").toString ();
+        tracker->_name = query.record ().value ("name").toString ();
+        tracker->_is_in_chlog = query.record ().value ("is_in_chlog").toString ();
+        tracker->_position = query.record ().value ("position").toString ();
+        tracker->_is_in_roadmap = query.record ().value ("is_in_roadmap").toString ();
+        tracker->_fields_bits = query.record ().value ("fields_bits").toString ();
+        tracker->_default_status_id = query.record ().value ("default_status_id").toString ();
+
+        _trackers.insert (tracker->_id, tracker);
+    }
+
+    return true;
+}
+
+const QMap<QString, QSharedPointer<RedmineTrackers> > &RedmineInstance::trackers () {
+    return _trackers;
 }
 
 RedmineInstance::RedmineInstance ()

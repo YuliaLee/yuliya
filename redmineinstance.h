@@ -20,8 +20,15 @@ public:
 
     bool loadIssues (const QString &prjid);
 
+
     bool loadIssueStatuses ();
     const QMap<QString, QSharedPointer<RedmineIssueStatuses> > &statuses ();
+
+    bool loadIssueCategories ();
+    const QMap<QString, QSharedPointer<RedmineIssueCategories> > &categories ();
+
+    bool loadTrackers ();
+    const QMap<QString, QSharedPointer<RedmineTrackers> > &trackers ();
 
 protected:
 
@@ -32,6 +39,8 @@ protected:
 
     QMap<QString, QSharedPointer<RedmineProject> > _projects;
     QMap<QString, QSharedPointer<RedmineIssueStatuses> > _statuses;
+    QMap<QString, QSharedPointer<RedmineIssueCategories> > _categories;
+    QMap<QString, QSharedPointer<RedmineTrackers> > _trackers;
 };
 
 #endif // REDMINEINSTANCE_H

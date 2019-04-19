@@ -7,7 +7,11 @@ HEADERS       = mainwindow.h \
     redmineinstance.h \
     redmineobjects.h \
     projectsettingsdialog.h \
-    onechartwidget.h
+    charts/mainslice.h \
+    charts/donutbreakdownchart.h \
+    charts/drilldownslice.h \
+    charts/drilldownchart.h \
+    metrics/maturitymetrics.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
@@ -16,7 +20,11 @@ SOURCES       = main.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \
     projectsettingsdialog.cpp \
-    onechartwidget.cpp
+    charts/mainslice.cpp \
+    charts/donutbreakdownchart.cpp \
+    charts/drilldownslice.cpp \
+    charts/drilldownchart.cpp \
+    metrics/maturitymetrics.cpp
 RESOURCES     = yuliya.qrc
 
 # install

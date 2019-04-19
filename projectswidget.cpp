@@ -48,12 +48,30 @@ QString ProjectsWidget::selectedProject () const
 
 void ProjectsWidget::slotInitProjectsList ()
 {
-    if (!RedmineInstance::instance ().loadIssueStatuses ()) {
+    if (RedmineInstance::instance ().loadIssueCategories ()) {
+        qDebug () << "[ProjectsWidget][slotInitProjectsList] Issue categories loaded";
+    } else {
+        qCritical () << "[ProjectsWidget][slotInitProjectsList] Could not load issue categories";
+        return;
+    }
+
+    if (RedmineInstance::instance ().loadIssueStatuses ()) {
+        qDebug () << "[ProjectsWidget][slotInitProjectsList] Issue statuses loaded";
+    } else {
         qCritical () << "[ProjectsWidget][slotInitProjectsList] Could not load issue statuses";
         return;
     }
 
-    if (!RedmineInstance::instance ().loadProjects ()) {
+    if (RedmineInstance::instance ().loadTrackers ()) {
+        qDebug () << "[ProjectsWidget][slotInitProjectsList] Trackers loaded";
+    } else {
+        qCritical () << "[ProjectsWidget][slotInitProjectsList] Could not load trackers";
+        return;
+    }
+
+    if (RedmineInstance::instance ().loadProjects ()) {
+        qDebug () << "[ProjectsWidget][slotInitProjectsList] Projects loaded";
+    } else {
         qCritical () << "[ProjectsWidget][slotInitProjectsList] Could not load projects list";
         return;
     }
@@ -140,12 +158,40 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
             return;
         } else {
             QSharedPointer<RedmineProject> project =
-                RedmineInstance::instance ().projects ().value (prjid);
+                    RedmineInstance::instance ().projects ().value (prjid);
             if (project.isNull ())
                 return;
             for (int i = 0; i < project->_issues.size (); ++i)
-                qDebug () << project->_issues[i]->_subject
-                          << RedmineInstance::instance ().statuses ()[project->_issues[i]->_status_id]->_name;
+                //qDebug () << project->_issues[i]->_subject
+                //          << RedmineInstance::instance ().statuses ()[project->_issues[i]->_status_id]->_name
+                //          << project->_issues[i]->_category_id;
+                if (trUtf8 ("При установке текущей Ген.Сх. удаляются другие") == project->_issues[i]->_subject)
+                {
+                    qDebug () << project->_issues[i]->_assigned_to_id << "_assigned_to_id";
+                    qDebug () << project->_issues[i]->_author_id << "_author_id";
+                    qDebug () << project->_issues[i]->_category_id << "_category_id";
+                    qDebug () << project->_issues[i]->_closed_on << "_closed_on";
+                    qDebug () << project->_issues[i]->_closed_on << "_closed_on";
+                    qDebug () << project->_issues[i]->_created_on << "_created_on";
+                    qDebug () << project->_issues[i]->_description << "_description";
+                    qDebug () << project->_issues[i]->_done_ratio << "_done_ratio";
+                    qDebug () << project->_issues[i]->_due_date << "_due_date";
+                    qDebug () << project->_issues[i]->_estimated_hours << "_estimated_hours";
+                    qDebug () << project->_issues[i]->_fixed_version_id << "_fixed_version_id";
+                    qDebug () << project->_issues[i]->_id << "_id";
+                    qDebug () << project->_issues[i]->_is_private << "_is_private";
+                    qDebug () << project->_issues[i]->_lft << "_lft";
+                    qDebug () << project->_issues[i]->_lock_version << "_lock_version";
+                    qDebug () << project->_issues[i]->_parent_id << "_parent_id";
+                    qDebug () << project->_issues[i]->_priority_id << "_priority_id";
+                    qDebug () << project->_issues[i]->_rgt << "_rgt";
+                    qDebug () << project->_issues[i]->_root_id << "_root_id";
+                    qDebug () << project->_issues[i]->_start_date << "_start_date";
+                    qDebug () << project->_issues[i]->_status_id << "_status_id";
+                    qDebug () << project->_issues[i]->_subject << "_subject";
+                    qDebug () << project->_issues[i]->_tracker_id << "_tracker_id";
+                    qDebug () << project->_issues[i]->_updated_on << "_updated_on";
+                }
         }
     }
     else if (act->text () == trUtf8 ("Настройки"))

@@ -92,15 +92,15 @@
    <item row="7" column="0">
     <widget class="QLabel" name="label_7">
      <property name="text">
-      <string>Раз-ное кол-во тест-кейсов:</string>
+      <string>Подтверждённое кол-во тест-кейсов:</string>
      </property>
     </widget>
    </item>
    <item row="6" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
+    <widget class="QLineEdit" name="_editNeedTestCase"/>
    </item>
    <item row="7" column="1">
-    <widget class="QLineEdit" name="lineEdit_2"/>
+    <widget class="QLineEdit" name="_editCreatedTestCase"/>
    </item>
   </layout>
  </widget>

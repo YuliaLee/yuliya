@@ -17,7 +17,7 @@
 #include "connectiondialog.h"
 #include "projectswidget.h"
 #include "redmineinstance.h"
-#include "onechartwidget.h"
+#include "metrics/maturitymetrics.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
@@ -407,7 +407,7 @@ void MainWindow::one ()
     if (prjid.isEmpty ())
         return;
 
-    OneChartWidget *w = new OneChartWidget (prjid, _mdiArea);
+    MaturityMetricsWidget *w = new MaturityMetricsWidget (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

@@ -5,6 +5,35 @@
 #include <QSharedPointer>
 #include <QSettings>
 
+//!
+//! \brief Типы issue - ошибка, улучшение, функционал и т.д.
+//!
+struct RedmineTrackers
+{
+    enum {
+        Error = 1,
+        Feature = 2,
+        Support = 3,
+        Functional = 4
+    };
+
+    QString _id;
+    QString _name;
+    QString _is_in_chlog;
+    QString _position;
+    QString _is_in_roadmap;
+    QString _fields_bits;
+    QString _default_status_id;
+};
+
+struct RedmineIssueCategories
+{
+    QString _id;
+    QString _project_id;
+    QString _name;
+    QString _assigned_to_id;
+};
+
 struct RedmineIssue
 {
     QString _id;
@@ -64,6 +93,8 @@ struct RedmineProject
         _incorrect_actions = settings.value ("incorrect_actions", "0").toInt ();
         _reference_number_of_error = settings.value ("reference_number_of_error", "0").toInt ();
         _required_actions = settings.value ("required_actions", "0").toInt ();
+        _need_test_case = settings.value ("need_test_case", "0").toInt ();
+        _created_test_case = settings.value ("created_test_case", "0").toInt ();
 
         settings.endGroup ();
     }
@@ -81,6 +112,8 @@ struct RedmineProject
         settings.setValue ("incorrect_actions", QString::number (_incorrect_actions));
         settings.setValue ("reference_number_of_error", QString::number (_reference_number_of_error));
         settings.setValue ("required_actions", QString::number (_required_actions));
+        settings.setValue ("need_test_case", QString::number (_need_test_case));
+        settings.setValue ("created_test_case", QString::number (_created_test_case));
 
         settings.endGroup ();
     }
@@ -108,6 +141,8 @@ struct RedmineProject
     int _incorrect_actions;
     int _reference_number_of_error;
     int _required_actions;
+    int _need_test_case;
+    int _created_test_case;
 };
 
 struct RedmineIssueStatuses
