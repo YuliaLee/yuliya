@@ -7,9 +7,14 @@
 #include <QDebug>
 #include <QHBoxLayout>
 
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
 #include <QtCharts/QChartView>
 #include <QtCharts/QLegend>
 #include <QtCharts/QPieSeries>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -31,11 +36,6 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
 
         //-- обнаружение ошибок
         {
-            QPieSeries *series = new QPieSeries();
-
-            //-------------- Число обнаруженных ошибок
-            series->append (trUtf8 ("Число обнаруженных ошибок"), 1);
-
             int A = 0;
             QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
             for (int i = 0; i < project->_issues.size (); ++i)
@@ -44,31 +44,80 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
                 if (project->_issues[i]->_tracker_id == "1")
                     A++;
             }
-            QPieSlice *slice = series->slices ().at (0);
-            slice->setValue (A);
-            slice->setLabel (trUtf8 ("Число обнаруженных ошибок - %1").arg (QString::number (A)));
+            QBarSet *set0 = new QBarSet (trUtf8 ("Число обнаруженных ошибок - %1").arg (QString::number (A)));
+            *set0 << A;
 
-            //-------------- Планируемое число ошибок
-
-            series->append (trUtf8 ("Планируемое число ошибок"), 2);
             int B = project->_reference_number_of_error;
-            slice = series->slices ().at (1);
-            slice->setValue (B);
-            slice->setLabel (trUtf8 ("Планируемое число ошибок - %1").arg (QString::number (B)));
+            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое число ошибок - %1").arg (QString::number (B)));
+            *set1 << B;
 
-            //--------------
+            QBarSeries *series = new QBarSeries ();
+            series->append (set0);
+            series->append (set1);
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
             chart->setTitle (trUtf8 ("Обнаружение ошибок"));
-            chart->setAnimationOptions (QChart::AllAnimations);
-            chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignRight);
+            chart->setAnimationOptions (QChart::SeriesAnimations);
 
-            QChartView *chartView = new QChartView (chart);
-            chartView->setRenderHint (QPainter::Antialiasing);
-            //layout ()->addWidget (chartView);
+//            QStringList categories;
+//            categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+//            QBarCategoryAxis *axisX = new QBarCategoryAxis();
+//            axisX->append (categories);
+//            chart->addAxis (axisX, Qt::AlignBottom);
+//            series->attachAxis (axisX);
+
+//            QValueAxis *axisY = new QValueAxis();
+//            axisY->setRange(0,15);
+//            chart->addAxis(axisY, Qt::AlignLeft);
+//            series->attachAxis(axisY);
+
+            chart->legend ()->setVisible (true);
+            chart->legend ()->setAlignment (Qt::AlignBottom);
+
+            QChartView *chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing);
             hl->addWidget (chartView);
+
+
+            //            QPieSeries *series = new QPieSeries();
+
+            //            //-------------- Число обнаруженных ошибок
+            //            series->append (trUtf8 ("Число обнаруженных ошибок"), 1);
+
+            //            int A = 0;
+            //            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+            //            for (int i = 0; i < project->_issues.size (); ++i)
+            //            {
+            //                //-- ищем все ошибки
+            //                if (project->_issues[i]->_tracker_id == "1")
+            //                    A++;
+            //            }
+            //            QPieSlice *slice = series->slices ().at (0);
+            //            slice->setValue (A);
+            //            slice->setLabel (trUtf8 ("Число обнаруженных ошибок - %1").arg (QString::number (A)));
+
+            //            //-------------- Планируемое число ошибок
+
+            //            series->append (trUtf8 ("Планируемое число ошибок"), 2);
+            //            int B = project->_reference_number_of_error;
+            //            slice = series->slices ().at (1);
+            //            slice->setValue (B);
+            //            slice->setLabel (trUtf8 ("Планируемое число ошибок - %1").arg (QString::number (B)));
+
+            //            //--------------
+
+            //            QChart *chart = new QChart ();
+            //            chart->addSeries (series);
+            //            chart->setTitle (trUtf8 ("Обнаружение ошибок"));
+            //            chart->setAnimationOptions (QChart::AllAnimations);
+            //            chart->legend ()->setVisible (true);
+            //            chart->legend ()->setAlignment (Qt::AlignRight);
+
+            //            QChartView *chartView = new QChartView (chart);
+            //            chartView->setRenderHint (QPainter::Antialiasing);
+            //            //layout ()->addWidget (chartView);
+            //            hl->addWidget (chartView);
         }
 
         //-- устранение ошибок
