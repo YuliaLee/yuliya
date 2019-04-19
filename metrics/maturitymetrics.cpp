@@ -204,7 +204,7 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint (QPainter::Antialiasing);
-            //layout ()->addWidget (chartView);
+
             vl->addWidget (chartView);
         }
     }
