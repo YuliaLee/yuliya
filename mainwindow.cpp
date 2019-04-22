@@ -18,6 +18,9 @@
 #include "projectswidget.h"
 #include "redmineinstance.h"
 #include "metrics/maturitymetrics.h"
+#include "metrics/faulttolerancemetrics.h"
+#include "metrics/recoverabilitymetrics.h"
+#include "metrics/reliabilitycompliancemetrics.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
@@ -290,8 +293,21 @@ void MainWindow::createActions()
 
     //---------------------------------------------------
 
-    _oneAct = new QAction (QIcon(":/images/chart.png"), tr ("One"), this);
-    connect (_oneAct, SIGNAL(triggered()), this, SLOT(one()));
+    _maturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
+    _maturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
+    connect (_maturityMetricsAct, SIGNAL(triggered()), this, SLOT(maturityMetrics()));
+
+    _faultToleranceAct = new QAction (QIcon(":/images/chart.png"), tr ("Fault Tolerance Metrics"), this);
+    _faultToleranceAct->setToolTip (tr ("Fault Tolerance Metrics"));
+    connect (_faultToleranceAct, SIGNAL(triggered()), this, SLOT(faultToleranceMetrics()));
+
+    _recoverabilityAct = new QAction (QIcon(":/images/chart.png"), tr ("Recoverability Meterics"), this);
+    _recoverabilityAct->setToolTip (tr ("Recoverability Metrics"));
+    connect (_recoverabilityAct, SIGNAL(triggered()), this, SLOT(recoverabilityMetrics()));
+
+    _reliabilityComplianceAct = new QAction (QIcon(":/images/chart.png"), tr ("Reliability Compliance Metrics"), this);
+    _reliabilityComplianceAct->setToolTip (tr ("Reliability Compliance Metrics"));
+    connect (_reliabilityComplianceAct, SIGNAL(triggered()), this, SLOT(reliabilityComplianceMetrics()));
 }
 
 void MainWindow::createMenus()
@@ -333,7 +349,10 @@ void MainWindow::createToolBars()
     _editToolBar->addAction(_pasteAct);
 
     _internalToolBar = addToolBar (tr ("Internal"));
-    _internalToolBar->addAction (_oneAct);
+    _internalToolBar->addAction (_maturityMetricsAct);
+    _internalToolBar->addAction (_faultToleranceAct);
+    _internalToolBar->addAction (_recoverabilityAct);
+    _internalToolBar->addAction (_reliabilityComplianceAct);
     _externalToolBar = addToolBar (tr ("External"));
 }
 
@@ -401,13 +420,49 @@ void MainWindow::initProjectList ()
     addDockWidget (Qt::LeftDockWidgetArea, doc);
 }
 
-void MainWindow::one ()
+void MainWindow::maturityMetrics ()
 {
     QString prjid = _projectsWidget->selectedProject ();
     if (prjid.isEmpty ())
         return;
 
     MaturityMetricsWidget *w = new MaturityMetricsWidget (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::faultToleranceMetrics ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    FaultToleranceMetrics *w = new FaultToleranceMetrics (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::recoverabilityMetrics ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    RecoverabilityMetrics *w = new RecoverabilityMetrics (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::reliabilityComplianceMetrics ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    ReliabilityComplianceMetrics *w = new ReliabilityComplianceMetrics (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

@@ -11,7 +11,10 @@ HEADERS       = mainwindow.h \
     charts/donutbreakdownchart.h \
     charts/drilldownslice.h \
     charts/drilldownchart.h \
-    metrics/maturitymetrics.h
+    metrics/maturitymetrics.h \
+    metrics/faulttolerancemetrics.h \
+    metrics/recoverabilitymetrics.h \
+    metrics/reliabilitycompliancemetrics.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
@@ -24,7 +27,10 @@ SOURCES       = main.cpp \
     charts/donutbreakdownchart.cpp \
     charts/drilldownslice.cpp \
     charts/drilldownchart.cpp \
-    metrics/maturitymetrics.cpp
+    metrics/maturitymetrics.cpp \
+    metrics/faulttolerancemetrics.cpp \
+    metrics/recoverabilitymetrics.cpp \
+    metrics/reliabilitycompliancemetrics.cpp
 RESOURCES     = yuliya.qrc
 
 # install

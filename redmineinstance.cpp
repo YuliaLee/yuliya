@@ -113,7 +113,7 @@ bool RedmineInstance::loadIssues (const QString &prjid)
         issue->_subject = query.record ().value ("subject").toString ();
         issue->_description = query.record ().value ("description").toString ();
         issue->_due_date = query.record ().value ("due_date").toString ();
-        issue->_category_id = query.record ().value ("categoty_id").toString ();
+        issue->_category_id = query.record ().value ("category_id").toString ();
         issue->_status_id = query.record ().value ("status_id").toString ();
         issue->_assigned_to_id = query.record ().value ("assigned_to_id").toString ();
         issue->_priority_id = query.record ().value ("priority_id").toString ();
@@ -265,12 +265,60 @@ const QMap<QString, QSharedPointer<RedmineTrackers> > &RedmineInstance::trackers
     return _trackers;
 }
 
-RedmineInstance::RedmineInstance ()
+bool RedmineInstance::loadAttachments ()
 {
+    QSqlDatabase db = QSqlDatabase::database ("yuliya");
+    if (!db.isValid () || !db.isOpen ()) {
+        qCritical () << "[RedmineInstance][loadAttachments] Could not find 'yuliya' database";
+        return false;
+    }
 
+    QSqlQuery query (db);
+    if (!query.exec ("SELECT * FROM attachments;"))
+    {
+        qCritical () << "[RedmineInstance][loadAttachments] Connection error";
+        qCritical () << "[RedmineInstance][loadAttachments]"
+                     << query.lastError ().databaseText ();
+        qCritical () << "[RedmineInstance][loadAttachments]" <<
+                        query.lastError ().driverText ();
+        qCritical () << "[RedmineInstance][loadAttachments]" <<
+                        query.lastError ().text ();
+
+        return false;
+    }
+
+    while (query.next ())
+    {
+        QSharedPointer<RedmineAttachments> attach
+                = QSharedPointer<RedmineAttachments> (new RedmineAttachments);
+
+        attach->_id = query.record ().value ("id").toString ();
+        attach->_container_id = query.record ().value ("container_id").toString ();
+        attach->_container_type = query.record ().value ("container_type").toString ();
+
+        attach->_filename = query.record ().value ("filename").toString ();
+        attach->_disk_filename = query.record ().value ("disk_filename").toString ();
+        attach->_filesize = query.record ().value ("filesize").toString ();
+        attach->_content_type = query.record ().value ("content_type").toString ();
+        attach->_digest = query.record ().value ("digest").toString ();
+        attach->_downloads = query.record ().value ("downloads").toString ();
+        attach->_author_id = query.record ().value ("author_id").toString ();
+        attach->_created_on = query.record ().value ("created_on").toString ();
+        attach->_description = query.record ().value ("description").toString ();
+        attach->_disk_directory = query.record ().value ("disk_directory").toString ();
+
+        _attachments.insert (attach->_id, attach);
+    }
+
+    return true;
 }
+
+const QMap<QString, QSharedPointer<RedmineAttachments> > &RedmineInstance::attachments () {
+    return _attachments;
+}
+
+RedmineInstance::RedmineInstance ()
+{}
 
 RedmineInstance::~RedmineInstance ()
-{
-
-}
+{}

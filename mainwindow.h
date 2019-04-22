@@ -44,7 +44,10 @@ private slots:
     //! Инициализация панли со списокм проектов
     void initProjectList ();
 
-    void one ();
+    void maturityMetrics ();
+    void faultToleranceMetrics ();
+    void recoverabilityMetrics ();
+    void reliabilityComplianceMetrics ();
 
 private:
 
@@ -86,7 +89,10 @@ private:
     QAction *_aboutQtAct;
 
     QToolBar *_internalToolBar;
-    QAction *_oneAct;
+    QAction *_maturityMetricsAct;
+    QAction *_faultToleranceAct;
+    QAction *_recoverabilityAct;
+    QAction *_reliabilityComplianceAct;
     QToolBar *_externalToolBar;
 
     ProjectsWidget *_projectsWidget;

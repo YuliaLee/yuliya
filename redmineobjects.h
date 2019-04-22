@@ -154,4 +154,21 @@ struct RedmineIssueStatuses
     QString _default_done_ratio;
 };
 
+struct RedmineAttachments
+{
+    QString _id;
+    QString _container_id;
+    QString _container_type;
+    QString _filename;
+    QString _disk_filename;
+    QString _filesize;
+    QString _content_type;
+    QString _digest;
+    QString _downloads;
+    QString _author_id;
+    QString _created_on;
+    QString _description;
+    QString _disk_directory;
+};
+
 #endif // REDMINEOBJECTS_H
