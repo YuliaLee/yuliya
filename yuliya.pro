@@ -3,6 +3,7 @@ QT += widgets gui sql charts
 HEADERS       = mainwindow.h \
                 mdichild.h \
     connectiondialog.h \
+    metrics/resultingchartofmetrics.h \
     projectswidget.h \
     redmineinstance.h \
     redmineobjects.h \
@@ -19,6 +20,7 @@ SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
     connectiondialog.cpp \
+    metrics/resultingchartofmetrics.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \

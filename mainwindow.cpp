@@ -21,6 +21,7 @@
 #include "metrics/faulttolerancemetrics.h"
 #include "metrics/recoverabilitymetrics.h"
 #include "metrics/reliabilitycompliancemetrics.h"
+#include "metrics/resultingchartofmetrics.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
@@ -463,6 +464,18 @@ void MainWindow::reliabilityComplianceMetrics ()
         return;
 
     ReliabilityComplianceMetrics *w = new ReliabilityComplianceMetrics (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::resultingChartofMetrics ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    ResultingChartofMetrics *w = new ResultingChartofMetrics (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

@@ -60,11 +60,11 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
                 }
             }
 
-            QBarSet *set0 = new QBarSet (trUtf8 ("Число некорректных действий - %1").arg (QString::number (A)));
+            QBarSet *set0 = new QBarSet (trUtf8 ("Количество некорректных действий - %1").arg (QString::number (A)));
             *set0 << A;
 
             int B = project->_incorrect_actions;
-            QBarSet *set1 = new QBarSet (trUtf8 ("Кол-во некорректных действий - %1").arg (QString::number (B)));
+            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое количество некорректных действий - %1").arg (QString::number (B)));
             *set1 << B;
 
             QBarSeries *series = new QBarSeries ();

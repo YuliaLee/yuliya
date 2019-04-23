@@ -35,7 +35,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Эталонное кол-во ошибок:</string>
+      <string>Планируемое количество ошибок:</string>
      </property>
     </widget>
    </item>
@@ -45,7 +45,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Кол-во строк кода:</string>
+      <string>Количество строк кода:</string>
      </property>
     </widget>
    </item>
@@ -55,16 +55,12 @@
    <item row="2" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Кол-во исключений:</string>
+      <string>Планируемое количество иключений:</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Кол-во некорректных действий:</string>
-     </property>
-    </widget>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="_editExceptions"/>
    </item>
    <item row="4" column="1">
     <widget class="QLineEdit" name="_editIncorrectActions"/>
@@ -79,15 +75,15 @@
    <item row="5" column="1">
     <widget class="QLineEdit" name="_editRequiredActions"/>
    </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="_editExceptions"/>
-   </item>
    <item row="6" column="0">
     <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Кол-во требуемых тест-кейсов:</string>
+      <string>Количество требуемых тест-кейсов:</string>
      </property>
     </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="_editNeedTestCase"/>
    </item>
    <item row="7" column="0">
     <widget class="QLabel" name="label_7">
@@ -96,11 +92,15 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QLineEdit" name="_editNeedTestCase"/>
-   </item>
    <item row="7" column="1">
     <widget class="QLineEdit" name="_editCreatedTestCase"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Планируемое количество некорректных действий:</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
