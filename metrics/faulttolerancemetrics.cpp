@@ -24,7 +24,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
     if (RedmineInstance::instance ().projects ().contains (prjid) &&
             RedmineInstance::instance ().loadIssues (prjid))
     {
-        setWindowTitle (trUtf8 ("Внутренние метрики устойчивости к ошибка"));
+        setWindowTitle (trUtf8 ("Внутренние метрики устойчивости к ошибкам"));
 
         QVBoxLayout *vl = new QVBoxLayout ();
         vl->setContentsMargins (4,4,4,4);
@@ -40,7 +40,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
             for (int i = 0; i < project->_issues.size (); ++i)
             {
-                //-- ищем все ошибки
+                //-- ищем задачи для предотращения некорректных действий
                 if (project->_issues[i]->_tracker_id == "4" &&          //функционал
                         (project->_issues[i]->_category_id == "37" ||
                          project->_issues[i]->_category_id == "38" ||
@@ -52,7 +52,6 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
                          project->_issues[i]->_category_id == "51" ||
                          project->_issues[i]->_category_id == "52" ||
                          project->_issues[i]->_category_id == "53") &&  //категория check test
-                        project->_issues[i]->_status_id == "3" &&       //статус - решена
                         (project->_issues[i]->_priority_id == "4" ||    //приоритет - срочный или немедленный
                          project->_issues[i]->_priority_id == "5"))
                 {
@@ -60,7 +59,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
                 }
             }
 
-            QBarSet *set0 = new QBarSet (trUtf8 ("Количество некорректных действий - %1").arg (QString::number (A)));
+            QBarSet *set0 = new QBarSet (trUtf8 ("Количество разработанных задач для предотвращения некорректных действий - %1").arg (QString::number (A)));
             *set0 << A;
 
             int B = project->_incorrect_actions;
@@ -95,7 +94,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
             for (int i = 0; i < project->_issues.size (); ++i)
             {
-                //-- ищем все ошибки
+                //-- ищем все решенные exception
                 if (project->_issues[i]->_tracker_id == "4" &&          //функционал
                         (project->_issues[i]->_category_id == "31" ||
                          project->_issues[i]->_category_id == "32" ||

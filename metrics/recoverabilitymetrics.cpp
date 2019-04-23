@@ -52,7 +52,7 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
             *set0 << A;
 
             int B = project->_exceptions;
-            QBarSet *set1 = new QBarSet (trUtf8 ("Кол-во исключений - %1").arg (QString::number (B)));
+            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое количество исключений - %1").arg (QString::number (B)));
             *set1 << B;
 
             QBarSeries *series = new QBarSeries ();
