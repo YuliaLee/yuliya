@@ -86,17 +86,18 @@ void ConnectionDialog::slotConnectionClicked ()
         qCritical () << "[ConnectionDialog][slotConnectionClicked]" << db.lastError ().driverText ();
         qCritical () << "[ConnectionDialog][slotConnectionClicked]" << db.lastError ().text ();
 
+        writeSettings ();
         reject ();
+        return;
     }
 
     writeSettings ();
-
     accept ();
 }
 
 void ConnectionDialog::readSettings ()
 {
-    QSettings settings ("yuliya", "yuliya");
+    QSettings settings ("Inteltech", "yuliya");
     settings.beginGroup ("last_connection");
     ui->_editIp->setText (settings.value ("ip").toString ());
     ui->_editPort->setText (settings.value ("port").toString ());
@@ -108,7 +109,7 @@ void ConnectionDialog::readSettings ()
 
 void ConnectionDialog::writeSettings ()
 {
-    QSettings settings ("yuliya", "yuliya");
+    QSettings settings ("Inteltech", "yuliya");
     settings.beginGroup ("last_connection");
     settings.setValue ("ip", ui->_editIp->text ().trimmed ());
     settings.setValue ("port", ui->_editPort->text ().trimmed ());

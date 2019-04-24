@@ -1,5 +1,6 @@
 #include "projectswidget.h"
-#include "projectsettingsdialog.h"
+#include "projectpassportdialog.h"
+#include "projectcodesettingsdialog.h"
 
 #include <QFile>
 #include <QTimer>
@@ -146,67 +147,30 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
         return;
 
     QMenu menu;
-    menu.addAction (trUtf8 ("Задачи"));
-    menu.addAction (trUtf8 ("Настройки"));
+    menu.addAction (tr ("Passport"));
+    menu.addAction (tr ("Code Settings"));
     QAction *act = menu.exec (_view->viewport ()->mapToGlobal (pos));
     if (!act) return;
 
-    if (act->text () == trUtf8 ("Задачи"))
+    if (act->text () == tr ("Passport"))
     {
         if (!RedmineInstance::instance ().loadIssues (prjid)) {
             qCritical () << "[ProjectsWidget][slotCustomContextMenu]";
             return;
         } else {
-            QSharedPointer<RedmineProject> project =
-                    RedmineInstance::instance ().projects ().value (prjid);
-            if (project.isNull ())
-                return;
-            for (int i = 0; i < project->_issues.size (); ++i)
-                //qDebug () << project->_issues[i]->_subject
-                //          << RedmineInstance::instance ().statuses ()[project->_issues[i]->_status_id]->_name
-                //          << project->_issues[i]->_category_id;
-                if (trUtf8 ("При установке текущей Ген.Сх. удаляются другие") == project->_issues[i]->_subject)
-                {
-                    qDebug () << project->_issues[i]->_assigned_to_id << "_assigned_to_id";
-                    qDebug () << project->_issues[i]->_author_id << "_author_id";
-                    qDebug () << project->_issues[i]->_category_id << "_category_id";
-                    qDebug () << project->_issues[i]->_closed_on << "_closed_on";
-                    qDebug () << project->_issues[i]->_closed_on << "_closed_on";
-                    qDebug () << project->_issues[i]->_created_on << "_created_on";
-                    qDebug () << project->_issues[i]->_description << "_description";
-                    qDebug () << project->_issues[i]->_done_ratio << "_done_ratio";
-                    qDebug () << project->_issues[i]->_due_date << "_due_date";
-                    qDebug () << project->_issues[i]->_estimated_hours << "_estimated_hours";
-                    qDebug () << project->_issues[i]->_fixed_version_id << "_fixed_version_id";
-                    qDebug () << project->_issues[i]->_id << "_id";
-                    qDebug () << project->_issues[i]->_is_private << "_is_private";
-                    qDebug () << project->_issues[i]->_lft << "_lft";
-                    qDebug () << project->_issues[i]->_lock_version << "_lock_version";
-                    qDebug () << project->_issues[i]->_parent_id << "_parent_id";
-                    qDebug () << project->_issues[i]->_priority_id << "_priority_id";
-                    qDebug () << project->_issues[i]->_rgt << "_rgt";
-                    qDebug () << project->_issues[i]->_root_id << "_root_id";
-                    qDebug () << project->_issues[i]->_start_date << "_start_date";
-                    qDebug () << project->_issues[i]->_status_id << "_status_id";
-                    qDebug () << project->_issues[i]->_subject << "_subject";
-                    qDebug () << project->_issues[i]->_tracker_id << "_tracker_id";
-                    qDebug () << project->_issues[i]->_updated_on << "_updated_on";
-                }
-        }
-    }
-    else if (act->text () == trUtf8 ("Настройки"))
-    {
-        if (!RedmineInstance::instance ().loadIssues (prjid)) {
-            qCritical () << "[ProjectsWidget][slotCustomContextMenu]";
-            return;
-        } else {
-            auto *dlg = new ProjectSettingsDialog (prjid, this);
+            auto *dlg = new ProjectPassportDialog (prjid, this);
             dlg->exec ();
         }
     }
+    else if (act->text () == tr ("Code Settings"))
+    {
+        auto *dlg = new ProjectCodeSettingsDialog (prjid, this);
+        dlg->exec ();
+    }
 }
 
-void ProjectsWidget::slotSelectionChanged (const QItemSelection &selected, const QItemSelection &deselected)
+void ProjectsWidget::slotSelectionChanged (const QItemSelection &selected,
+                                           const QItemSelection &deselected)
 {
     (void)deselected;
 
@@ -214,6 +178,8 @@ void ProjectsWidget::slotSelectionChanged (const QItemSelection &selected, const
         _currentIndex = QModelIndex ();
     else
         _currentIndex = selected.indexes ()[0];
+
+    emit projectSelected (_currentIndex.data (Qt::UserRole + 1).toString ());
 }
 
 void ProjectsWidget::showEvent (QShowEvent */*ev*/)

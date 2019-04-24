@@ -1,12 +1,12 @@
-#include "projectsettingsdialog.h"
-#include "ui_projectsettingsdialog.h"
+#include "projectpassportdialog.h"
+#include "ui_projectpassportdialog.h"
 #include "redmineinstance.h"
 
 #include <QSettings>
 
-ProjectSettingsDialog::ProjectSettingsDialog (const QString &prjid, QWidget *parent)
+ProjectPassportDialog::ProjectPassportDialog (const QString &prjid, QWidget *parent)
     : QDialog (parent)
-    , ui (new Ui::ProjectSettingsDialog)
+    , ui (new Ui::ProjectPassportDialog)
     , _prjid (prjid)
 {
     ui->setupUi (this);
@@ -31,12 +31,12 @@ ProjectSettingsDialog::ProjectSettingsDialog (const QString &prjid, QWidget *par
     }
 }
 
-ProjectSettingsDialog::~ProjectSettingsDialog ()
+ProjectPassportDialog::~ProjectPassportDialog ()
 {
     delete ui;
 }
 
-void ProjectSettingsDialog::readSettings ()
+void ProjectPassportDialog::readSettings ()
 {
     QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[_prjid];
     if (project.isNull ())
@@ -50,7 +50,7 @@ void ProjectSettingsDialog::readSettings ()
     ui->_editCreatedTestCase->setText (QString::number (project->_created_test_case));
 }
 
-void ProjectSettingsDialog::writeSettings ()
+void ProjectPassportDialog::writeSettings ()
 {
     QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[_prjid];
     if (project.isNull ())

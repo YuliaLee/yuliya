@@ -3,10 +3,11 @@ QT += widgets gui sql charts
 HEADERS       = mainwindow.h \
                 mdichild.h \
     connectiondialog.h \
+    projectcodesettingsdialog.h \
+    projectpassportdialog.h \
     projectswidget.h \
     redmineinstance.h \
     redmineobjects.h \
-    projectsettingsdialog.h \
     charts/mainslice.h \
     charts/donutbreakdownchart.h \
     charts/drilldownslice.h \
@@ -21,10 +22,11 @@ SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
     connectiondialog.cpp \
+    projectcodesettingsdialog.cpp \
+    projectpassportdialog.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \
-    projectsettingsdialog.cpp \
     charts/mainslice.cpp \
     charts/donutbreakdownchart.cpp \
     charts/drilldownslice.cpp \
@@ -51,4 +53,4 @@ RESOURCES     = yuliya.qrc
 
 FORMS += \
     connectiondialog.ui \
-    projectsettingsdialog.ui
+    projectpassportdialog.ui
