@@ -48,7 +48,9 @@ private slots:
     void faultToleranceMetrics ();
     void recoverabilityMetrics ();
     void reliabilityComplianceMetrics ();
-    void resultingChartofMetrics();
+    void resultingInternalMetrics ();
+
+    void resultingExternalMetrics ();
 
 private:
 
@@ -94,8 +96,10 @@ private:
     QAction *_faultToleranceAct;
     QAction *_recoverabilityAct;
     QAction *_reliabilityComplianceAct;
-    QAction *_resultingChartofMetricsAct;
+    QAction *_resultingInternalMetricsAct;
+
     QToolBar *_externalToolBar;
+    QAction *_resultingExternalMetricsAct;
 
     ProjectsWidget *_projectsWidget;
 };

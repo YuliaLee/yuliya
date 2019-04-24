@@ -13,6 +13,7 @@
 #include <QToolBar>
 #include <QSettings>
 #include <QDockWidget>
+#include <QLabel>
 
 #include "connectiondialog.h"
 #include "projectswidget.h"
@@ -21,7 +22,8 @@
 #include "metrics/faulttolerancemetrics.h"
 #include "metrics/recoverabilitymetrics.h"
 #include "metrics/reliabilitycompliancemetrics.h"
-#include "metrics/resultingchartofmetrics.h"
+#include "metrics/resultinginternalmetrics.h"
+#include "metrics/resultingexternalmetrics.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
@@ -294,9 +296,9 @@ void MainWindow::createActions()
 
     //---------------------------------------------------
 
-    _resultingChartofMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting Chart of Metrics"), this);
-    _resultingChartofMetricsAct->setToolTip (tr ("Resulting Chart of Metrics"));
-    connect (_resultingChartofMetricsAct, SIGNAL(triggered()), this, SLOT(resultingChartofMetrics()));
+    _resultingInternalMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting Internal Metrics"), this);
+    _resultingInternalMetricsAct->setToolTip (tr ("Resulting Internal Metrics"));
+    connect (_resultingInternalMetricsAct, SIGNAL(triggered()), this, SLOT(resultingInternalMetrics()));
 
     _maturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
     _maturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
@@ -313,6 +315,12 @@ void MainWindow::createActions()
     _reliabilityComplianceAct = new QAction (QIcon(":/images/chart.png"), tr ("Reliability Compliance Metrics"), this);
     _reliabilityComplianceAct->setToolTip (tr ("Reliability Compliance Metrics"));
     connect (_reliabilityComplianceAct, SIGNAL(triggered()), this, SLOT(reliabilityComplianceMetrics()));
+
+    //---------------------------------------------------
+
+    _resultingExternalMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting External Metrics"), this);
+    _resultingExternalMetricsAct->setToolTip (tr ("Resulting External Metrics"));
+    connect (_resultingExternalMetricsAct, SIGNAL(triggered()), this, SLOT(resultingExternalMetrics()));
 }
 
 void MainWindow::createMenus()
@@ -353,16 +361,20 @@ void MainWindow::createToolBars()
     _editToolBar->addAction(_copyAct);
     _editToolBar->addAction(_pasteAct);
 
-    _internalToolBar = addToolBar (tr ("Internal"));
-    _internalToolBar->addAction (_resultingChartofMetricsAct);
+    _internalToolBar = addToolBar (tr ("Internal metrics"));
+    _internalToolBar->addWidget (new QLabel (tr ("Internal metrics")));
+    _internalToolBar->addAction (_resultingInternalMetricsAct);
     _internalToolBar->addAction (_maturityMetricsAct);
     _internalToolBar->addAction (_faultToleranceAct);
     _internalToolBar->addAction (_recoverabilityAct);
     _internalToolBar->addAction (_reliabilityComplianceAct);
+
     _externalToolBar = addToolBar (tr ("External"));
+    _externalToolBar->addWidget (new QLabel (tr ("External metrics")));
+    _externalToolBar->addAction (_resultingExternalMetricsAct);
 }
 
-void MainWindow::createStatusBar()
+void MainWindow::createStatusBar ()
 {
     statusBar()->showMessage(tr("Ready"));
 }
@@ -474,13 +486,25 @@ void MainWindow::reliabilityComplianceMetrics ()
     child->show ();
 }
 
-void MainWindow::resultingChartofMetrics ()
+void MainWindow::resultingInternalMetrics ()
 {
     QString prjid = _projectsWidget->selectedProject ();
     if (prjid.isEmpty ())
         return;
 
     ResultingInternalMetricsWidget *w = new ResultingInternalMetricsWidget (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::resultingExternalMetrics ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    ResultingExternalMetricsWidget *w = new ResultingExternalMetricsWidget (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

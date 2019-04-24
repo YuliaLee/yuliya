@@ -1,4 +1,4 @@
-#include "resultingchartofmetrics.h"
+#include "resultinginternalmetrics.h"
 
 #include "redmineinstance.h"
 #include "charts/drilldownchart.h"
@@ -200,6 +200,5 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             chartView->setRenderHint(QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
-
     }
 }

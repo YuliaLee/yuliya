@@ -3,7 +3,6 @@ QT += widgets gui sql charts
 HEADERS       = mainwindow.h \
                 mdichild.h \
     connectiondialog.h \
-    metrics/resultingchartofmetrics.h \
     projectswidget.h \
     redmineinstance.h \
     redmineobjects.h \
@@ -15,12 +14,13 @@ HEADERS       = mainwindow.h \
     metrics/maturitymetrics.h \
     metrics/faulttolerancemetrics.h \
     metrics/recoverabilitymetrics.h \
-    metrics/reliabilitycompliancemetrics.h
+    metrics/reliabilitycompliancemetrics.h \
+    metrics/resultinginternalmetrics.h \
+    metrics/resultingexternalmetrics.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
     connectiondialog.cpp \
-    metrics/resultingchartofmetrics.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \
@@ -32,7 +32,9 @@ SOURCES       = main.cpp \
     metrics/maturitymetrics.cpp \
     metrics/faulttolerancemetrics.cpp \
     metrics/recoverabilitymetrics.cpp \
-    metrics/reliabilitycompliancemetrics.cpp
+    metrics/reliabilitycompliancemetrics.cpp \
+    metrics/resultinginternalmetrics.cpp \
+    metrics/resultingexternalmetrics.cpp
 RESOURCES     = yuliya.qrc
 
 # install
