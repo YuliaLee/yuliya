@@ -1,13 +1,14 @@
-#ifndef RESULTINGCHARTOFMETRICS_H
-#define RESULTINGCHARTOFMETRICS_H
+#ifndef RESULTINGINTERNALMETRICSWIDGET_H
+#define RESULTINGINTERNALMETRICSWIDGET_H
 
 #include <QWidget>
 
-class ResultingChartofMetrics : public QWidget
+class ResultingInternalMetricsWidget : public QWidget
 {
     Q_OBJECT
+
 public:
-    explicit ResultingChartofMetrics (const QString &prjid, QWidget *parent = nullptr);
+    explicit ResultingInternalMetricsWidget (const QString &prjid, QWidget *parent = nullptr);
 };
 
-#endif // RESULTINGCHARTOFMETRICS_H
+#endif // RESULTINGINTERNALMETRICSWIDGET_H

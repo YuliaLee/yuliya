@@ -317,6 +317,222 @@ const QMap<QString, QSharedPointer<RedmineAttachments> > &RedmineInstance::attac
     return _attachments;
 }
 
+int RedmineInstance::metric1A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем задачи для предотращения некорректных действий
+        if (project->_issues[i]->_tracker_id == "4" &&          //функционал
+                (project->_issues[i]->_category_id == "37" ||
+                 project->_issues[i]->_category_id == "38" ||
+                 project->_issues[i]->_category_id == "39" ||
+                 project->_issues[i]->_category_id == "47" ||
+                 project->_issues[i]->_category_id == "48" ||
+                 project->_issues[i]->_category_id == "49" ||
+                 project->_issues[i]->_category_id == "50" ||
+                 project->_issues[i]->_category_id == "51" ||
+                 project->_issues[i]->_category_id == "52" ||
+                 project->_issues[i]->_category_id == "53") &&  //категория check test
+                (project->_issues[i]->_priority_id == "4" ||    //приоритет - срочный или немедленный
+                 project->_issues[i]->_priority_id == "5"))
+        {
+            A++;
+        }
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric1B (const QString &prjid)
+{
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    return project->_incorrect_actions;
+}
+
+int RedmineInstance::metric2A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все решенные exception
+        if (project->_issues[i]->_tracker_id == "4" &&          //функционал
+                (project->_issues[i]->_category_id == "31" ||
+                 project->_issues[i]->_category_id == "32" ||
+                 project->_issues[i]->_category_id == "33" ||
+                 project->_issues[i]->_category_id == "36") &&  //категория exception
+                project->_issues[i]->_status_id == "3")         //статус - решена
+        {
+            A++;
+        }
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric2B (const QString &prjid)
+{
+    int B = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "4" &&          //функционал
+                (project->_issues[i]->_category_id == "31" ||
+                 project->_issues[i]->_category_id == "32" ||
+                 project->_issues[i]->_category_id == "33" ||
+                 project->_issues[i]->_category_id == "36"))  //категория exception
+        {
+            B++;
+        }
+    }
+
+    return B;
+}
+
+int RedmineInstance::metric3A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "1")
+            A++;
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric3B (const QString &prjid)
+{
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    return project->_reference_number_of_error;
+}
+
+int RedmineInstance::metric4A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем закрытые ошибки
+        if (project->_issues[i]->_tracker_id == "1" &&
+                project->_issues[i]->_status_id == "3")
+            A++;
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric4B (const QString &prjid)
+{
+    int B = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "1")
+            B++;
+    }
+
+    return B;
+}
+
+int RedmineInstance::metric5A (const QString &prjid)
+{
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    return project->_created_test_case;
+}
+
+int RedmineInstance::metric5B (const QString &prjid)
+{
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    return project->_need_test_case;
+}
+
+int RedmineInstance::metric6A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "4" &&          //функционал
+                (project->_issues[i]->_category_id == "31" ||
+                 project->_issues[i]->_category_id == "32" ||
+                 project->_issues[i]->_category_id == "33" ||
+                 project->_issues[i]->_category_id == "36") &&  //категория exception
+                project->_issues[i]->_status_id == "3")         //статус - решена
+        {
+            A++;
+        }
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric6B (const QString &prjid)
+{
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    return project->_exceptions;
+}
+
+int RedmineInstance::metric7A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "4" &&          //функционал
+                project->_issues[i]->_status_id == "3")         //статус - решена
+        {
+            QList<QSharedPointer<RedmineAttachments> > attachments
+                    = RedmineInstance::instance ().attachments ().values ();
+
+            for (int j = 0; j < attachments.size (); ++j)
+            {
+                if (attachments[j]->_container_type == "Issue" &&
+                        attachments[j]->_container_id == project->_issues[i]->_id &&
+                        (attachments[j]->_filename.toLower ().contains (QObject::trUtf8 ("надёжност")) ||
+                         attachments[j]->_filename.toLower ().contains (QObject::trUtf8 ("надежност"))))
+                    A++;
+            }
+        }
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric7B (const QString &prjid)
+{
+    int B = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "4")          //функционал
+        {
+            QList<QSharedPointer<RedmineAttachments> > attachments
+                    = RedmineInstance::instance ().attachments ().values ();
+
+            for (int j = 0; j < attachments.size (); ++j)
+            {
+                if (attachments[j]->_container_type == "Issue" &&
+                        attachments[j]->_container_id == project->_issues[i]->_id &&
+                        (attachments[j]->_filename.toLower ().contains (QObject::trUtf8 ("надёжност")) ||
+                         attachments[j]->_filename.toLower ().contains (QObject::trUtf8 ("надежност"))))
+                    B++;
+            }
+        }
+    }
+
+    return B;
+}
+
 RedmineInstance::RedmineInstance ()
 {}
 

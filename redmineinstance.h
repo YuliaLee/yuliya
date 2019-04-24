@@ -1,4 +1,4 @@
-#ifndef REDMINEINSTANCE_H
+﻿#ifndef REDMINEINSTANCE_H
 #define REDMINEINSTANCE_H
 
 #include <QSharedPointer>
@@ -31,6 +31,70 @@ public:
 
     bool loadAttachments ();
     const QMap<QString, QSharedPointer<RedmineAttachments> > &attachments ();
+
+    //----------------- FaultToleranceMetrics Внутренние метрики устойчивости к ошибкам
+
+    //------ Способность к предотвращению некоррестных действий
+
+    //-- Количество разработанных задач для предотвращения некорректных действий
+    int metric1A (const QString &prjid);
+
+    //-- Планируемое количество некорректных действий
+    int metric1B (const QString &prjid);
+
+    //------ Коэффициент отказов
+
+    //-- Число предотвращённых исключений
+    int metric2A (const QString &prjid);
+
+    //-- Число всех исключений
+    int metric2B (const QString &prjid);
+
+    //----------------- MaturityMetrics Внутренние метрики завершённости
+
+    //------ Обнаружение ошибок
+
+    //-- Число обнаруженных ошибок
+    int metric3A (const QString &prjid);
+
+    //-- Планируемое число ошибок
+    int metric3B (const QString &prjid);
+
+    //------ Устранение ошибок
+
+    //-- Число решённых ошибок
+    int metric4A (const QString &prjid);
+
+    //-- Число всех ошибок
+    int metric4B (const QString &prjid);
+
+    //------ Адекватность теста
+
+    //-- Подтверждённое кол-во тест-кейсов
+    int metric5A (const QString &prjid);
+
+    //-- Количество требуемых тест-кейсов
+    int metric5B (const QString &prjid);
+
+    //----------------- Recoverability Внутренние метрики восстанавливаемости
+
+    //------ Восстанавливаемость
+
+    //-- Число предотвращённых исключений
+    int metric6A (const QString &prjid);
+
+    //-- Планируемое количество исключений
+    int metric6B (const QString &prjid);
+
+    //----------------- ReliabilityCompliance Внутренняя метрика соответсвия надёжности
+
+    //------ Внутренняя метрика соответсвия надёжности
+
+    //-- A
+    int metric7A (const QString &prjid);
+
+    //-- B общее количество
+    int metric7B (const QString &prjid);
 
 protected:
 

@@ -36,10 +36,10 @@ MainWindow::MainWindow ()
     _mdiArea->setVerticalScrollBarPolicy (Qt::ScrollBarAsNeeded);
     setCentralWidget (_mdiArea);
     connect (_mdiArea, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-            this, SLOT(updateMenus()));
+             this, SLOT(updateMenus()));
     _windowMapper = new QSignalMapper (this);
     connect (_windowMapper, SIGNAL(mapped(QWidget*)),
-            this, SLOT(setActiveSubWindow(QWidget*)));
+             this, SLOT(setActiveSubWindow(QWidget*)));
 
     createActions ();
     createMenus ();
@@ -130,9 +130,9 @@ void MainWindow::paste()
 
 void MainWindow::about()
 {
-   QMessageBox::about(this, tr("About MDI"),
-            tr("The <b>MDI</b> example demonstrates how to write multiple "
-               "document interface applications using Qt."));
+    QMessageBox::about(this, tr("About MDI"),
+                       tr("The <b>MDI</b> example demonstrates how to write multiple "
+                          "document interface applications using Qt."));
 }
 
 void MainWindow::updateMenus()
@@ -177,10 +177,10 @@ void MainWindow::updateWindowMenu()
         QString text;
         if (i < 9) {
             text = tr("&%1 %2").arg(i + 1)
-                               .arg(child->userFriendlyCurrentFile());
+                    .arg(child->userFriendlyCurrentFile());
         } else {
             text = tr("%1 %2").arg(i + 1)
-                              .arg(child->userFriendlyCurrentFile());
+                    .arg(child->userFriendlyCurrentFile());
         }
         QAction *action  = _windowMenu->addAction(text);
         action->setCheckable(true);
@@ -225,29 +225,29 @@ void MainWindow::createActions()
     _saveAsAct->setStatusTip(tr("Save the document under a new name"));
     connect(_saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
 
-//! [0]
+    //! [0]
     _exitAct = new QAction(tr("E&xit"), this);
     _exitAct->setShortcuts(QKeySequence::Quit);
     _exitAct->setStatusTip(tr("Exit the application"));
     connect(_exitAct, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
-//! [0]
+    //! [0]
 
     _cutAct = new QAction(QIcon(":/images/cut.png"), tr("Cu&t"), this);
     _cutAct->setShortcuts(QKeySequence::Cut);
     _cutAct->setStatusTip(tr("Cut the current selection's contents to the "
-                            "clipboard"));
+                             "clipboard"));
     connect(_cutAct, SIGNAL(triggered()), this, SLOT(cut()));
 
     _copyAct = new QAction(QIcon(":/images/copy.png"), tr("&Copy"), this);
     _copyAct->setShortcuts(QKeySequence::Copy);
     _copyAct->setStatusTip(tr("Copy the current selection's contents to the "
-                             "clipboard"));
+                              "clipboard"));
     connect(_copyAct, SIGNAL(triggered()), this, SLOT(copy()));
 
     _pasteAct = new QAction(QIcon(":/images/paste.png"), tr("&Paste"), this);
     _pasteAct->setShortcuts(QKeySequence::Paste);
     _pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
-                              "selection"));
+                               "selection"));
     connect(_pasteAct, SIGNAL(triggered()), this, SLOT(paste()));
 
     _closeAct = new QAction(tr("Cl&ose"), this);
@@ -277,7 +277,7 @@ void MainWindow::createActions()
     _previousAct = new QAction(tr("Pre&vious"), this);
     _previousAct->setShortcuts(QKeySequence::PreviousChild);
     _previousAct->setStatusTip(tr("Move the focus to the previous "
-                                 "window"));
+                                  "window"));
     connect(_previousAct, SIGNAL(triggered()),
             _mdiArea, SLOT(activatePreviousSubWindow()));
 
@@ -293,6 +293,10 @@ void MainWindow::createActions()
     connect(_aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     //---------------------------------------------------
+
+    _resultingChartofMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting Chart of Metrics"), this);
+    _resultingChartofMetricsAct->setToolTip (tr ("Resulting Chart of Metrics"));
+    connect (_resultingChartofMetricsAct, SIGNAL(triggered()), this, SLOT(resultingChartofMetrics()));
 
     _maturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
     _maturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
@@ -350,6 +354,7 @@ void MainWindow::createToolBars()
     _editToolBar->addAction(_pasteAct);
 
     _internalToolBar = addToolBar (tr ("Internal"));
+    _internalToolBar->addAction (_resultingChartofMetricsAct);
     _internalToolBar->addAction (_maturityMetricsAct);
     _internalToolBar->addAction (_faultToleranceAct);
     _internalToolBar->addAction (_recoverabilityAct);
@@ -475,7 +480,7 @@ void MainWindow::resultingChartofMetrics ()
     if (prjid.isEmpty ())
         return;
 
-    ResultingChartofMetrics *w = new ResultingChartofMetrics (prjid, _mdiArea);
+    ResultingInternalMetricsWidget *w = new ResultingInternalMetricsWidget (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

@@ -7,5 +7,6 @@
         <file>images/paste.png</file>
         <file>images/save.png</file>
         <file>images/chart.png</file>
+        <file>images/sum.png</file>
     </qresource>
 </RCC>

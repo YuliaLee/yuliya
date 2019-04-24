@@ -38,27 +38,28 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
             //-------------- Число решённых ошибок
             series->append (trUtf8 ("A"), 1);
 
-            int A = 0;
-            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
-            for (int i = 0; i < project->_issues.size (); ++i)
-            {
-                //-- ищем все ошибки
-                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
-                        project->_issues[i]->_status_id == "3")         //статус - решена
-                {
-                    QList<QSharedPointer<RedmineAttachments> > attachments
-                            = RedmineInstance::instance ().attachments ().values ();
+            int A = RedmineInstance::instance ().metric7A (prjid);
+//            int A = 0;
+//            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+//            for (int i = 0; i < project->_issues.size (); ++i)
+//            {
+//                //-- ищем все ошибки
+//                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
+//                        project->_issues[i]->_status_id == "3")         //статус - решена
+//                {
+//                    QList<QSharedPointer<RedmineAttachments> > attachments
+//                            = RedmineInstance::instance ().attachments ().values ();
 
-                    for (int j = 0; j < attachments.size (); ++j)
-                    {
-                        if (attachments[j]->_container_type == "Issue" &&
-                                attachments[j]->_container_id == project->_issues[i]->_id &&
-                                (attachments[j]->_filename.toLower ().contains (trUtf8 ("надёжност")) ||
-                                 attachments[j]->_filename.toLower ().contains (trUtf8 ("надежност"))))
-                            A++;
-                    }
-                }
-            }
+//                    for (int j = 0; j < attachments.size (); ++j)
+//                    {
+//                        if (attachments[j]->_container_type == "Issue" &&
+//                                attachments[j]->_container_id == project->_issues[i]->_id &&
+//                                (attachments[j]->_filename.toLower ().contains (trUtf8 ("надёжност")) ||
+//                                 attachments[j]->_filename.toLower ().contains (trUtf8 ("надежност"))))
+//                            A++;
+//                    }
+//                }
+//            }
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
@@ -67,26 +68,27 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
             //-------------- Число не решённых ошибок
             series->append (trUtf8 ("B"), 2);
 
-            int B = 0;
-            project = RedmineInstance::instance ().projects ()[prjid];
-            for (int i = 0; i < project->_issues.size (); ++i)
-            {
-                //-- ищем все ошибки
-                if (project->_issues[i]->_tracker_id == "4")          //функционал
-                {
-                    QList<QSharedPointer<RedmineAttachments> > attachments
-                            = RedmineInstance::instance ().attachments ().values ();
+            int B = RedmineInstance::instance ().metric7B (prjid);
+//            int B = 0;
+//            project = RedmineInstance::instance ().projects ()[prjid];
+//            for (int i = 0; i < project->_issues.size (); ++i)
+//            {
+//                //-- ищем все ошибки
+//                if (project->_issues[i]->_tracker_id == "4")          //функционал
+//                {
+//                    QList<QSharedPointer<RedmineAttachments> > attachments
+//                            = RedmineInstance::instance ().attachments ().values ();
 
-                    for (int j = 0; j < attachments.size (); ++j)
-                    {
-                        if (attachments[j]->_container_type == "Issue" &&
-                                attachments[j]->_container_id == project->_issues[i]->_id &&
-                                (attachments[j]->_filename.toLower ().contains (trUtf8 ("надёжност")) ||
-                                 attachments[j]->_filename.toLower ().contains (trUtf8 ("надежност"))))
-                            B++;
-                    }
-                }
-            }
+//                    for (int j = 0; j < attachments.size (); ++j)
+//                    {
+//                        if (attachments[j]->_container_type == "Issue" &&
+//                                attachments[j]->_container_id == project->_issues[i]->_id &&
+//                                (attachments[j]->_filename.toLower ().contains (trUtf8 ("надёжност")) ||
+//                                 attachments[j]->_filename.toLower ().contains (trUtf8 ("надежност"))))
+//                            B++;
+//                    }
+//                }
+//            }
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
