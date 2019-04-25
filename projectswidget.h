@@ -15,6 +15,9 @@ public:
     explicit ProjectsWidget (QWidget *parent = nullptr);
     QString selectedProject () const;
 
+signals:
+    void projectSelected (const QString &prjid);
+
 protected slots:
     void slotInitProjectsList ();
     void slotCustomContextMenu (const QPoint &pos);
@@ -24,7 +27,7 @@ protected:
     void showEvent (QShowEvent *ev);
 
     void deepTreeRun (QStandardItem *item,
-                           const QMap<QString, QSharedPointer<RedmineProject> > &prjs);
+                      const QMap<QString, QSharedPointer<RedmineProject> > &prjs);
 
     QTreeView *_view;
     QStandardItemModel *_model;

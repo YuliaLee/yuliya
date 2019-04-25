@@ -3,38 +3,46 @@ QT += widgets gui sql charts
 HEADERS       = mainwindow.h \
                 mdichild.h \
     connectiondialog.h \
+    projectpassportdialog.h \
     projectswidget.h \
     redmineinstance.h \
     redmineobjects.h \
-    projectsettingsdialog.h \
     charts/mainslice.h \
     charts/donutbreakdownchart.h \
     charts/drilldownslice.h \
     charts/drilldownchart.h \
-    metrics/maturitymetrics.h \
-    metrics/faulttolerancemetrics.h \
-    metrics/recoverabilitymetrics.h \
-    metrics/reliabilitycompliancemetrics.h \
-    metrics/resultinginternalmetrics.h \
-    metrics/resultingexternalmetrics.h
+    metrics/internal/recoverabilitymetrics.h \
+    metrics/internal/reliabilitycompliancemetrics.h \
+    metrics/internal/resultinginternalmetrics.h \
+    metrics/external/resultingexternalmetrics.h \
+    projectcodelinesdialog.h \
+    projectcodemetricsdialog.h \
+    metrics/internal/internalmaturitymetrics.h \
+    metrics/external/externalmaturitymetrics.h \
+    metrics/internal/internalfaulttolerancemetrics.h \
+    metrics/external/externalfaulttolerancemetrics.h
 SOURCES       = main.cpp \
                 mainwindow.cpp \
                 mdichild.cpp \
     connectiondialog.cpp \
+    projectpassportdialog.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \
-    projectsettingsdialog.cpp \
     charts/mainslice.cpp \
     charts/donutbreakdownchart.cpp \
     charts/drilldownslice.cpp \
     charts/drilldownchart.cpp \
-    metrics/maturitymetrics.cpp \
-    metrics/faulttolerancemetrics.cpp \
-    metrics/recoverabilitymetrics.cpp \
-    metrics/reliabilitycompliancemetrics.cpp \
-    metrics/resultinginternalmetrics.cpp \
-    metrics/resultingexternalmetrics.cpp
+    metrics/internal/recoverabilitymetrics.cpp \
+    metrics/internal/reliabilitycompliancemetrics.cpp \
+    metrics/internal/resultinginternalmetrics.cpp \
+    metrics/external/resultingexternalmetrics.cpp \
+    projectcodelinesdialog.cpp \
+    projectcodemetricsdialog.cpp \
+    metrics/internal/internalmaturitymetrics.cpp \
+    metrics/external/externalmaturitymetrics.cpp \
+    metrics/internal/internalfaulttolerancemetrics.cpp \
+    metrics/external/externalfaulttolerancemetrics.cpp
 RESOURCES     = yuliya.qrc
 
 # install
@@ -51,4 +59,5 @@ RESOURCES     = yuliya.qrc
 
 FORMS += \
     connectiondialog.ui \
-    projectsettingsdialog.ui
+    projectpassportdialog.ui \
+    projectcodelinesdialog.ui

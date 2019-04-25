@@ -1,4 +1,4 @@
-#include "faulttolerancemetrics.h"
+#include "internalfaulttolerancemetrics.h"
 
 #include "redmineinstance.h"
 #include "charts/drilldownchart.h"
@@ -18,6 +18,8 @@
 
 QT_CHARTS_USE_NAMESPACE
 
+using namespace Internal;
+
 FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *parent)
     : QWidget (parent)
 {
@@ -33,32 +35,9 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
         //-- Способность к предотвращению некоррестных действий
         {
             int A = RedmineInstance::instance ().metric1A (prjid);
-            //            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
-            //            for (int i = 0; i < project->_issues.size (); ++i)
-            //            {
-            //                //-- ищем задачи для предотращения некорректных действий
-            //                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
-            //                        (project->_issues[i]->_category_id == "37" ||
-            //                         project->_issues[i]->_category_id == "38" ||
-            //                         project->_issues[i]->_category_id == "39" ||
-            //                         project->_issues[i]->_category_id == "47" ||
-            //                         project->_issues[i]->_category_id == "48" ||
-            //                         project->_issues[i]->_category_id == "49" ||
-            //                         project->_issues[i]->_category_id == "50" ||
-            //                         project->_issues[i]->_category_id == "51" ||
-            //                         project->_issues[i]->_category_id == "52" ||
-            //                         project->_issues[i]->_category_id == "53") &&  //категория check test
-            //                        (project->_issues[i]->_priority_id == "4" ||    //приоритет - срочный или немедленный
-            //                         project->_issues[i]->_priority_id == "5"))
-            //                {
-            //                    A++;
-            //                }
-            //            }
-
             QBarSet *set0 = new QBarSet (trUtf8 ("Количество разработанных задач для предотвращения некорректных действий - %1").arg (QString::number (A)));
             *set0 << A;
 
-            //int B = project->_incorrect_actions;
             int B = RedmineInstance::instance ().metric1B (prjid);
             QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое количество некорректных действий - %1").arg (QString::number (B)));
             *set1 << B;
@@ -82,27 +61,12 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 
         //-- Коэффициент отказов
         {
-            QPieSeries *series = new QPieSeries();
+            QPieSeries *series = new QPieSeries ();
 
             //-------------- Число предотвращённых исключений
             series->append (trUtf8 ("Число предотвращённых исключений"), 1);
 
             int A = RedmineInstance::instance ().metric2A (prjid);
-//            int A = 0;
-//            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
-//            for (int i = 0; i < project->_issues.size (); ++i)
-//            {
-//                //-- ищем все решенные exception
-//                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
-//                        (project->_issues[i]->_category_id == "31" ||
-//                         project->_issues[i]->_category_id == "32" ||
-//                         project->_issues[i]->_category_id == "33" ||
-//                         project->_issues[i]->_category_id == "36") &&  //категория exception
-//                        project->_issues[i]->_status_id == "3")         //статус - решена
-//                {
-//                    A++;
-//                }
-//            }
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
@@ -112,20 +76,6 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             series->append (trUtf8 ("Число НЕ предотвращённых исключений"), 2);
 
             int B = RedmineInstance::instance ().metric2B (prjid);
-//            int B = 0;
-//            project = RedmineInstance::instance ().projects ()[prjid];
-//            for (int i = 0; i < project->_issues.size (); ++i)
-//            {
-//                //-- ищем все ошибки
-//                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
-//                        (project->_issues[i]->_category_id == "31" ||
-//                         project->_issues[i]->_category_id == "32" ||
-//                         project->_issues[i]->_category_id == "33" ||
-//                         project->_issues[i]->_category_id == "36"))  //категория exception
-//                {
-//                    B++;
-//                }
-//            }
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
@@ -147,7 +97,6 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             chartView->setRenderHint (QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
-
     }
 }
 

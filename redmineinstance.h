@@ -32,6 +32,10 @@ public:
     bool loadAttachments ();
     const QMap<QString, QSharedPointer<RedmineAttachments> > &attachments ();
 
+    const QList<RedmineProjectCodeMetrics> codeMetrics (const QString &prjid);
+
+
+
     //----------------- FaultToleranceMetrics Внутренние метрики устойчивости к ошибкам
 
     //------ Способность к предотвращению некоррестных действий
@@ -95,6 +99,17 @@ public:
 
     //-- B общее количество
     int metric7B (const QString &prjid);
+
+
+    //----------------- Fault tolerance metrics Внешние
+
+    //----  breakedown avoidance
+
+    //--
+    int metric8A (const QString &prjid);
+
+    //--
+    int metric8B (const QString &prjid);
 
 protected:
 

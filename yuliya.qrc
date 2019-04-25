@@ -1,12 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/copy.png</file>
-        <file>images/cut.png</file>
-        <file>images/new.png</file>
-        <file>images/open.png</file>
-        <file>images/paste.png</file>
         <file>images/save.png</file>
         <file>images/chart.png</file>
         <file>images/sum.png</file>
+        <file>images/minus-button.png</file>
+        <file>images/plus-button.png</file>
     </qresource>
 </RCC>

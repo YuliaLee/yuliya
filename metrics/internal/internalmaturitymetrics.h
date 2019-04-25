@@ -1,10 +1,13 @@
-#ifndef MATURITYMETRICS_H
-#define MATURITYMETRICS_H
+#ifndef INTERNAL_MATURITYMETRICS_H
+#define INTERNAL_MATURITYMETRICS_H
 
 #include <QWidget>
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+
+namespace Internal
+{
 
 //!
 //! \brief Внутренние метрики завершённости (maturitymetrics)
@@ -18,4 +21,6 @@ public:
     virtual ~MaturityMetricsWidget ();
 };
 
-#endif // MATURITYMETRICS_H
+}
+
+#endif //INTERNAL_MATURITYMETRICS_H

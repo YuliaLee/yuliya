@@ -1,4 +1,4 @@
-#include "maturitymetrics.h"
+#include "internalmaturitymetrics.h"
 
 #include "redmineinstance.h"
 #include "charts/drilldownchart.h"
@@ -17,6 +17,8 @@
 #include <QtCharts/QValueAxis>
 
 QT_CHARTS_USE_NAMESPACE
+
+using namespace Internal;
 
 MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *parent)
     : QWidget (parent)

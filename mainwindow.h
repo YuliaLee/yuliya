@@ -25,18 +25,7 @@ protected:
     void showEvent (QShowEvent *ev);
 
 private slots:
-    void newFile ();
-    void open ();
-    void save ();
-    void saveAs ();
-    void cut ();
-    void copy ();
-    void paste ();
-    void about ();
-    void updateMenus ();
-    void updateWindowMenu ();
-    MdiChild *createMdiChild ();
-    void setActiveSubWindow (QWidget *window);
+    void updateToolbar (const QString &prjid);
 
     //! Инициализация соединений с БД
     void initConnections ();
@@ -44,62 +33,36 @@ private slots:
     //! Инициализация панли со списокм проектов
     void initProjectList ();
 
-    void maturityMetrics ();
-    void faultToleranceMetrics ();
+    void internalMaturityMetrics ();
+    void internalFaultToleranceMetrics ();
     void recoverabilityMetrics ();
     void reliabilityComplianceMetrics ();
     void resultingInternalMetrics ();
 
     void resultingExternalMetrics ();
+    void externalMaturityMetrics ();
+    void externalFaultToleranceMetrics ();
 
 private:
-
     void createActions ();
-    void createMenus ();
     void createToolBars ();
     void createStatusBar ();
     void readSettings ();
     void writeSettings ();
 
-    MdiChild *activeMdiChild ();
-    QMdiSubWindow *findMdiChild (const QString &fileName);
-
     QMdiArea *_mdiArea;
-    QSignalMapper *_windowMapper;
-
-    QMenu *_fileMenu;
-    QMenu *_editMenu;
-    QMenu *_windowMenu;
-    QMenu *_helpMenu;
-    QToolBar *_fileToolBar;
-    QToolBar *_editToolBar;
-    QAction *_newAct;
-    QAction *_openAct;
-    QAction *_saveAct;
-    QAction *_saveAsAct;
-    QAction *_exitAct;
-    QAction *_cutAct;
-    QAction *_copyAct;
-    QAction *_pasteAct;
-    QAction *_closeAct;
-    QAction *_closeAllAct;
-    QAction *_tileAct;
-    QAction *_cascadeAct;
-    QAction *_nextAct;
-    QAction *_previousAct;
-    QAction *_separatorAct;
-    QAction *_aboutAct;
-    QAction *_aboutQtAct;
 
     QToolBar *_internalToolBar;
-    QAction *_maturityMetricsAct;
-    QAction *_faultToleranceAct;
+    QAction *_internalMaturityMetricsAct;
+    QAction *_internalFaultToleranceAct;
     QAction *_recoverabilityAct;
     QAction *_reliabilityComplianceAct;
     QAction *_resultingInternalMetricsAct;
 
     QToolBar *_externalToolBar;
     QAction *_resultingExternalMetricsAct;
+    QAction *_externalMaturityMetricsAct;
+    QAction *_externalFaultToleranceAct;
 
     ProjectsWidget *_projectsWidget;
 };
