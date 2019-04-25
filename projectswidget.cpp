@@ -1,6 +1,6 @@
 #include "projectswidget.h"
 #include "projectpassportdialog.h"
-#include "projectcodesettingsdialog.h"
+#include "projectcodemetricsdialog.h"
 
 #include <QFile>
 #include <QTimer>
@@ -164,7 +164,7 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
     }
     else if (act->text () == tr ("Code Settings"))
     {
-        auto *dlg = new ProjectCodeSettingsDialog (prjid, this);
+        auto *dlg = new ProjectCodeMetricsDialog (prjid, this);
         dlg->exec ();
     }
 }

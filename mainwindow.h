@@ -33,13 +33,15 @@ private slots:
     //! Инициализация панли со списокм проектов
     void initProjectList ();
 
-    void maturityMetrics ();
-    void faultToleranceMetrics ();
+    void internalMaturityMetrics ();
+    void internalFaultToleranceMetrics ();
     void recoverabilityMetrics ();
     void reliabilityComplianceMetrics ();
     void resultingInternalMetrics ();
 
     void resultingExternalMetrics ();
+    void externalMaturityMetrics ();
+    void externalFaultToleranceMetrics ();
 
 private:
     void createActions ();
@@ -51,14 +53,16 @@ private:
     QMdiArea *_mdiArea;
 
     QToolBar *_internalToolBar;
-    QAction *_maturityMetricsAct;
-    QAction *_faultToleranceAct;
+    QAction *_internalMaturityMetricsAct;
+    QAction *_internalFaultToleranceAct;
     QAction *_recoverabilityAct;
     QAction *_reliabilityComplianceAct;
     QAction *_resultingInternalMetricsAct;
 
     QToolBar *_externalToolBar;
     QAction *_resultingExternalMetricsAct;
+    QAction *_externalMaturityMetricsAct;
+    QAction *_externalFaultToleranceAct;
 
     ProjectsWidget *_projectsWidget;
 };

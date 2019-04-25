@@ -5,6 +5,14 @@
 #include <QSharedPointer>
 #include <QSettings>
 
+struct RedmineProjectCodeMetrics
+{
+    QString _date;
+    QString _code_lines;
+    QString _errors;
+    QString _test_cases;
+};
+
 //!
 //! \brief Типы issue - ошибка, улучшение, функционал и т.д.
 //!

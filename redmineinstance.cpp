@@ -317,6 +317,31 @@ const QMap<QString, QSharedPointer<RedmineAttachments> > &RedmineInstance::attac
     return _attachments;
 }
 
+const QList<RedmineProjectCodeMetrics> RedmineInstance::codeMetrics(const QString &prjid)
+{
+    QList<RedmineProjectCodeMetrics> code_metrics;
+
+    QSettings settings ("Inteltech", "yuliya");
+    settings.beginGroup (QString ("code_settings_%1").arg (prjid));
+
+    QStringList lst = settings.allKeys ();
+    for (int i = 0; i < lst.size (); ++i)
+    {
+        QStringList values = settings.value (lst[i]).toString ().split (";");
+
+        RedmineProjectCodeMetrics metric;
+        metric._date = lst[i];
+        metric._code_lines = values[0];
+        metric._errors = values[1];
+        metric._test_cases = values[2];
+
+        code_metrics.append (metric);
+    }
+    settings.endGroup ();
+
+    return code_metrics;
+}
+
 int RedmineInstance::metric1A (const QString &prjid)
 {
     int A = 0;
@@ -527,6 +552,39 @@ int RedmineInstance::metric7B (const QString &prjid)
                          attachments[j]->_filename.toLower ().contains (QObject::trUtf8 ("надежност"))))
                     B++;
             }
+        }
+    }
+
+    return B;
+}
+
+int RedmineInstance::metric8A (const QString &prjid)
+{
+    int A = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "1" &&
+                (project->_issues[i]->_priority_id == "3" || project->_issues[i]->_priority_id == "4" || project->_issues[i]->_priority_id == "5"))
+        {
+            A++;
+        }
+    }
+
+    return A;
+}
+
+int RedmineInstance::metric8B (const QString &prjid)
+{
+    int B = 0;
+    QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+    for (int i = 0; i < project->_issues.size (); ++i)
+    {
+        //-- ищем все ошибки
+        if (project->_issues[i]->_tracker_id == "1")
+        {
+            B++;
         }
     }
 

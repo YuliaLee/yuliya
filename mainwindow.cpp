@@ -18,12 +18,14 @@
 #include "connectiondialog.h"
 #include "projectswidget.h"
 #include "redmineinstance.h"
-#include "metrics/maturitymetrics.h"
-#include "metrics/faulttolerancemetrics.h"
-#include "metrics/recoverabilitymetrics.h"
-#include "metrics/reliabilitycompliancemetrics.h"
-#include "metrics/resultinginternalmetrics.h"
-#include "metrics/resultingexternalmetrics.h"
+#include "metrics/internal/internalmaturitymetrics.h"
+#include "metrics/internal/internalfaulttolerancemetrics.h"
+#include "metrics/internal/recoverabilitymetrics.h"
+#include "metrics/internal/reliabilitycompliancemetrics.h"
+#include "metrics/internal/resultinginternalmetrics.h"
+#include "metrics/external/resultingexternalmetrics.h"
+#include "metrics/external/externalmaturitymetrics.h"
+#include "metrics/external/externalfaulttolerancemetrics.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
@@ -89,13 +91,13 @@ void MainWindow::createActions ()
     _resultingInternalMetricsAct->setToolTip (tr ("Resulting Internal Metrics"));
     connect (_resultingInternalMetricsAct, SIGNAL(triggered()), this, SLOT(resultingInternalMetrics()));
 
-    _maturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
-    _maturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
-    connect (_maturityMetricsAct, SIGNAL(triggered()), this, SLOT(maturityMetrics()));
+    _internalMaturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
+    _internalMaturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
+    connect (_internalMaturityMetricsAct, SIGNAL(triggered()), this, SLOT(internalMaturityMetrics()));
 
-    _faultToleranceAct = new QAction (QIcon(":/images/chart.png"), tr ("Fault Tolerance Metrics"), this);
-    _faultToleranceAct->setToolTip (tr ("Fault Tolerance Metrics"));
-    connect (_faultToleranceAct, SIGNAL(triggered()), this, SLOT(faultToleranceMetrics()));
+    _internalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), tr ("Fault Tolerance Metrics"), this);
+    _internalFaultToleranceAct->setToolTip (tr ("Fault Tolerance Metrics"));
+    connect (_internalFaultToleranceAct, SIGNAL(triggered()), this, SLOT(internalFaultToleranceMetrics()));
 
     _recoverabilityAct = new QAction (QIcon(":/images/chart.png"), tr ("Recoverability Meterics"), this);
     _recoverabilityAct->setToolTip (tr ("Recoverability Metrics"));
@@ -110,6 +112,14 @@ void MainWindow::createActions ()
     _resultingExternalMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting External Metrics"), this);
     _resultingExternalMetricsAct->setToolTip (tr ("Resulting External Metrics"));
     connect (_resultingExternalMetricsAct, SIGNAL(triggered()), this, SLOT(resultingExternalMetrics()));
+
+    _externalMaturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
+    _externalMaturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
+    connect (_externalMaturityMetricsAct, SIGNAL(triggered()), this, SLOT(externalMaturityMetrics()));
+
+    _externalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), tr ("Fault Tolerance Metrics"), this);
+    _externalFaultToleranceAct->setToolTip (tr ("Fault Tolerance Metrics"));
+    connect (_externalFaultToleranceAct, SIGNAL(triggered()), this, SLOT(externalFaultToleranceMetrics()));
 }
 
 void MainWindow::createToolBars ()
@@ -117,14 +127,16 @@ void MainWindow::createToolBars ()
     _internalToolBar = addToolBar (tr ("Internal metrics"));
     _internalToolBar->addWidget (new QLabel (tr ("Internal metrics")));
     _internalToolBar->addAction (_resultingInternalMetricsAct);
-    _internalToolBar->addAction (_maturityMetricsAct);
-    _internalToolBar->addAction (_faultToleranceAct);
+    _internalToolBar->addAction (_internalMaturityMetricsAct);
+    _internalToolBar->addAction (_internalFaultToleranceAct);
     _internalToolBar->addAction (_recoverabilityAct);
     _internalToolBar->addAction (_reliabilityComplianceAct);
 
     _externalToolBar = addToolBar (tr ("External"));
     _externalToolBar->addWidget (new QLabel (tr ("External metrics")));
     _externalToolBar->addAction (_resultingExternalMetricsAct);
+    _externalToolBar->addAction (_externalMaturityMetricsAct);
+    _externalToolBar->addAction (_externalFaultToleranceAct);
 }
 
 void MainWindow::createStatusBar ()
@@ -170,25 +182,25 @@ void MainWindow::initProjectList ()
              SLOT(updateToolbar(QString)));
 }
 
-void MainWindow::maturityMetrics ()
+void MainWindow::internalMaturityMetrics ()
 {
     QString prjid = _projectsWidget->selectedProject ();
     if (prjid.isEmpty ())
         return;
 
-    MaturityMetricsWidget *w = new MaturityMetricsWidget (prjid, _mdiArea);
+    Internal::MaturityMetricsWidget *w = new Internal::MaturityMetricsWidget (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();
 }
 
-void MainWindow::faultToleranceMetrics ()
+void MainWindow::internalFaultToleranceMetrics ()
 {
     QString prjid = _projectsWidget->selectedProject ();
     if (prjid.isEmpty ())
         return;
 
-    FaultToleranceMetrics *w = new FaultToleranceMetrics (prjid, _mdiArea);
+    Internal::FaultToleranceMetrics *w = new Internal::FaultToleranceMetrics (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();
@@ -237,6 +249,39 @@ void MainWindow::resultingExternalMetrics ()
         return;
 
     ResultingExternalMetricsWidget *w = new ResultingExternalMetricsWidget (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::externalMaturityMetrics ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    {
+        External::MaturityMetricsWidget1 *w = new External::MaturityMetricsWidget1 (prjid, _mdiArea);
+        QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+        child->resize (800, 600);
+        child->show ();
+    }
+
+    {
+        External::MaturityMetricsWidget2 *w = new External::MaturityMetricsWidget2 (prjid, _mdiArea);
+        QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+        child->resize (800, 600);
+        child->show ();
+    }
+}
+
+void MainWindow::externalFaultToleranceMetrics()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    External::FaultToleranceMetrics *w = new External::FaultToleranceMetrics (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

@@ -114,17 +114,8 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             QBarSeries *series = new QBarSeries ();
 
             QValueAxis *axisY = new QValueAxis ();
-            //axisY->setRange (0, 1);
-            //axisY->setTickCount (20);
-            //axisY->setMin (0);
-            //axisY->setMax (1);
             axisY->applyNiceNumbers ();
             series->attachAxis (axisY);
-
-            //        QLineSeries *lineseries = new QLineSeries();
-            //        lineseries->setName ("max");
-            //        lineseries->append (QPoint (1, 0));
-            //        lineseries->append (QPoint (1, 1));
 
             //-- Fault detection
             {
@@ -188,7 +179,6 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            //chart->addSeries (lineseries);
             chart->addAxis (axisY, Qt::AlignLeft);
             chart->setTitle (trUtf8 ("Resulting Charts of Internal Metrics"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
