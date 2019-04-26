@@ -147,12 +147,12 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
         return;
 
     QMenu menu;
-    menu.addAction (tr ("Passport"));
-    menu.addAction (tr ("Code Settings"));
+    menu.addAction (trUtf8 ("Паспорт проекта"));
+    menu.addAction (trUtf8 ("Настроки кода"));
     QAction *act = menu.exec (_view->viewport ()->mapToGlobal (pos));
     if (!act) return;
 
-    if (act->text () == tr ("Passport"))
+    if (act->text () == trUtf8 ("Паспорт проекта"))
     {
         if (!RedmineInstance::instance ().loadIssues (prjid)) {
             qCritical () << "[ProjectsWidget][slotCustomContextMenu]";
@@ -162,7 +162,7 @@ void ProjectsWidget::slotCustomContextMenu (const QPoint &pos)
             dlg->exec ();
         }
     }
-    else if (act->text () == tr ("Code Settings"))
+    else if (act->text () == trUtf8 ("Настроки кода"))
     {
         auto *dlg = new ProjectCodeMetricsDialog (prjid, this);
         dlg->exec ();
