@@ -7,6 +7,11 @@ namespace Ui {
     class ProjectPassportDialog;
 }
 
+//!
+//! \brief Диалоговое окно с паспортом проекта.
+//! Паспорт объекта сохраняется через QSettings в файл
+//! конфига.
+//!
 class ProjectPassportDialog : public QDialog
 {
     Q_OBJECT

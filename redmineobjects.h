@@ -74,7 +74,7 @@ struct RedmineProject
 {
     RedmineProject ()
     {
-        _code_lines = 0;
+        //_code_lines = 0;
         _exceptions = 0;
         _incorrect_actions = 0;
         _reference_number_of_error = 0;
@@ -93,10 +93,10 @@ struct RedmineProject
         if (_id.isEmpty ())
             return;
 
-        QSettings settings ("yuliya", "yuliya");
+        QSettings settings ("Inteltech", "yuliya");
         settings.beginGroup (QString ("project/%1").arg (_id));
 
-        _code_lines = settings.value ("code_lines", "0").toInt ();
+        //_code_lines = settings.value ("code_lines", "0").toInt ();
         _exceptions = settings.value ("exceptions", "0").toInt ();
         _incorrect_actions = settings.value ("incorrect_actions", "0").toInt ();
         _reference_number_of_error = settings.value ("reference_number_of_error", "0").toInt ();
@@ -112,10 +112,10 @@ struct RedmineProject
         if (_id.isEmpty ())
             return;
 
-        QSettings settings ("yuliya", "yuliya");
+        QSettings settings ("Inteltech", "yuliya");
         settings.beginGroup (QString ("project/%1").arg (_id));
 
-        settings.setValue ("code_lines", QString::number (_code_lines));
+        //settings.setValue ("code_lines", QString::number (_code_lines));
         settings.setValue ("exceptions", QString::number (_exceptions));
         settings.setValue ("incorrect_actions", QString::number (_incorrect_actions));
         settings.setValue ("reference_number_of_error", QString::number (_reference_number_of_error));
@@ -144,13 +144,13 @@ struct RedmineProject
 
     QList<QSharedPointer<RedmineIssue>> _issues;
 
-    int _code_lines;
-    int _exceptions;
-    int _incorrect_actions;
-    int _reference_number_of_error;
+    //int _code_lines;
+    int _exceptions;                    //!< Планируемое количество иключений
+    int _incorrect_actions;             //!< Планируемое количество некорректных действий
+    int _reference_number_of_error;     //!< Планируемое количество ошибок
     int _required_actions;
-    int _need_test_case;
-    int _created_test_case;
+    int _need_test_case;                //!< Количество требуемых тест-кейсов
+    int _created_test_case;             //!< Подтверждённое кол-во тест-кейсов
 };
 
 struct RedmineIssueStatuses

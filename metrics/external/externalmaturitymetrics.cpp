@@ -36,10 +36,6 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
         vl->setContentsMargins (4,4,4,4);
         setLayout (vl);
 
-        //        QHBoxLayout *hl = new QHBoxLayout ();
-        //        hl->setContentsMargins (4,4,4,4);
-        //        vl->addLayout (hl);
-
         {
             QLineSeries *series = new QLineSeries ();
             QList<RedmineProjectCodeMetrics> metrics = RedmineInstance::instance ().codeMetrics (prjid);
@@ -52,7 +48,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (tr ("Estimated latent fault density"));
+            chart->setTitle (trUtf8 ("Оцениваемая плотность скрытых ошибок"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
@@ -76,7 +72,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (tr ("Failure density against test cases"));
+            chart->setTitle (trUtf8 ("Плотность отказов по отношению к тест-кейсам"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
@@ -100,7 +96,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (tr ("Fault density"));
+            chart->setTitle (trUtf8 ("Плотность ошибок"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
