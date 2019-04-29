@@ -94,21 +94,21 @@ public:
 
     //------ Внутренняя метрика соответсвия надёжности
 
-    //-- A
+    //-- Решенные задачи с вложениями
     int metric7A (const QString &prjid);
 
-    //-- B общее количество
+    //-- Общее количество задач с вложениями
     int metric7B (const QString &prjid);
 
 
-    //----------------- Fault tolerance metrics Внешние
+    //----------------- Fault tolerance metrics Внешние метрики устойчивости к ошибкам
 
-    //----  breakedown avoidance
+    //----  Коэффициент аварийных отказов
 
-    //--
+    //--Критические ошибки
     int metric8A (const QString &prjid);
 
-    //--
+    //--Все ошибки
     int metric8B (const QString &prjid);
 
 protected:

@@ -614,11 +614,10 @@ int RedmineInstance::metric8A (const QString &prjid)
     QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
     for (int i = 0; i < project->_issues.size (); ++i)
     {
-        //-- ищем все ошибки
-        if (project->_issues[i]->_tracker_id == "1" &&
-                (project->_issues[i]->_priority_id == "3" ||
-                 project->_issues[i]->_priority_id == "4" ||
-                 project->_issues[i]->_priority_id == "5"))
+        //-- ищем все критические ошибки
+        if (project->_issues[i]->_tracker_id == "1" &&          // Ошибки
+                (project->_issues[i]->_priority_id == "4" ||
+                 project->_issues[i]->_priority_id == "5"))     // Приоритет - срочный, немедленный
         {
             A++;
         }

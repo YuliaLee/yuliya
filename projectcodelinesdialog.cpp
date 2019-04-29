@@ -24,6 +24,19 @@ ProjectCodeLinesDialog::ProjectCodeLinesDialog (const QString &prjid, QWidget *p
 
         ui->_editErrors->setText (QString::number (errors));
     }
+
+    if (project && RedmineInstance::instance ().loadIssues (_prjid))
+    {
+        int test_cases = 0;
+        for (int i = 0; i < project->_issues.size (); ++i)
+        {
+            if (project->_issues[i]->_tracker_id == "5")
+                test_cases++;
+        }
+
+        ui->_editTestCases->setText (QString::number (test_cases));
+    }
+
 }
 
 ProjectCodeLinesDialog::~ProjectCodeLinesDialog ()
