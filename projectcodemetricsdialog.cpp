@@ -16,13 +16,13 @@ ProjectCodeMetricsDialog::ProjectCodeMetricsDialog (const QString &prjid, QWidge
     , _model (nullptr)
     , _prjid (prjid)
 {
-    setWindowTitle (tr ("Project Code Settings"));
+    setWindowTitle (trUtf8 ("Настройки кода"));
     setLayout (new QVBoxLayout);
 
     _toolBar = new QToolBar;
     _toolBar->setToolButtonStyle (Qt::ToolButtonTextUnderIcon);
-    _addAct = _toolBar->addAction (QIcon (":/images/plus-button.png"), tr ("Add"), this, SLOT(slotAdd()));
-    _delAct = _toolBar->addAction (QIcon (":/images/minus-button.png"), tr ("Delete"), this, SLOT(slotDelete()));
+    _addAct = _toolBar->addAction (QIcon (":/images/plus-button.png"), trUtf8 ("Добавить"), this, SLOT(slotAdd()));
+    _delAct = _toolBar->addAction (QIcon (":/images/minus-button.png"), trUtf8 ("Удалить"), this, SLOT(slotDelete()));
     layout ()->addWidget (_toolBar);
 
     _model = new QStandardItemModel (0, 4);

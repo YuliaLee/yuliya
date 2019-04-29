@@ -87,53 +87,56 @@ void MainWindow::updateToolbar (const QString &prjid)
 
 void MainWindow::createActions ()
 {
-    _resultingInternalMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting Internal Metrics"), this);
-    _resultingInternalMetricsAct->setToolTip (tr ("Resulting Internal Metrics"));
+
+
+    //---------------------------------------------------
+    _resultingInternalMetricsAct = new QAction (QIcon(":/images/sum.png"), trUtf8 ("Результирующие графики внутренних метрик"), this);
+    _resultingInternalMetricsAct->setToolTip (trUtf8 ("Результирующие графики внутренних метрик"));
     connect (_resultingInternalMetricsAct, SIGNAL(triggered()), this, SLOT(resultingInternalMetrics()));
 
-    _internalMaturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
-    _internalMaturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
+    _internalMaturityMetricsAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Внутренние метрики завершенности"), this);
+    _internalMaturityMetricsAct->setToolTip (trUtf8 ("Внутренние метрики завершенности"));
     connect (_internalMaturityMetricsAct, SIGNAL(triggered()), this, SLOT(internalMaturityMetrics()));
 
-    _internalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), tr ("Fault Tolerance Metrics"), this);
-    _internalFaultToleranceAct->setToolTip (tr ("Fault Tolerance Metrics"));
+    _internalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Внутренние метрики устойчивости к ошибкам"), this);
+    _internalFaultToleranceAct->setToolTip (trUtf8 ("Внутренние метрики устойчивости к ошибкам"));
     connect (_internalFaultToleranceAct, SIGNAL(triggered()), this, SLOT(internalFaultToleranceMetrics()));
 
-    _recoverabilityAct = new QAction (QIcon(":/images/chart.png"), tr ("Recoverability Meterics"), this);
-    _recoverabilityAct->setToolTip (tr ("Recoverability Metrics"));
+    _recoverabilityAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Внутренние метрики восстанавливаемости"), this);
+    _recoverabilityAct->setToolTip (trUtf8 ("Внутренние метрики восстанавливаемости"));
     connect (_recoverabilityAct, SIGNAL(triggered()), this, SLOT(recoverabilityMetrics()));
 
-    _reliabilityComplianceAct = new QAction (QIcon(":/images/chart.png"), tr ("Reliability Compliance Metrics"), this);
-    _reliabilityComplianceAct->setToolTip (tr ("Reliability Compliance Metrics"));
+    _reliabilityComplianceAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Внутренняя метрика соответствия надежности"), this);
+    _reliabilityComplianceAct->setToolTip (trUtf8 ("RВнутренняя метрика соответствия надежности"));
     connect (_reliabilityComplianceAct, SIGNAL(triggered()), this, SLOT(reliabilityComplianceMetrics()));
 
     //---------------------------------------------------
 
-    _resultingExternalMetricsAct = new QAction (QIcon(":/images/sum.png"), tr ("Resulting External Metrics"), this);
-    _resultingExternalMetricsAct->setToolTip (tr ("Resulting External Metrics"));
+    _resultingExternalMetricsAct = new QAction (QIcon(":/images/sum.png"), trUtf8 ("Результирующие графики внешних метрик"), this);
+    _resultingExternalMetricsAct->setToolTip (trUtf8 ("Результирующие графики внешних метрик"));
     connect (_resultingExternalMetricsAct, SIGNAL(triggered()), this, SLOT(resultingExternalMetrics()));
 
-    _externalMaturityMetricsAct = new QAction (QIcon(":/images/chart.png"), tr ("Maturity Metrics"), this);
-    _externalMaturityMetricsAct->setToolTip (tr ("Maturity Metrics"));
+    _externalMaturityMetricsAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Внешние метрики завершенности"), this);
+    _externalMaturityMetricsAct->setToolTip (trUtf8( "Внешние метрики завершенности"));
     connect (_externalMaturityMetricsAct, SIGNAL(triggered()), this, SLOT(externalMaturityMetrics()));
 
-    _externalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), tr ("Fault Tolerance Metrics"), this);
-    _externalFaultToleranceAct->setToolTip (tr ("Fault Tolerance Metrics"));
+    _externalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), trUtf8("Внешние метрики устойчивости к ошибкам"), this);
+    _externalFaultToleranceAct->setToolTip (trUtf8( "Внешние метрики устойчивости к ошибкам"));
     connect (_externalFaultToleranceAct, SIGNAL(triggered()), this, SLOT(externalFaultToleranceMetrics()));
 }
 
 void MainWindow::createToolBars ()
 {
-    _internalToolBar = addToolBar (tr ("Internal metrics"));
-    _internalToolBar->addWidget (new QLabel (tr ("Internal metrics")));
+    _internalToolBar = addToolBar (trUtf8("Внутренние метрики"));
+    _internalToolBar->addWidget (new QLabel (trUtf8("Внутренние метрики")));
     _internalToolBar->addAction (_resultingInternalMetricsAct);
     _internalToolBar->addAction (_internalMaturityMetricsAct);
     _internalToolBar->addAction (_internalFaultToleranceAct);
     _internalToolBar->addAction (_recoverabilityAct);
     _internalToolBar->addAction (_reliabilityComplianceAct);
 
-    _externalToolBar = addToolBar (tr ("External"));
-    _externalToolBar->addWidget (new QLabel (tr ("External metrics")));
+    _externalToolBar = addToolBar (trUtf8("Внешние метрики"));
+    _externalToolBar->addWidget (new QLabel (trUtf8("Внешние метрики")));
     _externalToolBar->addAction (_resultingExternalMetricsAct);
     _externalToolBar->addAction (_externalMaturityMetricsAct);
     _externalToolBar->addAction (_externalFaultToleranceAct);
