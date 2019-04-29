@@ -16,8 +16,6 @@ ProjectPassportDialog::ProjectPassportDialog (const QString &prjid, QWidget *par
         project->readSettings ();
         readSettings ();
 
-        //connect (ui->_editCodeLines, SIGNAL(textChanged(QString)),
-        //         SLOT(writeSettings()));
         connect (ui->_editExceptions, SIGNAL(textChanged(QString)),
                  SLOT(writeSettings()));
         connect (ui->_editIncorrectActions, SIGNAL(textChanged(QString)),
@@ -25,8 +23,6 @@ ProjectPassportDialog::ProjectPassportDialog (const QString &prjid, QWidget *par
         connect (ui->_editReferenceNumberOfErrors, SIGNAL(textChanged(QString)),
                  SLOT(writeSettings()));
         connect (ui->_editNeedTestCase, SIGNAL(textChanged(QString)),
-                 SLOT(writeSettings()));
-        connect (ui->_editCreatedTestCase, SIGNAL(textChanged(QString)),
                  SLOT(writeSettings()));
     }
 }
@@ -42,12 +38,63 @@ void ProjectPassportDialog::readSettings ()
     if (project.isNull ())
         return;
 
-    //ui->_editCodeLines->setText (QString::number (project->_code_lines));
-    ui->_editExceptions->setText (QString::number (project->_exceptions));
-    ui->_editIncorrectActions->setText (QString::number (project->_incorrect_actions));
+//--------------------------Вывод общего числа исключений
+    if (project && RedmineInstance::instance ().loadIssues (_prjid))
+    {
+        int exceptions = 0;
+        for (int i = 0; i < project->_issues.size (); ++i)
+        {
+            if (project->_issues[i]->_tracker_id == "4" &&           //функционал
+               (project->_issues[i]->_category_id == "31" ||
+                project->_issues[i]->_category_id == "32" ||
+                project->_issues[i]->_category_id == "33" ||
+                project->_issues[i]->_category_id == "36"))          //категория exception))
+                    exceptions++;
+        }
+
+        ui->_editExceptions->setText (QString::number (exceptions));
+    }
+
+//--------------------------Вывод общего числа некорректных действий
+    if (project && RedmineInstance::instance ().loadIssues (_prjid))
+    {
+        int incorrect_actions = 0;
+        for (int i = 0; i < project->_issues.size (); ++i)
+        {
+            if (project->_issues[i]->_tracker_id == "4" &&           //функционал
+                    (project->_issues[i]->_category_id == "37" ||
+                     project->_issues[i]->_category_id == "38" ||
+                     project->_issues[i]->_category_id == "39" ||
+                     project->_issues[i]->_category_id == "47" ||
+                     project->_issues[i]->_category_id == "48" ||
+                     project->_issues[i]->_category_id == "49" ||
+                     project->_issues[i]->_category_id == "50" ||
+                     project->_issues[i]->_category_id == "51" ||
+                     project->_issues[i]->_category_id == "52" ||
+                     project->_issues[i]->_category_id == "53"))      // категория Check test
+                incorrect_actions++;
+        }
+
+        ui->_editIncorrectActions->setText (QString::number (incorrect_actions));
+    }
+
+//--------------------------Вывод/ввод планируемого числа ошибок
     ui->_editReferenceNumberOfErrors->setText (QString::number (project->_reference_number_of_error));
-    ui->_editNeedTestCase->setText (QString::number (project->_need_test_case));
-    ui->_editCreatedTestCase->setText (QString::number (project->_created_test_case));
+
+
+//--------------------------Вывод общего числа требуемых тест-кейсов
+
+    if (project && RedmineInstance::instance ().loadIssues (_prjid))
+    {
+        int _need_test_case = 0;
+        for (int i = 0; i < project->_issues.size (); ++i)
+        {
+            if (project->_issues[i]->_tracker_id == "5")
+                _need_test_case++;
+        }
+
+        ui->_editNeedTestCase->setText (QString::number (_need_test_case));
+    }
 }
 
 void ProjectPassportDialog::writeSettings ()
@@ -56,12 +103,10 @@ void ProjectPassportDialog::writeSettings ()
     if (project.isNull ())
         return;
 
-    //project->_code_lines = ui->_editCodeLines->text ().trimmed ().toInt ();
     project->_exceptions = ui->_editExceptions->text ().trimmed ().toInt ();
     project->_incorrect_actions = ui->_editIncorrectActions->text ().trimmed ().toInt ();
     project->_reference_number_of_error = ui->_editReferenceNumberOfErrors->text ().trimmed ().toInt ();
     project->_need_test_case = ui->_editNeedTestCase->text ().trimmed ().toInt ();
-    project->_created_test_case = ui->_editCreatedTestCase->text ().trimmed ().toInt ();
 
     project->writeSettings ();
 }

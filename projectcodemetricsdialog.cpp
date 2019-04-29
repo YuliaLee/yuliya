@@ -26,10 +26,10 @@ ProjectCodeMetricsDialog::ProjectCodeMetricsDialog (const QString &prjid, QWidge
     layout ()->addWidget (_toolBar);
 
     _model = new QStandardItemModel (0, 4);
-    _model->setHorizontalHeaderItem (0, new QStandardItem (tr ("Date")));
-    _model->setHorizontalHeaderItem (1, new QStandardItem (tr ("Code lines")));
-    _model->setHorizontalHeaderItem (2, new QStandardItem (tr ("Errors")));
-    _model->setHorizontalHeaderItem (3, new QStandardItem (tr ("Test Cases")));
+    _model->setHorizontalHeaderItem (0, new QStandardItem (trUtf8 ("Дата")));
+    _model->setHorizontalHeaderItem (1, new QStandardItem (trUtf8 ("Количество строк кода")));
+    _model->setHorizontalHeaderItem (2, new QStandardItem (trUtf8 ("Количество ошибок")));
+    _model->setHorizontalHeaderItem (3, new QStandardItem (trUtf8 ("Количество тест-кейсов")));
 
     _view = new QTableView;
     _view->setModel (_model);

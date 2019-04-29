@@ -46,7 +46,7 @@ MainWindow::MainWindow ()
 
     readSettings ();
 
-    setWindowTitle (tr ("Metrics"));
+    setWindowTitle (trUtf8 ("Метрики"));
     setUnifiedTitleAndToolBarOnMac (true);
 
     updateToolbar (QString::null);
