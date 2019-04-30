@@ -22,9 +22,10 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
     : QWidget (parent)
 {
     if (RedmineInstance::instance ().projects ().contains (prjid) &&
-            RedmineInstance::instance ().loadIssues (prjid))
+            RedmineInstance::instance ().loadIssues (prjid) &&
+            RedmineInstance::instance ().loadAttachments ())
     {
-        setWindowTitle (trUtf8 ("Внутренние метрики восстанавливаемости"));
+        setWindowTitle (trUtf8 ("Внутренние метрики восстанавливаемости и соответствия надежности"));
 
         QVBoxLayout *vl = new QVBoxLayout ();
         vl->setContentsMargins (4,4,4,4);
@@ -32,46 +33,81 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
         //-- Восстанавливаемость
         {
-            int A = RedmineInstance::instance ().metric6A (prjid);
-            //            int A = 0;
-            //            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
-            //            for (int i = 0; i < project->_issues.size (); ++i)
-            //            {
-            //                //-- ищем все ошибки
-            //                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
-            //                        (project->_issues[i]->_category_id == "31" ||
-            //                         project->_issues[i]->_category_id == "32" ||
-            //                         project->_issues[i]->_category_id == "33" ||
-            //                         project->_issues[i]->_category_id == "36") &&  //категория exception
-            //                        project->_issues[i]->_status_id == "3")         //статус - решена
-            //                {
-            //                    A++;
-            //                }
-            //            }
+            QPieSeries *series = new QPieSeries();
 
-            QBarSet *set0 = new QBarSet (trUtf8 ("Число предотвращённых исключений - %1").arg (QString::number (A)));
-            *set0 << A;
+            //--------------Число предотвращённых исключений
+            series->append (trUtf8 ("Число предотвращённых исключений"), 1);
+
+            int A = RedmineInstance::instance ().metric6A (prjid);
+
+            QPieSlice *slice = series->slices ().at (0);
+            slice->setValue (A);
+            slice->setLabel (trUtf8 (("Число предотвращённых исключений - %1")).arg (QString::number (A)));
+
+            //-------------- Число Не предотвращённых исключений
+            series->append (trUtf8 ("Число Не предотвращённых исключений"), 2);
 
             int B = RedmineInstance::instance ().metric6B (prjid);
-            //            int B = project->_exceptions;
-            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое количество исключений - %1").arg (QString::number (B)));
-            *set1 << B;
 
-            QBarSeries *series = new QBarSeries ();
-            series->append (set0);
-            series->append (set1);
+            slice = series->slices ().at (1);
+            slice->setValue (B - A);
+            slice->setLabel (trUtf8 ("Число Не предотвращённых исключений - %1").arg (QString::number (B - A)));
+            slice->setExploded (true);
+            slice->setBorderColor (Qt::red);
+            slice->setBorderWidth (4);
+
+            //--------------
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
             chart->setTitle (trUtf8 ("Восстанавливаемость"));
-            chart->setAnimationOptions (QChart::SeriesAnimations);
-
+            chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignBottom);
+            chart->legend ()->setAlignment (Qt::AlignRight);
 
             QChartView *chartView = new QChartView (chart);
-            chartView->setRenderHint(QPainter::Antialiasing);
+            chartView->setRenderHint (QPainter::Antialiasing);
+            vl->addWidget (chartView);
+        }
+
+        //-- Внутренняя метрика соответсвия надёжности
+        {
+            QPieSeries *series = new QPieSeries();
+
+            //-------------- Число решённых ошибок
+            series->append (trUtf8 ("A"), 1);
+
+            int A = RedmineInstance::instance ().metric7A (prjid);
+
+            QPieSlice *slice = series->slices ().at (0);
+            slice->setValue (A);
+            slice->setLabel (trUtf8 ("A - %1").arg (QString::number (A)));
+
+            //-------------- Число не решённых ошибок
+            series->append (trUtf8 ("B"), 2);
+
+            int B = RedmineInstance::instance ().metric7B (prjid);
+
+            slice = series->slices ().at (1);
+            slice->setValue (B - A);
+            slice->setLabel (trUtf8 ("B - %1").arg (QString::number (B - A)));
+            slice->setExploded (true);
+            slice->setBorderColor (Qt::red);
+            slice->setBorderWidth (4);
+
+            //--------------
+
+            QChart *chart = new QChart ();
+            chart->addSeries (series);
+            chart->setTitle (trUtf8 ("Внутренняя метрика соответсвия надёжности"));
+            chart->setAnimationOptions (QChart::AllAnimations);
+            chart->legend ()->setVisible (true);
+            chart->legend ()->setAlignment (Qt::AlignRight);
+
+            QChartView *chartView = new QChartView (chart);
+            chartView->setRenderHint (QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
     }
 }
+
