@@ -107,7 +107,7 @@ void MainWindow::createActions ()
     connect (_recoverabilityAct, SIGNAL(triggered()), this, SLOT(recoverabilityMetrics()));
 
     _reliabilityComplianceAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Внутренняя метрика соответствия надежности"), this);
-    _reliabilityComplianceAct->setToolTip (trUtf8 ("RВнутренняя метрика соответствия надежности"));
+    _reliabilityComplianceAct->setToolTip (trUtf8 ("Внутренняя метрика соответствия надежности"));
     connect (_reliabilityComplianceAct, SIGNAL(triggered()), this, SLOT(reliabilityComplianceMetrics()));
 
     //---------------------------------------------------

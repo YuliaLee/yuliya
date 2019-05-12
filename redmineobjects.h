@@ -120,6 +120,7 @@ struct RedmineProject
         settings.setValue ("reference_number_of_error", QString::number (_reference_number_of_error));
         settings.setValue ("required_actions", QString::number (_required_actions));
         settings.setValue ("need_test_case", QString::number (_need_test_case));
+        settings.setValue ("total_operation_time", QString::number (_total_operation_time));
 
         settings.endGroup ();
     }
@@ -147,6 +148,7 @@ struct RedmineProject
     int _reference_number_of_error;     //!< Планируемое количество ошибок
     int _required_actions;
     int _need_test_case;                //!< Количество требуемых тест-кейсов
+    int _total_operation_time;
 };
 
 struct RedmineIssueStatuses

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>139</height>
+    <height>167</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -62,7 +62,7 @@
    <item row="6" column="0">
     <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Разработанное количество требуемых тест-кейсов:</string>
+      <string>Количество тест-кейсов в тест-плане:</string>
      </property>
     </widget>
    </item>
@@ -78,6 +78,16 @@
    </item>
    <item row="3" column="1">
     <widget class="QLineEdit" name="_editReferenceNumberOfErrors"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Общее время работы программы (в часах):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="_editTotalOperationTime"/>
    </item>
   </layout>
  </widget>

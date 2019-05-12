@@ -30,7 +30,9 @@ ProjectCodeLinesDialog::ProjectCodeLinesDialog (const QString &prjid, QWidget *p
         int test_cases = 0;
         for (int i = 0; i < project->_issues.size (); ++i)
         {
-            if (project->_issues[i]->_tracker_id == "5")
+            if (project->_issues[i]->_tracker_id == "5" &&
+                    (project->_issues[i]->_status_id =="11" ||
+                     project->_issues[i]->_status_id =="12" ))
                 test_cases++;
         }
 

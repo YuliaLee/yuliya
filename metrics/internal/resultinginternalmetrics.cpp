@@ -48,7 +48,7 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             //        lineseries->append (QPoint (1, 0));
             //        lineseries->append (QPoint (1, 1));
 
-            //-- Fault removal
+            //-- Fault removal - Устранение ошибок
 //            {
 //                int A = RedmineInstance::instance ().metric4A (prjid);
 //                int B = RedmineInstance::instance ().metric4B (prjid);
@@ -63,22 +63,23 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
 //                series->append (set);
 //            }
 
-            //-- Test adequance
+            //-- Test adequance - Адекватность теста
             {
-                int A = RedmineInstance::instance ().metric5A (prjid);
-                int B = RedmineInstance::instance ().metric5B (prjid);
+                QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+                int A = RedmineInstance::instance ().metric5B (prjid);
+                int B = project->_need_test_case;
                 float X = 0;
                 if (B != 0)
                     X = (float)A/(float)B;
                 else
-                    X = 1;
+                    X = 0;
 
                 QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Адекватность теста  - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
 
-            //-- Failure avoidance
+            //-- Failure avoidance - Коэффициент отказов
             {
                 int A = RedmineInstance::instance ().metric2A (prjid);
                 int B = RedmineInstance::instance ().metric2B (prjid);
@@ -93,23 +94,23 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 series->append (set);
             }
 
-            //-- Fault detection
+//            //-- Fault detection - Обнаружение ошибок
 
-            {
-                int A = RedmineInstance::instance ().metric3A (prjid);
-                int B = RedmineInstance::instance ().metric3B (prjid);
-                float X = 0;
-                if (B != 0)
-                    X = (float)A/(float)B;
-                else
-                    X = 1;
+//            {
+//                int A = RedmineInstance::instance ().metric3A (prjid);
+//                int B = RedmineInstance::instance ().metric3B (prjid);
+//                float X = 0;
+//                if (B != 0)
+//                    X = (float)A/(float)B;
+//                else
+//                    X = 1;
 
-                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Обнаружение ошибок - %1</b></font>").arg (QString::number (X, 'f', 2)));
-                *set << X;
-                series->append (set);
-            }
+//                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Обнаружение ошибок - %1</b></font>").arg (QString::number (X, 'f', 2)));
+//                *set << X;
+//                series->append (set);
+//            }
 
-            //-- Incorrect operation avoidance
+            //-- Incorrect operation avoidance - Способность к предотвращению некорректных действий
             {
                 int A = RedmineInstance::instance ().metric1A (prjid);
                 int B = RedmineInstance::instance ().metric1B (prjid);
@@ -119,12 +120,12 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 else
                     X = 1;
 
-                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Способность к предотвращению некорректных действий - %1</b></font>").arg (QString::number (X, 'f', 2)));
+                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Предотвращение некорр. действий - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
 
-            //-- Restorability
+            //-- Restorability - Восстанавливаемость
             {
                 int A = RedmineInstance::instance ().metric6A (prjid);
                 int B = RedmineInstance::instance ().metric6B (prjid);
@@ -139,7 +140,7 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 series->append (set);
             }
 
-            //-- Reliability Compliance
+            //-- Reliability Compliance - Соответствие надежности
             {
                 int A = RedmineInstance::instance ().metric7A (prjid);
                 int B = RedmineInstance::instance ().metric7B (prjid);

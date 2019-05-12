@@ -24,6 +24,8 @@ ProjectPassportDialog::ProjectPassportDialog (const QString &prjid, QWidget *par
                  SLOT(writeSettings()));
         connect (ui->_editNeedTestCase, SIGNAL(textChanged(QString)),
                  SLOT(writeSettings()));
+        connect (ui->_editTotalOperationTime, SIGNAL(textChanged(QString)),
+                 SLOT(writeSettings()));
     }
 }
 
@@ -82,19 +84,19 @@ void ProjectPassportDialog::readSettings ()
     ui->_editReferenceNumberOfErrors->setText (QString::number (project->_reference_number_of_error));
 
 
-//--------------------------Вывод общего числа требуемых тест-кейсов
+//--------------------------Вывод/ввод количества тест-кейсов, необходимых по тест-плану
+    ui->_editNeedTestCase->setText (QString::number (project->_need_test_case));
+//    if (project && RedmineInstance::instance ().loadIssues (_prjid))
+//    {
+//        int _need_test_case = 0;
+//        for (int i = 0; i < project->_issues.size (); ++i)
+//        {
+//            if (project->_issues[i]->_tracker_id == "5")
+//                _need_test_case++;
+//        }
 
-    if (project && RedmineInstance::instance ().loadIssues (_prjid))
-    {
-        int _need_test_case = 0;
-        for (int i = 0; i < project->_issues.size (); ++i)
-        {
-            if (project->_issues[i]->_tracker_id == "5")
-                _need_test_case++;
-        }
-
-        ui->_editNeedTestCase->setText (QString::number (_need_test_case));
-    }
+//        ui->_editNeedTestCase->setText (QString::number (_need_test_case));
+//    }
 }
 
 void ProjectPassportDialog::writeSettings ()
@@ -107,6 +109,7 @@ void ProjectPassportDialog::writeSettings ()
     project->_incorrect_actions = ui->_editIncorrectActions->text ().trimmed ().toInt ();
     project->_reference_number_of_error = ui->_editReferenceNumberOfErrors->text ().trimmed ().toInt ();
     project->_need_test_case = ui->_editNeedTestCase->text ().trimmed ().toInt ();
+    project->_total_operation_time = ui->_editNeedTestCase->text ().trimmed ().toInt ();
 
     project->writeSettings ();
 }

@@ -111,6 +111,47 @@ public:
     //--Все ошибки
     int metric8B (const QString &prjid);
 
+    //----------------- Maturity metrics Внешние метрики завершенности
+
+    //----  Разрешенние отказов
+
+    //--Критические ошибки
+    int metric9A (const QString &prjid);
+
+    //--Все ошибки
+    int metric9B (const QString &prjid);
+
+    //----  Тестовое покрытие
+
+    //--Запущенные тесты
+    int metric10A (const QString &prjid);
+
+
+
+    //---- Завершенность испытаний
+
+    //---- Прошедшие тест-кейсы
+    int metric11A (const QString &prjid);
+
+
+
+    //---- Коэффициент отказов
+
+    //---- Прошедшие для проверки исключений немедленные и срочные тест-кейсы
+    int metric12A (const QString &prjid);
+
+    //---- Запущенные для проверки исключений тест-кейсы
+    int metric12B (const QString &prjid);
+
+
+    //---- Предотвращение некорректных действий
+
+    //---- Прошедшие для проверки некорректных действий немедленные и срочные тест-кейсы
+    int metric13A (const QString &prjid);
+
+    //---- Запущенные для проверки некорректных действий тест-кейсы
+    int metric13B (const QString &prjid);
+
 protected:
 
     RedmineInstance ();
