@@ -130,7 +130,7 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
             int A = RedmineInstance::instance ().metric5B (prjid);
 
             QPieSlice *slice = series->slices ().at (0);
-            slice->setLabel (trUtf8 ("Разработанные тест-кейсы - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Разработанные тест-кейсы - %1</b></font>").arg (QString::number (A)));
             slice->setValue (A);
             slice->setColor(QColor(135, 206, 250));
 
@@ -141,7 +141,7 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не разработанные тест-кейсы - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Не разработанные тест-кейсы - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(30, 144, 255));
             slice->setBorderColor (Qt::red);
@@ -151,7 +151,7 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Адекватность теста"));
+            chart->setTitle (trUtf8 ("<font size=6><b>Адекватность теста</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
