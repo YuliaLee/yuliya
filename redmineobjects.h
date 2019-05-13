@@ -22,7 +22,8 @@ struct RedmineTrackers
         Error = 1,
         Feature = 2,
         Support = 3,
-        Functional = 4
+        Functional = 4,
+        TestCase = 5
     };
 
     QString _id;
@@ -74,7 +75,6 @@ struct RedmineProject
 {
     RedmineProject ()
     {
-        //_code_lines = 0;
         _exceptions = 0;
         _incorrect_actions = 0;
         _reference_number_of_error = 0;
@@ -102,7 +102,6 @@ struct RedmineProject
         _reference_number_of_error = settings.value ("reference_number_of_error", "0").toInt ();
         _required_actions = settings.value ("required_actions", "0").toInt ();
         _need_test_case = settings.value ("need_test_case", "0").toInt ();
-        _created_test_case = settings.value ("created_test_case", "0").toInt ();
 
         settings.endGroup ();
     }
@@ -121,7 +120,7 @@ struct RedmineProject
         settings.setValue ("reference_number_of_error", QString::number (_reference_number_of_error));
         settings.setValue ("required_actions", QString::number (_required_actions));
         settings.setValue ("need_test_case", QString::number (_need_test_case));
-        settings.setValue ("created_test_case", QString::number (_created_test_case));
+        settings.setValue ("total_operation_time", QString::number (_total_operation_time));
 
         settings.endGroup ();
     }
@@ -144,13 +143,12 @@ struct RedmineProject
 
     QList<QSharedPointer<RedmineIssue>> _issues;
 
-    //int _code_lines;
-    int _exceptions;                    //!< Планируемое количество иключений
-    int _incorrect_actions;             //!< Планируемое количество некорректных действий
+    int _exceptions;                    //!< Требуемое количество иключений
+    int _incorrect_actions;             //!< Требуемое количество некорректных действий
     int _reference_number_of_error;     //!< Планируемое количество ошибок
     int _required_actions;
     int _need_test_case;                //!< Количество требуемых тест-кейсов
-    int _created_test_case;             //!< Подтверждённое кол-во тест-кейсов
+    int _total_operation_time;
 };
 
 struct RedmineIssueStatuses

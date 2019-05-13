@@ -26,7 +26,7 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             RedmineInstance::instance ().loadIssues (prjid) &&
             RedmineInstance::instance ().loadAttachments ())
     {
-        setWindowTitle (trUtf8 ("Resulting Charts of Internal Metrics"));
+        setWindowTitle (trUtf8 ("Результирующий график внутренних метрик"));
 
         QVBoxLayout *vl = new QVBoxLayout ();
         vl->setContentsMargins (4,4,4,4);
@@ -36,7 +36,7 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             QBarSeries *series = new QBarSeries ();
 
             QValueAxis *axisY = new QValueAxis ();
-            //axisY->setRange (0, 1);
+            axisY->setRange (0, 1);
             //axisY->setTickCount (20);
             //axisY->setMin (0);
             //axisY->setMax (1);
@@ -48,37 +48,38 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             //        lineseries->append (QPoint (1, 0));
             //        lineseries->append (QPoint (1, 1));
 
-            //-- Fault removal
+            //-- Fault removal - Устранение ошибок
+//            {
+//                int A = RedmineInstance::instance ().metric4A (prjid);
+//                int B = RedmineInstance::instance ().metric4B (prjid);
+//                float X = 0;
+//                if (B != 0)
+//                    X = (float)A/(float)B;
+//                else
+//                    X = 1;
+
+//                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Устранение ошибок - %1</b></font>").arg (QString::number (X, 'f', 2)));
+//                *set << X;
+//                series->append (set);
+//            }
+
+            //-- Test adequance - Адекватность теста
             {
-                int A = RedmineInstance::instance ().metric4A (prjid);
-                int B = RedmineInstance::instance ().metric4B (prjid);
+                QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+                int A = RedmineInstance::instance ().metric5B (prjid);
+                int B = project->_need_test_case;
                 float X = 0;
                 if (B != 0)
                     X = (float)A/(float)B;
                 else
-                    X = 1;
+                    X = 0;
 
-                QBarSet *set = new QBarSet (trUtf8 ("Fault removal %1").arg (QString::number (X, 'f', 2)));
+                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Адекватность теста  - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
 
-            //-- Test adequance
-            {
-                int A = RedmineInstance::instance ().metric5A (prjid);
-                int B = RedmineInstance::instance ().metric5B (prjid);
-                float X = 0;
-                if (B != 0)
-                    X = (float)A/(float)B;
-                else
-                    X = 1;
-
-                QBarSet *set = new QBarSet (trUtf8 ("Test adequance %1").arg (QString::number (X, 'f', 2)));
-                *set << X;
-                series->append (set);
-            }
-
-            //-- Failure avoidance
+            //-- Failure avoidance - Коэффициент отказов
             {
                 int A = RedmineInstance::instance ().metric2A (prjid);
                 int B = RedmineInstance::instance ().metric2B (prjid);
@@ -88,51 +89,28 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 else
                     X = 1;
 
-                QBarSet *set = new QBarSet (trUtf8 ("Failure avoidance %1").arg (QString::number (X, 'f', 2)));
+                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Коэффициент отказов - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
 
-            QChart *chart = new QChart ();
-            chart->addSeries (series);
-            //chart->addSeries (lineseries);
-            chart->addAxis (axisY, Qt::AlignLeft);
-            chart->setTitle (trUtf8 ("Resulting Charts of Internal Metrics"));
-            chart->setAnimationOptions (QChart::SeriesAnimations);
+//            //-- Fault detection - Обнаружение ошибок
 
-            chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignBottom);
+//            {
+//                int A = RedmineInstance::instance ().metric3A (prjid);
+//                int B = RedmineInstance::instance ().metric3B (prjid);
+//                float X = 0;
+//                if (B != 0)
+//                    X = (float)A/(float)B;
+//                else
+//                    X = 1;
 
-            QChartView *chartView = new QChartView (chart);
-            chartView->setRenderHint(QPainter::Antialiasing);
-            vl->addWidget (chartView);
-        }
+//                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Обнаружение ошибок - %1</b></font>").arg (QString::number (X, 'f', 2)));
+//                *set << X;
+//                series->append (set);
+//            }
 
-        //*******************************************
-
-        {
-            QBarSeries *series = new QBarSeries ();
-
-            QValueAxis *axisY = new QValueAxis ();
-            axisY->applyNiceNumbers ();
-            series->attachAxis (axisY);
-
-            //-- Fault detection
-            {
-                int A = RedmineInstance::instance ().metric3A (prjid);
-                int B = RedmineInstance::instance ().metric3B (prjid);
-                float X = 0;
-                if (B != 0)
-                    X = (float)A/(float)B;
-                else
-                    X = 1;
-
-                QBarSet *set = new QBarSet (trUtf8 ("Fault detection %1").arg (QString::number (X, 'f', 2)));
-                *set << X;
-                series->append (set);
-            }
-
-            //-- Incorrect operation avoidance
+            //-- Incorrect operation avoidance - Способность к предотвращению некорректных действий
             {
                 int A = RedmineInstance::instance ().metric1A (prjid);
                 int B = RedmineInstance::instance ().metric1B (prjid);
@@ -142,12 +120,12 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 else
                     X = 1;
 
-                QBarSet *set = new QBarSet (trUtf8 ("Incorrect operation avoidance %1").arg (QString::number (X, 'f', 2)));
+                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Предотвращение некорр. действий - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
 
-            //-- Restorability
+            //-- Restorability - Восстанавливаемость
             {
                 int A = RedmineInstance::instance ().metric6A (prjid);
                 int B = RedmineInstance::instance ().metric6B (prjid);
@@ -157,12 +135,12 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 else
                     X = 1;
 
-                QBarSet *set = new QBarSet (trUtf8 ("Restorability %1").arg (QString::number (X, 'f', 2)));
+                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Восстанавливаемость - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
 
-            //-- Reliability Compliance
+            //-- Reliability Compliance - Соответствие надежности
             {
                 int A = RedmineInstance::instance ().metric7A (prjid);
                 int B = RedmineInstance::instance ().metric7B (prjid);
@@ -172,7 +150,7 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 else
                     X = 1;
 
-                QBarSet *set = new QBarSet (trUtf8 ("Reliability Compliance %1").arg (QString::number (X, 'f', 2)));
+                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Соответствие надежности - %1</b></font>").arg (QString::number (X, 'f', 2)));
                 *set << X;
                 series->append (set);
             }
@@ -180,11 +158,10 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             QChart *chart = new QChart ();
             chart->addSeries (series);
             chart->addAxis (axisY, Qt::AlignLeft);
-            chart->setTitle (trUtf8 ("Resulting Charts of Internal Metrics"));
+            chart->setTitle (trUtf8 ("<font size=18><b>Результирующий график внутренних метрик</b></font>"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
-
             chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignBottom);
+            chart->legend ()->setAlignment (Qt::AlignRight);
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);

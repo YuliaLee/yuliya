@@ -24,7 +24,8 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
     : QWidget (parent)
 {
     if (RedmineInstance::instance ().projects ().contains (prjid) &&
-            RedmineInstance::instance ().loadIssues (prjid))
+            RedmineInstance::instance ().loadIssues (prjid) &&
+            RedmineInstance::instance ().loadAttachments ())
     {
         setWindowTitle (trUtf8 ("Внутренние метрики устойчивости к ошибкам"));
 
@@ -32,30 +33,48 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
         vl->setContentsMargins (4,4,4,4);
         setLayout (vl);
 
+        QHBoxLayout *hl = new QHBoxLayout ();
+        hl->setContentsMargins (4,4,4,4);
+        vl->addLayout (hl);
+
         //-- Способность к предотвращению некоррестных действий
         {
+            QPieSeries *series = new QPieSeries();
+
+            //-------------- Количество предотвращенных некорректных действий
+            series->append (trUtf8 ("Предотвращенные некорректные действия"), 1);
+
             int A = RedmineInstance::instance ().metric1A (prjid);
-            QBarSet *set0 = new QBarSet (trUtf8 ("Количество разработанных задач для предотвращения некорректных действий - %1").arg (QString::number (A)));
-            *set0 << A;
+
+            QPieSlice *slice = series->slices ().at (0);
+            slice->setValue (A);
+            slice->setColor(QColor(255, 160, 122));
+            slice->setLabel (trUtf8 (("Предотвращенные некорректные действия - %1")).arg (QString::number (A)));
+
+            //-------------- Количество Не разработанных задач для предотвращения некорректных действий
+            series->append (trUtf8 ("Не предотвращенные некорректные действия"), 2);
 
             int B = RedmineInstance::instance ().metric1B (prjid);
-            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое количество некорректных действий - %1").arg (QString::number (B)));
-            *set1 << B;
 
-            QBarSeries *series = new QBarSeries ();
-            series->append (set0);
-            series->append (set1);
+            slice = series->slices ().at (1);
+            slice->setValue (B - A);
+            slice->setLabel (trUtf8 ("Не предотвращенные некорректные действия - %1").arg (QString::number (B - A)));
+            slice->setExploded (true);
+            slice->setColor(QColor(255, 140, 0));
+            slice->setBorderColor (Qt::red);
+            slice->setBorderWidth (3);
+
+            //--------------
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Способность к предотвращению некоррестных действий"));
-            chart->setAnimationOptions (QChart::SeriesAnimations);
-
+            chart->setTitle (trUtf8 ("Предотвращение некорректных действий"));
+            chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignBottom);
 
-            QChartView *chartView = new QChartView(chart);
-            chartView->setRenderHint(QPainter::Antialiasing);
+            QChartView *chartView = new QChartView (chart);
+            chartView->setRenderHint (QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
 
@@ -64,25 +83,27 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             QPieSeries *series = new QPieSeries ();
 
             //-------------- Число предотвращённых исключений
-            series->append (trUtf8 ("Число предотвращённых исключений"), 1);
+            series->append (trUtf8 ("Предотвращённые исключения"), 1);
 
             int A = RedmineInstance::instance ().metric2A (prjid);
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
-            slice->setLabel (trUtf8 ("Число предотвращённых исключений - %1").arg (QString::number (A)));
+            slice->setColor(QColor(124, 252, 0));
+            slice->setLabel (trUtf8 ("Предотвращённые исключения - %1").arg (QString::number (A)));
 
             //-------------- Число НЕ предотвращённых исключений
-            series->append (trUtf8 ("Число НЕ предотвращённых исключений"), 2);
+            series->append (trUtf8 ("Не предотвращённые исключения"), 2);
 
             int B = RedmineInstance::instance ().metric2B (prjid);
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Число НЕ предотвращённых исключений - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("Не предотвращённые исключения - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
+            slice->setColor(QColor(154, 205, 50));
             slice->setBorderColor (Qt::red);
-            slice->setBorderWidth (4);
+            slice->setBorderWidth (3);
 
             //--------------
 
@@ -91,7 +112,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             chart->setTitle (trUtf8 ("Коэффициент отказов"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignRight);
+            chart->legend ()->setAlignment (Qt::AlignBottom);
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint (QPainter::Antialiasing);

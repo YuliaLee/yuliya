@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
-    <height>168</height>
+    <width>513</width>
+    <height>167</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -32,55 +32,62 @@
    <property name="bottomMargin">
     <number>4</number>
    </property>
-   <item row="0" column="0">
+   <item row="1" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Разработанное количество иключений:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="_editExceptions"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Разработанное количество некорректных действий:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="_editIncorrectActions"/>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Количество тест-кейсов в тест-плане:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="_editNeedTestCase"/>
+   </item>
+   <item row="3" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Планируемое количество ошибок:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="3" column="1">
     <widget class="QLineEdit" name="_editReferenceNumberOfErrors"/>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Планируемое количество иключений:</string>
+      <string>Общее время работы программы (в часах):</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="_editExceptions"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Планируемое количество некорректных действий:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="_editIncorrectActions"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Количество требуемых тест-кейсов:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="_editNeedTestCase"/>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_7">
-     <property name="text">
-      <string>Подтверждённое кол-во тест-кейсов:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="_editCreatedTestCase"/>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="_editTotalOperationTime"/>
    </item>
   </layout>
  </widget>

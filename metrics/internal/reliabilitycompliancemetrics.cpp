@@ -39,69 +39,30 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
             series->append (trUtf8 ("A"), 1);
 
             int A = RedmineInstance::instance ().metric7A (prjid);
-//            int A = 0;
-//            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
-//            for (int i = 0; i < project->_issues.size (); ++i)
-//            {
-//                //-- ищем все ошибки
-//                if (project->_issues[i]->_tracker_id == "4" &&          //функционал
-//                        project->_issues[i]->_status_id == "3")         //статус - решена
-//                {
-//                    QList<QSharedPointer<RedmineAttachments> > attachments
-//                            = RedmineInstance::instance ().attachments ().values ();
-
-//                    for (int j = 0; j < attachments.size (); ++j)
-//                    {
-//                        if (attachments[j]->_container_type == "Issue" &&
-//                                attachments[j]->_container_id == project->_issues[i]->_id &&
-//                                (attachments[j]->_filename.toLower ().contains (trUtf8 ("надёжност")) ||
-//                                 attachments[j]->_filename.toLower ().contains (trUtf8 ("надежност"))))
-//                            A++;
-//                    }
-//                }
-//            }
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
-            slice->setLabel (trUtf8 ("A - %1").arg (QString::number (A)));
+            slice->setColor(QColor(240, 128, 128));
+            slice->setLabel (trUtf8 ("Соответствующие надежности задачи - %1").arg (QString::number (A)));
 
             //-------------- Число не решённых ошибок
             series->append (trUtf8 ("B"), 2);
 
             int B = RedmineInstance::instance ().metric7B (prjid);
-//            int B = 0;
-//            project = RedmineInstance::instance ().projects ()[prjid];
-//            for (int i = 0; i < project->_issues.size (); ++i)
-//            {
-//                //-- ищем все ошибки
-//                if (project->_issues[i]->_tracker_id == "4")          //функционал
-//                {
-//                    QList<QSharedPointer<RedmineAttachments> > attachments
-//                            = RedmineInstance::instance ().attachments ().values ();
-
-//                    for (int j = 0; j < attachments.size (); ++j)
-//                    {
-//                        if (attachments[j]->_container_type == "Issue" &&
-//                                attachments[j]->_container_id == project->_issues[i]->_id &&
-//                                (attachments[j]->_filename.toLower ().contains (trUtf8 ("надёжност")) ||
-//                                 attachments[j]->_filename.toLower ().contains (trUtf8 ("надежност"))))
-//                            B++;
-//                    }
-//                }
-//            }
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("B - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("Не соответствующие надежности задачи - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
+            slice->setColor(QColor(178, 34, 34));
             slice->setBorderColor (Qt::red);
-            slice->setBorderWidth (4);
+            slice->setBorderWidth (3);
 
             //--------------
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Внутренняя метрика соответсвия надёжности"));
+            chart->setTitle (trUtf8 ("Соответсвие надёжности"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
