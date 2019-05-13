@@ -16,8 +16,6 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_USE_NAMESPACE
-
 RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *parent)
     : QWidget (parent)
 {
@@ -33,7 +31,7 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
         //-- Восстанавливаемость
         {
-            QPieSeries *series = new QPieSeries();
+            QPieSeries *series = new QPieSeries ();
 
             //--------------Число предотвращённых исключений
             series->append (trUtf8 ("Выполненные требования к восстанавл-ти"), 1);
@@ -43,34 +41,61 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(147, 112, 219));
-            slice->setLabel (trUtf8 (("Выполненные требования к восстанавл-ти- %1")).arg (QString::number (A)));
+            slice->setLabel (trUtf8 (("Выполненные требования к восстанавливаемости - %1")).arg (QString::number (A)));
+
+            {
+                QFontMetrics fm (slice->labelFont ());
+                if (_maxw < fm.width (trUtf8 (("Выполненные требования к восстанавливаемости - 666"))))
+                    _maxw = fm.width (trUtf8 (("Выполненные требования к восстанавливаемости - 666")));
+                _maxh += fm.height ();
+            }
 
             //-------------- Число Не предотвращённых исключений
-            series->append (trUtf8 ("Не выполненные требования к восстанавл-ти"), 2);
+            series->append (trUtf8 ("Не выполненные требования к восстанавливаемости"), 2);
 
             int B = RedmineInstance::instance ().metric6B (prjid);
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не выполненные требования к восстанавл-ти- %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("Не выполненные требования к восстанавливаемости - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
-            slice->setColor(QColor(72, 61, 139));
+            slice->setColor (QColor(72, 61, 139));
             slice->setBorderColor (Qt::red);
-            slice->setBorderWidth (3);
+            slice->setBorderWidth (2);
+
+            {
+                QFontMetrics fm (slice->labelFont ());
+                if (_maxw < fm.width (trUtf8 ("Не выполненные требования к восстанавливаемости - 666")))
+                    _maxw = fm.width (trUtf8 ("Не выполненные требования к восстанавливаемости - 666"));
+                _maxh += fm.height ();
+            }
 
             //--------------
 
-            QChart *chart = new QChart ();
-            chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Восстанавливаемость"));
-            chart->setAnimationOptions (QChart::AllAnimations);
-            chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignRight);
+            _chart = new QChart ();
+            _chart->addSeries (series);
+            _chart->setTitle (trUtf8 ("Восстанавливаемость"));
+            _chart->setAnimationOptions (QChart::AllAnimations);
+            _chart->legend ()->setVisible (true);
+            _chart->legend ()->setAlignment (Qt::AlignRight);
 
-            QChartView *chartView = new QChartView (chart);
+            _chart->legend ()->detachFromChart ();
+            _chart->legend ()->setBackgroundVisible (true);
+            //_chart->legend ()->setGeometry (QRect (20, 20, maxw + 30, maxh + 30));
+            _chart->legend ()->setAlignment (Qt::AlignLeft);
+
+            QChartView *chartView = new QChartView (_chart);
             chartView->setRenderHint (QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
     }
+}
+
+void RecoverabilityMetrics::resizeEvent (QResizeEvent *event)
+{
+    if (!_chart)
+        return;
+
+    _chart->legend ()->setGeometry (20, geometry ().bottom () - _maxh - 80, _maxw + 30, _maxh + 30);
 }
 
