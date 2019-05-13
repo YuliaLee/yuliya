@@ -129,9 +129,14 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
         vl->setContentsMargins (4,4,4,4);
         setLayout (vl);
 
-        QHBoxLayout *hl = new QHBoxLayout ();
-        hl->setContentsMargins (4,4,4,4);
-        vl->addLayout (hl);
+        QHBoxLayout *hl0 = new QHBoxLayout ();
+        hl0->setContentsMargins (4,4,4,4);
+        vl->addLayout (hl0);
+
+        QHBoxLayout *hl1 = new QHBoxLayout ();
+        hl1->setContentsMargins (4,4,4,4);
+        vl->addLayout (hl1);
+
 
         //-- Обнаружение ошибок
         {
@@ -161,7 +166,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);
-            hl->addWidget (chartView);
+            hl0->addWidget (chartView);
         }
 
         //-- Устранение ошибок
@@ -202,7 +207,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint (QPainter::Antialiasing);
-            hl->addWidget (chartView);
+            hl0->addWidget (chartView);
         }
 
         //-- Разрешение отказов
@@ -243,7 +248,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint (QPainter::Antialiasing);
-            vl->addWidget (chartView);
+            hl1->addWidget (chartView);
         }
 
         {
@@ -284,7 +289,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint (QPainter::Antialiasing);
-            vl->addWidget (chartView);
+            hl1->addWidget (chartView);
         }
 
         //----------------Завершенность испытаний
