@@ -41,7 +41,7 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(147, 112, 219));
-            slice->setLabel (trUtf8 (("Выполненные требования к восстанавливаемости - %1")).arg (QString::number (A)));
+            slice->setLabel (trUtf8 (("<font size=4><b>Выполненные требования к восстанавливаемости - %1</b></font>")).arg (QString::number (A)));
 
             {
                 QFontMetrics fm (slice->labelFont ());
@@ -57,7 +57,7 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не выполненные требования к восстанавливаемости - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Не выполненные требования к восстанавливаемости - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor (QColor(72, 61, 139));
             slice->setBorderColor (Qt::red);
@@ -74,7 +74,7 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
             _chart = new QChart ();
             _chart->addSeries (series);
-            _chart->setTitle (trUtf8 ("Восстанавливаемость"));
+            _chart->setTitle (trUtf8 ("<font size=6><b>Восстанавливаемость</b></font>"));
             _chart->setAnimationOptions (QChart::AllAnimations);
             _chart->legend ()->setVisible (true);
             _chart->legend ()->setAlignment (Qt::AlignRight);

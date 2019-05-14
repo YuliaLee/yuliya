@@ -45,7 +45,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(0, 139, 139));
-            slice->setLabel (trUtf8 ("Аварийные отказы - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Аварийные отказы - %1</b></font>").arg (QString::number (A)));
             slice->setBorderColor (Qt::red);
             slice->setBorderWidth (3);
 
@@ -55,7 +55,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не аварийные отказы - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Не аварийные отказы - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(102, 205, 170));
 
@@ -63,7 +63,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Коэффициент аварийных отказов"));
+            chart->setTitle (trUtf8 ("<font size=6><b>Коэффициент аварийных отказов</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
@@ -82,14 +82,14 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(218, 112, 214));
-            slice->setLabel (trUtf8 ("Пройденные тест-кейсы исключений - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Пройденные тест-кейсы исключений - %1</b></font>").arg (QString::number (A)));
 
             series->append (trUtf8 ("Не пройденные тест-кейсы исключений"), 2);
             int B = RedmineInstance::instance ().metric12B (prjid);
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не пройденные тест-кейсы исключений - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Не пройденные тест-кейсы исключений - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(128,0,128));
             slice->setBorderColor (Qt::red);
@@ -99,7 +99,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Коэффициент отказов"));
+            chart->setTitle (trUtf8 ("<font size=6><b>Коэффициент отказов</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
@@ -118,14 +118,14 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(135, 206, 235));
-            slice->setLabel (trUtf8 ("Пройденные тест-кейсы некорректных действий - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Пройденные тест-кейсы некорректных действий - %1</b></font>").arg (QString::number (A)));
 
             series->append (trUtf8 ("Не пройденные проверку некорректных действий тест-кейсы"), 2);
             int B = RedmineInstance::instance ().metric13B (prjid);
 
             slice = series->slices ().at (1);
             slice->setValue (B-A);
-            slice->setLabel (trUtf8 ("Не пройденные тест-кейсы некорректных действий - %1").arg (QString::number (B-A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Не пройденные тест-кейсы некорректных действий - %1</b></font>").arg (QString::number (B-A)));
             slice->setExploded (true);
             slice->setColor(QColor(0,0,128));
             slice->setBorderColor (Qt::red);
@@ -135,7 +135,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Предотвращение некорректных действий"));
+            chart->setTitle (trUtf8 ("<font size=6><b>Предотвращение некорректных действий</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);

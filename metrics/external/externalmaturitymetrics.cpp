@@ -49,7 +49,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Оцениваемая плотность скрытых ошибок"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Оцениваемая плотность скрытых ошибок</b></font>"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
@@ -74,7 +74,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Плотность отказов по отношению к тест-кейсам"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Плотность отказов по отношению к тест-кейсам</b></font>"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
@@ -99,7 +99,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Плотность ошибок"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Плотность ошибок</b></font>"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
@@ -142,13 +142,13 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
         {
             int A = RedmineInstance::instance ().metric3A (prjid);
 
-            QBarSet *set0 = new QBarSet (trUtf8 ("Число обнаруженных ошибок - %1").arg (QString::number (A)));
+            QBarSet *set0 = new QBarSet (trUtf8 ("<font size=3><b>Число обнаруженных ошибок - %1</b></font>").arg (QString::number (A)));
             *set0 << A;
             set0->setColor(QColor(255, 127, 80));
 
             int B = RedmineInstance::instance ().metric3B (prjid);
             //            int B = project->_reference_number_of_error;
-            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое число ошибок - %1").arg (QString::number (B)));
+            QBarSet *set1 = new QBarSet (trUtf8 ("<font size=3><b>Планируемое число ошибок - %1</b></font>").arg (QString::number (B)));
             *set1 << B;
             set1->setColor(QColor(255,69,0));
 
@@ -158,7 +158,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Обнаружение ошибок"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Обнаружение ошибок</b></font>"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
 
             chart->legend ()->setVisible (true);
@@ -181,7 +181,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(144, 238, 144));
-            slice->setLabel (trUtf8 ("Решенные ошибки - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Решенные ошибки - %1</b></font>").arg (QString::number (A)));
 
             //-------------- Число не решённых ошибок
             series->append (trUtf8 ("Число не решённых ошибок"), 2);
@@ -190,7 +190,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не решённые ошибки - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Не решённые ошибки - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(0, 100, 0));
             slice->setBorderColor (Qt::red);
@@ -200,7 +200,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Устранение ошибок"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Устранение ошибок</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
@@ -222,7 +222,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(233, 150, 122));
-            slice->setLabel (trUtf8 ("Разрешенные отказы - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Разрешенные отказы - %1</b></font>").arg (QString::number (A)));
 
             //-------------- Разрешенные отказы
             series->append (trUtf8 ("Не разрешенные отказы"), 2);
@@ -231,7 +231,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не разрешенные отказы - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Не разрешенные отказы - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(128, 0, 0));
             slice->setBorderColor (Qt::red);
@@ -241,7 +241,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Разрешение отказов"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Разрешение отказов</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
@@ -263,7 +263,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(255, 228, 181));
-            slice->setLabel (trUtf8 ("Запущенные тест-кейсы- %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Запущенные тест-кейсы - %1</b></font>").arg (QString::number (A)));
 
             //-------------- Не запущенные тест кейсы
             series->append (trUtf8 ("Не запущенные тест-кейсы"), 2);
@@ -272,8 +272,8 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не запущенные тест-кейсы - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
+            slice->setLabel (trUtf8 ("<font size=3><b>Не запущенные тест-кейсы - %1</b></font>").arg (QString::number (B - A)));
             slice->setColor(QColor(255, 215, 0));
             slice->setBorderColor (Qt::red);
             slice->setBorderWidth (3);
@@ -282,7 +282,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Тестовое покрытие"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Тестовое покрытие</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
@@ -304,7 +304,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(255, 182, 193));
-            slice->setLabel (trUtf8 ("Прошедшие тест-кейсы- %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Прошедшие тест-кейсы - %1</b></font>").arg (QString::number (A)));
 
             //-------------- Не прошедшие тест кейсы
             series->append (trUtf8 ("Не прошедшие тест-кейсы"), 2);
@@ -313,7 +313,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не прошедшие тест-кейсы - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=3><b>Не прошедшие тест-кейсы - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(199, 21, 133));
             slice->setBorderColor (Qt::red);
@@ -323,7 +323,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Завершенность испытаний"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Завершенность испытаний</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);

@@ -43,7 +43,7 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
             slice->setColor(QColor(240, 128, 128));
-            slice->setLabel (trUtf8 ("Соответствующие надежности задачи - %1").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Соответствующие надежности задачи - %1</b></font>").arg (QString::number (A)));
 
             //-------------- Число не решённых ошибок
             series->append (trUtf8 ("B"), 2);
@@ -52,7 +52,7 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("Не соответствующие надежности задачи - %1").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("<font size=4><b>Не соответствующие надежности задачи - %1</b></font>").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(178, 34, 34));
             slice->setBorderColor (Qt::red);
@@ -62,7 +62,7 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("Соответсвие надёжности"));
+            chart->setTitle (trUtf8 ("<font size=6><b>Соответсвие надёжности</b></font>"));
             chart->setAnimationOptions (QChart::AllAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
