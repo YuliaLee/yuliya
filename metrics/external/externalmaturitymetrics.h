@@ -13,6 +13,9 @@ public:
     explicit MaturityMetricsWidget1 (const QString &prjid, QWidget *parent = nullptr);
 };
 
+//!
+//! \brief Внешние метрики завершённости
+//!
 class MaturityMetricsWidget2 : public QWidget
 {
     Q_OBJECT

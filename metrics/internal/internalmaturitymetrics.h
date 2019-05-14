@@ -6,6 +6,10 @@
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
 
+#include <QtCharts/QChart>
+
+QT_CHARTS_USE_NAMESPACE
+
 namespace Internal
 {
 
@@ -19,6 +23,13 @@ class MaturityMetricsWidget : public QWidget
 public:
     explicit MaturityMetricsWidget (const QString &prjid, QWidget *parent = nullptr);
     virtual ~MaturityMetricsWidget ();
+
+protected:
+    void resizeEvent (QResizeEvent *event);
+
+    int _maxw = 0;
+    int _maxh = 0;
+    QChart *_chart = nullptr;
 };
 
 }

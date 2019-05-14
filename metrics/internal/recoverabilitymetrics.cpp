@@ -33,15 +33,15 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
         {
             QPieSeries *series = new QPieSeries ();
 
-            //--------------Число предотвращённых исключений
+            //-------------- Число предотвращённых исключений
             series->append (trUtf8 ("Выполненные требования к восстанавл-ти"), 1);
 
             int A = RedmineInstance::instance ().metric6A (prjid);
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
-            slice->setColor(QColor(147, 112, 219));
-            slice->setLabel (trUtf8 (("<font size=4><b>Выполненные требования к восстанавливаемости - %1</b></font>")).arg (QString::number (A)));
+            slice->setColor (QColor (147, 112, 219));
+            slice->setLabel (trUtf8 (("Выполненные требования к восстанавливаемости - %1")).arg (QString::number (A)));
 
             {
                 QFontMetrics fm (slice->labelFont ());
@@ -57,11 +57,11 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("<font size=4><b>Не выполненные требования к восстанавливаемости - %1</b></font>").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("Не выполненные требования к восстанавливаемости - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
-            slice->setColor (QColor(72, 61, 139));
+            slice->setColor (QColor (72, 61, 139));
             slice->setBorderColor (Qt::red);
-            slice->setBorderWidth (2);
+            slice->setBorderWidth (3);
 
             {
                 QFontMetrics fm (slice->labelFont ());
@@ -83,6 +83,10 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
             _chart->legend ()->setBackgroundVisible (true);
             _chart->legend ()->setAlignment (Qt::AlignLeft);
 
+            QFont f = _chart->legend ()->font ();
+            f.setPixelSize (14);
+            _chart->legend ()->setFont (f);
+
             QChartView *chartView = new QChartView (_chart);
             chartView->setRenderHint (QPainter::Antialiasing);
             vl->addWidget (chartView);
@@ -92,9 +96,11 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
 void RecoverabilityMetrics::resizeEvent (QResizeEvent *event)
 {
+    (void)event;
+
     if (!_chart)
         return;
 
-    _chart->legend ()->setGeometry (20, geometry ().bottom () - _maxh - 80, _maxw + 30, _maxh + 30);
+    _chart->legend ()->setGeometry (20, geometry ().bottom () - _maxh - 80, _maxw + 50, _maxh + 30);
 }
 

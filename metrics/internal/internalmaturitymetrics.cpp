@@ -16,8 +16,6 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_USE_NAMESPACE
-
 using namespace Internal;
 
 MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *parent)
@@ -36,89 +34,6 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
         hl->setContentsMargins (4,4,4,4);
         vl->addLayout (hl);
 
-//        //-- Обнаружение ошибок
-//        {
-//            int A = RedmineInstance::instance ().metric3A (prjid);
-//         }
-//            QBarSet *set0 = new QBarSet (trUtf8 ("Число обнаруженных ошибок - %1").arg (QString::number (A)));
-//            *set0 << A;
-
-//            int B = RedmineInstance::instance ().metric3B (prjid);
-//            //            int B = project->_reference_number_of_error;
-//            QBarSet *set1 = new QBarSet (trUtf8 ("Планируемое число ошибок - %1").arg (QString::number (B)));
-//            *set1 << B;
-
-//            QBarSeries *series = new QBarSeries ();
-//            series->append (set0);
-//            series->append (set1);
-
-//            QChart *chart = new QChart ();
-//            chart->addSeries (series);
-//            chart->setTitle (trUtf8 ("Обнаружение ошибок"));
-//            chart->setAnimationOptions (QChart::SeriesAnimations);
-
-//            chart->legend ()->setVisible (true);
-//            chart->legend ()->setAlignment (Qt::AlignBottom);
-
-//            QChartView *chartView = new QChartView (chart);
-//            chartView->setRenderHint(QPainter::Antialiasing);
-//            hl->addWidget (chartView);
-//        }
-
-//        //-- Устранение ошибок
-//        {
-//            QPieSeries *series = new QPieSeries();
-
-//            //-------------- Число решённых ошибок
-//            series->append (trUtf8 ("Число решённых ошибок"), 1);
-
-//            int A = RedmineInstance::instance ().metric4A (prjid);
-//            //            int A = 0;
-//            //            QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
-//            //            for (int i = 0; i < project->_issues.size (); ++i)
-//            //            {
-//            //                //-- ищем закрытые ошибки
-//            //                if (project->_issues[i]->_tracker_id == "1" &&
-//            //                        project->_issues[i]->_status_id == "3")
-//            //                    A++;
-//            //            }
-//            QPieSlice *slice = series->slices ().at (0);
-//            slice->setValue (A);
-//            slice->setLabel (trUtf8 ("Число решённых ошибок - %1").arg (QString::number (A)));
-
-//            //-------------- Число не решённых ошибок
-//            series->append (trUtf8 ("Число не решённых ошибок"), 2);
-
-//            int B = RedmineInstance::instance ().metric4B (prjid);
-//            //            int B = 0;
-//            //            for (int i = 0; i < project->_issues.size (); ++i)
-//            //            {
-//            //                //-- ищем все ошибки
-//            //                if (project->_issues[i]->_tracker_id == "1")
-//            //                    B++;
-//            //            }
-
-//            slice = series->slices ().at (1);
-//            slice->setValue (B - A);
-//            slice->setLabel (trUtf8 ("Число не решённых ошибок - %1").arg (QString::number (B - A)));
-//            slice->setExploded (true);
-//            slice->setBorderColor (Qt::red);
-//            slice->setBorderWidth (4);
-
-//            //--------------
-
-//            QChart *chart = new QChart ();
-//            chart->addSeries (series);
-//            chart->setTitle (trUtf8 ("Устранение ошибок"));
-//            chart->setAnimationOptions (QChart::AllAnimations);
-//            chart->legend ()->setVisible (true);
-//            chart->legend ()->setAlignment (Qt::AlignRight);
-
-//            QChartView *chartView = new QChartView (chart);
-//            chartView->setRenderHint (QPainter::Antialiasing);
-//            hl->addWidget (chartView);
-//        }
-
         //-- Адекватность теста
         {
             QPieSeries *series = new QPieSeries();
@@ -130,9 +45,16 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
             int A = RedmineInstance::instance ().metric5B (prjid);
 
             QPieSlice *slice = series->slices ().at (0);
-            slice->setLabel (trUtf8 ("<font size=4><b>Разработанные тест-кейсы - %1</b></font>").arg (QString::number (A)));
+            slice->setLabel (trUtf8 ("Разработанные тест-кейсы - %1").arg (QString::number (A)));
             slice->setValue (A);
-            slice->setColor(QColor(135, 206, 250));
+            slice->setColor (QColor (135, 206, 250));
+
+            {
+                QFontMetrics fm (slice->labelFont ());
+                if (_maxw < fm.width (trUtf8 (("Разработанные тест-кейсы - 666"))))
+                    _maxw = fm.width (trUtf8 (("Разработанные тест-кейсы - 666")));
+                _maxh += fm.height ();
+            }
 
             //-------------- Не разработанное кол-во тест-кейсов
             series->append (trUtf8 ("Не разработанные тест-кейсы:"), 2);
@@ -141,22 +63,33 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("<font size=4><b>Не разработанные тест-кейсы - %1</b></font>").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("Не разработанные тест-кейсы - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(30, 144, 255));
             slice->setBorderColor (Qt::red);
             slice->setBorderWidth (3);
 
+            {
+                QFontMetrics fm (slice->labelFont ());
+                if (_maxw < fm.width (trUtf8 (("Не разработанные тест-кейсы - 666"))))
+                    _maxw = fm.width (trUtf8 (("Не разработанные тест-кейсы - 666")));
+                _maxh += fm.height ();
+            }
+
             //--------------
 
-            QChart *chart = new QChart ();
-            chart->addSeries (series);
-            chart->setTitle (trUtf8 ("<font size=6><b>Адекватность теста</b></font>"));
-            chart->setAnimationOptions (QChart::AllAnimations);
-            chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignRight);
+            _chart = new QChart ();
+            _chart->addSeries (series);
+            _chart->setTitle (trUtf8 ("<font size=6><b>Адекватность теста</b></font>"));
+            _chart->setAnimationOptions (QChart::AllAnimations);
+            _chart->legend ()->setVisible (true);
+            _chart->legend ()->setAlignment (Qt::AlignRight);
 
-            QChartView *chartView = new QChartView (chart);
+            _chart->legend ()->detachFromChart ();
+            _chart->legend ()->setBackgroundVisible (true);
+            _chart->legend ()->setAlignment (Qt::AlignLeft);
+
+            QChartView *chartView = new QChartView (_chart);
             chartView->setRenderHint (QPainter::Antialiasing);
 
             vl->addWidget (chartView);
@@ -168,5 +101,14 @@ MaturityMetricsWidget::MaturityMetricsWidget (const QString &prjid, QWidget *par
 }
 
 MaturityMetricsWidget::~MaturityMetricsWidget ()
+{}
+
+void MaturityMetricsWidget::resizeEvent (QResizeEvent *event)
 {
+    (void)event;
+
+    if (!_chart)
+        return;
+
+    _chart->legend ()->setGeometry (20, geometry ().bottom () - _maxh - 80, _maxw + 50, _maxh + 30);
 }

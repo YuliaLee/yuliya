@@ -9,6 +9,9 @@ class ResultingInternalMetricsWidget : public QWidget
 
 public:
     explicit ResultingInternalMetricsWidget (const QString &prjid, QWidget *parent = nullptr);
+
+protected slots:
+    void slotMarkerClicked ();
 };
 
 #endif // RESULTINGINTERNALMETRICSWIDGET_H
