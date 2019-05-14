@@ -81,7 +81,6 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
 
             _chart->legend ()->detachFromChart ();
             _chart->legend ()->setBackgroundVisible (true);
-            //_chart->legend ()->setGeometry (QRect (20, 20, maxw + 30, maxh + 30));
             _chart->legend ()->setAlignment (Qt::AlignLeft);
 
             QChartView *chartView = new QChartView (_chart);
