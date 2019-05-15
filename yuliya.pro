@@ -4,6 +4,7 @@ HEADERS       = mainwindow.h \
                 mdichild.h \
     connectiondialog.h \
     projectpassportdialog.h \
+    projectreadinesswidget.h \
     projectswidget.h \
     redmineinstance.h \
     redmineobjects.h \
@@ -26,6 +27,7 @@ SOURCES       = main.cpp \
                 mdichild.cpp \
     connectiondialog.cpp \
     projectpassportdialog.cpp \
+    projectreadinesswidget.cpp \
     projectswidget.cpp \
     redmineinstance.cpp \
     redmineobjects.cpp \
@@ -60,4 +62,5 @@ RESOURCES     = yuliya.qrc
 FORMS += \
     connectiondialog.ui \
     projectpassportdialog.ui \
-    projectcodelinesdialog.ui
+    projectcodelinesdialog.ui \
+    projectreadinesswidget.ui

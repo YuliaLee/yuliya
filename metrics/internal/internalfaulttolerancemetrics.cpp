@@ -42,7 +42,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
-            slice->setColor(QColor(255, 160, 122));
+            slice->setColor (QColor (255, 160, 122));
             slice->setLabel (trUtf8 (("Предотвращенные некорректные действия - %1")).arg (QString::number (A)));
 
             {
@@ -61,7 +61,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             slice->setValue (B - A);
             slice->setLabel (trUtf8 ("Не предотвращенные некорректные действия - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
-            slice->setColor(QColor(255, 140, 0));
+            slice->setColor (QColor (255, 140, 0));
             slice->setBorderColor (Qt::red);
             slice->setBorderWidth (3);
 
@@ -160,16 +160,14 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
 }
 
 FaultToleranceMetrics::~FaultToleranceMetrics ()
-{
-}
+{}
 
 void FaultToleranceMetrics::resizeEvent (QResizeEvent *event)
 {
     (void)event;
 
-    if (!_chart0 || !_chart1)
-        return;
-
-    _chart0->legend ()->setGeometry (20, geometry ().bottom () - _maxh0 - 80, _maxw0 + 50, _maxh0 + 30);
-    _chart1->legend ()->setGeometry (20, geometry ().bottom () - _maxh1 - 80, _maxw1 + 50, _maxh1 + 30);
+    if (_chart0)
+        _chart0->legend ()->setGeometry (20, geometry ().bottom () - _maxh0 - 80, _maxw0 + 50, _maxh0 + 30);
+    if (_chart1)
+        _chart1->legend ()->setGeometry (20, geometry ().bottom () - _maxh1 - 80, _maxw1 + 50, _maxh1 + 30);
 }
