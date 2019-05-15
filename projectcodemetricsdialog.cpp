@@ -90,8 +90,11 @@ void ProjectCodeMetricsDialog::slotAdd ()
     }
 }
 
-void ProjectCodeMetricsDialog::slotDelete () {
+void ProjectCodeMetricsDialog::slotDelete ()
+{
     _model->removeRow (_index.row ());
+
+    writeSettings ();
 }
 
 void ProjectCodeMetricsDialog::writeSettings ()
@@ -135,4 +138,7 @@ void ProjectCodeMetricsDialog::readSettings ()
         _model->appendRow (row);
     }
     settings.endGroup ();
+
+    _view->resizeColumnsToContents ();
+    _view->horizontalHeader ()->setSectionResizeMode (QHeaderView::Stretch);
 }

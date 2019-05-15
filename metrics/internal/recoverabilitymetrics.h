@@ -14,9 +14,10 @@ class RecoverabilityMetrics : public QWidget
     Q_OBJECT
 public:
     explicit RecoverabilityMetrics (const QString &prjid, QWidget *parent = nullptr);
-    void resizeEvent (QResizeEvent *event);
 
 protected:
+    void resizeEvent (QResizeEvent *event);
+
     int _maxw = 0;
     int _maxh = 0;
     QChart *_chart = nullptr;

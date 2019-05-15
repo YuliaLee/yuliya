@@ -16,6 +16,7 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 #include <QtCharts/QLineSeries>
+#include <QtCharts/QLegendMarker>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -37,31 +38,8 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
 
             QValueAxis *axisY = new QValueAxis ();
             axisY->setRange (0, 1);
-            //axisY->setTickCount (20);
-            //axisY->setMin (0);
-            //axisY->setMax (1);
             axisY->applyNiceNumbers ();
             series->attachAxis (axisY);
-
-            //        QLineSeries *lineseries = new QLineSeries();
-            //        lineseries->setName ("max");
-            //        lineseries->append (QPoint (1, 0));
-            //        lineseries->append (QPoint (1, 1));
-
-            //-- Fault removal - Устранение ошибок
-//            {
-//                int A = RedmineInstance::instance ().metric4A (prjid);
-//                int B = RedmineInstance::instance ().metric4B (prjid);
-//                float X = 0;
-//                if (B != 0)
-//                    X = (float)A/(float)B;
-//                else
-//                    X = 1;
-
-//                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Устранение ошибок - %1</b></font>").arg (QString::number (X, 'f', 2)));
-//                *set << X;
-//                series->append (set);
-//            }
 
             //-- Test adequance - Адекватность теста
             {
@@ -93,22 +71,6 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
                 *set << X;
                 series->append (set);
             }
-
-//            //-- Fault detection - Обнаружение ошибок
-
-//            {
-//                int A = RedmineInstance::instance ().metric3A (prjid);
-//                int B = RedmineInstance::instance ().metric3B (prjid);
-//                float X = 0;
-//                if (B != 0)
-//                    X = (float)A/(float)B;
-//                else
-//                    X = 1;
-
-//                QBarSet *set = new QBarSet (trUtf8 ("<font size=5><b>Обнаружение ошибок - %1</b></font>").arg (QString::number (X, 'f', 2)));
-//                *set << X;
-//                series->append (set);
-//            }
 
             //-- Incorrect operation avoidance - Способность к предотвращению некорректных действий
             {
@@ -163,9 +125,22 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
 
+            QList <QLegendMarker*> markers = chart->legend ()->markers ();
+            for (int i = 0; i < markers.size (); ++i)
+                connect (markers[i], SIGNAL(clicked()), SLOT(slotMarkerClicked()));
+
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
     }
+}
+
+void ResultingInternalMetricsWidget::slotMarkerClicked ()
+{
+    QLegendMarker *marker = qobject_cast<QLegendMarker *> (sender ());
+    if (!marker)
+        return;
+
+//    qDebug () << marker->label ();
 }

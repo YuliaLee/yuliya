@@ -26,6 +26,7 @@
 #include "metrics/external/resultingexternalmetrics.h"
 #include "metrics/external/externalmaturitymetrics.h"
 #include "metrics/external/externalfaulttolerancemetrics.h"
+#include "projectreadinesswidget.h"
 
 #include "mainwindow.h"
 #include "mdichild.h"
@@ -77,11 +78,13 @@ void MainWindow::updateToolbar (const QString &prjid)
     {
         _externalToolBar->setEnabled (true);
         _internalToolBar->setEnabled (true);
+        _projectReadinessAct->setEnabled (true);
     }
     else
     {
         _externalToolBar->setEnabled (false);
         _internalToolBar->setEnabled (false);
+        _projectReadinessAct->setEnabled (false);
     }
 }
 
@@ -123,6 +126,10 @@ void MainWindow::createActions ()
     _externalFaultToleranceAct = new QAction (QIcon(":/images/chart.png"), trUtf8("Внешние метрики устойчивости к ошибкам"), this);
     _externalFaultToleranceAct->setToolTip (trUtf8( "Внешние метрики устойчивости к ошибкам"));
     connect (_externalFaultToleranceAct, SIGNAL(triggered()), this, SLOT(externalFaultToleranceMetrics()));
+
+    _projectReadinessAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Оценка степени"), this);
+    _projectReadinessAct->setToolTip (trUtf8 ("Оценка степени"));
+    connect (_projectReadinessAct, SIGNAL(triggered()), this, SLOT(projectReadiness()));
 }
 
 void MainWindow::createToolBars ()
@@ -140,6 +147,9 @@ void MainWindow::createToolBars ()
     _externalToolBar->addAction (_resultingExternalMetricsAct);
     _externalToolBar->addAction (_externalMaturityMetricsAct);
     _externalToolBar->addAction (_externalFaultToleranceAct);
+
+    _projectToolBar = addToolBar (trUtf8 ("Проект"));;
+    _projectToolBar->addAction (_projectReadinessAct);
 }
 
 void MainWindow::createStatusBar ()
@@ -276,6 +286,13 @@ void MainWindow::externalMaturityMetrics ()
         child->resize (800, 600);
         child->show ();
     }
+
+    {
+        External::MaturityMetricsWidget3 *w = new External::MaturityMetricsWidget3 (prjid, _mdiArea);
+        QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+        child->resize (800, 600);
+        child->show ();
+    }
 }
 
 void MainWindow::externalFaultToleranceMetrics()
@@ -285,6 +302,18 @@ void MainWindow::externalFaultToleranceMetrics()
         return;
 
     External::FaultToleranceMetrics *w = new External::FaultToleranceMetrics (prjid, _mdiArea);
+    QMdiSubWindow *child = _mdiArea->addSubWindow (w);
+    child->resize (800, 600);
+    child->show ();
+}
+
+void MainWindow::projectReadiness ()
+{
+    QString prjid = _projectsWidget->selectedProject ();
+    if (prjid.isEmpty ())
+        return;
+
+    ProjectReadinessWidget *w = new ProjectReadinessWidget (prjid, _mdiArea);
     QMdiSubWindow *child = _mdiArea->addSubWindow (w);
     child->resize (800, 600);
     child->show ();

@@ -43,6 +43,8 @@ private slots:
     void externalMaturityMetrics ();
     void externalFaultToleranceMetrics ();
 
+    void projectReadiness ();
+
 private:
     void createActions ();
     void createToolBars ();
@@ -63,6 +65,9 @@ private:
     QAction *_resultingExternalMetricsAct;
     QAction *_externalMaturityMetricsAct;
     QAction *_externalFaultToleranceAct;
+
+    QToolBar *_projectToolBar;
+    QAction *_projectReadinessAct;
 
     ProjectsWidget *_projectsWidget;
 };

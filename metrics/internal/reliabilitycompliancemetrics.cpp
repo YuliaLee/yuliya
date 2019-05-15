@@ -16,8 +16,6 @@
 #include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QValueAxis>
 
-QT_CHARTS_USE_NAMESPACE
-
 ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid, QWidget *parent)
     : QWidget (parent)
 {
@@ -42,8 +40,15 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
 
             QPieSlice *slice = series->slices ().at (0);
             slice->setValue (A);
-            slice->setColor(QColor(240, 128, 128));
-            slice->setLabel (trUtf8 ("<font size=4><b>Соответствующие надежности задачи - %1</b></font>").arg (QString::number (A)));
+            slice->setColor (QColor (240, 128, 128));
+            slice->setLabel (trUtf8 ("Соответствующие надежности задачи - %1").arg (QString::number (A)));
+
+            {
+                QFontMetrics fm (slice->labelFont ());
+                if (_maxw < fm.width (trUtf8 (("Соответствующие надежности задачи - 666"))))
+                    _maxw = fm.width (trUtf8 (("Соответствующие надежности задачи - 666")));
+                _maxh += fm.height ();
+            }
 
             //-------------- Число не решённых ошибок
             series->append (trUtf8 ("B"), 2);
@@ -52,24 +57,49 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
 
             slice = series->slices ().at (1);
             slice->setValue (B - A);
-            slice->setLabel (trUtf8 ("<font size=4><b>Не соответствующие надежности задачи - %1</b></font>").arg (QString::number (B - A)));
+            slice->setLabel (trUtf8 ("Не соответствующие надежности задачи - %1").arg (QString::number (B - A)));
             slice->setExploded (true);
             slice->setColor(QColor(178, 34, 34));
             slice->setBorderColor (Qt::red);
             slice->setBorderWidth (3);
 
+            {
+                QFontMetrics fm (slice->labelFont ());
+                if (_maxw < fm.width (trUtf8 (("Не соответствующие надежности задачи - 666"))))
+                    _maxw = fm.width (trUtf8 (("Не соответствующие надежности задачи - 666")));
+                _maxh += fm.height ();
+            }
+
             //--------------
 
-            QChart *chart = new QChart ();
-            chart->addSeries (series);
-            chart->setTitle (trUtf8 ("<font size=6><b>Соответсвие надёжности</b></font>"));
-            chart->setAnimationOptions (QChart::AllAnimations);
-            chart->legend ()->setVisible (true);
-            chart->legend ()->setAlignment (Qt::AlignRight);
+            _chart = new QChart ();
+            _chart->addSeries (series);
+            _chart->setTitle (trUtf8 ("<font size=6><b>Соответсвие надёжности</b></font>"));
+            _chart->setAnimationOptions (QChart::AllAnimations);
+            _chart->legend ()->setVisible (true);
+            _chart->legend ()->setAlignment (Qt::AlignRight);
 
-            QChartView *chartView = new QChartView (chart);
+            _chart->legend ()->detachFromChart ();
+            _chart->legend ()->setBackgroundVisible (true);
+            _chart->legend ()->setAlignment (Qt::AlignLeft);
+
+            QFont f = _chart->legend ()->font ();
+            f.setPixelSize (14);
+            _chart->legend ()->setFont (f);
+
+            QChartView *chartView = new QChartView (_chart);
             chartView->setRenderHint (QPainter::Antialiasing);
             vl->addWidget (chartView);
         }
     }
+}
+
+void ReliabilityComplianceMetrics::resizeEvent (QResizeEvent *event)
+{
+    (void)event;
+
+    if (!_chart)
+        return;
+
+    _chart->legend ()->setGeometry (20, geometry ().bottom () - _maxh - 80, _maxw + 50, _maxh + 30);
 }

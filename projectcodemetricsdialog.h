@@ -7,6 +7,9 @@
 #include <QTableView>
 #include <QStandardItemModel>
 
+//!
+//! \brief Настройки кода
+//!
 class ProjectCodeMetricsDialog : public QDialog
 {
     Q_OBJECT
