@@ -38,7 +38,6 @@ ProjectCodeLinesDialog::ProjectCodeLinesDialog (const QString &prjid, QWidget *p
 
         ui->_editTestCases->setText (QString::number (test_cases));
     }
-
 }
 
 ProjectCodeLinesDialog::~ProjectCodeLinesDialog ()
