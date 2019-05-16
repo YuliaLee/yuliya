@@ -37,9 +37,6 @@ ResultingExternalMetricsWidget::ResultingExternalMetricsWidget(const QString &pr
 
         QValueAxis *axisY = new QValueAxis ();
         axisY->setRange (0, 1);
-        //axisY->setTickCount (20);
-        //axisY->setMin (0);
-        //axisY->setMax (1);
         axisY->applyNiceNumbers ();
         series->attachAxis (axisY);
 

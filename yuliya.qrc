@@ -5,5 +5,7 @@
         <file>images/sum.png</file>
         <file>images/minus-button.png</file>
         <file>images/plus-button.png</file>
+        <file>images/minus.png</file>
+        <file>images/plus.png</file>
     </qresource>
 </RCC>
