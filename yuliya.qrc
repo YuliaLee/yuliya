@@ -7,5 +7,6 @@
         <file>images/plus-button.png</file>
         <file>images/minus.png</file>
         <file>images/plus.png</file>
+        <file>images/table-heatmap.png</file>
     </qresource>
 </RCC>

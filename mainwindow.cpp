@@ -127,7 +127,7 @@ void MainWindow::createActions ()
     _externalFaultToleranceAct->setToolTip (trUtf8( "Внешние метрики устойчивости к ошибкам"));
     connect (_externalFaultToleranceAct, SIGNAL(triggered()), this, SLOT(externalFaultToleranceMetrics()));
 
-    _projectReadinessAct = new QAction (QIcon(":/images/chart.png"), trUtf8 ("Оценка степени"), this);
+    _projectReadinessAct = new QAction (QIcon(":/images/table-heatmap.png"), trUtf8 ("Оценка степени"), this);
     _projectReadinessAct->setToolTip (trUtf8 ("Оценка степени"));
     connect (_projectReadinessAct, SIGNAL(triggered()), this, SLOT(projectReadiness()));
 }
