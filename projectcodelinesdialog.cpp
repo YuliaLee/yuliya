@@ -38,6 +38,19 @@ ProjectCodeLinesDialog::ProjectCodeLinesDialog (const QString &prjid, QWidget *p
 
         ui->_editTestCases->setText (QString::number (test_cases));
     }
+
+    if (project && RedmineInstance::instance ().loadIssues (_prjid))
+    {
+        int new_errors = 0;
+        for (int i = 0; i < project->_issues.size (); ++i)
+        {
+            if (project->_issues[i]->_tracker_id == "1" &&
+                    project->_issues[i]->_status_id =="1")
+                new_errors++;
+        }
+
+        ui->_editNewErrors->setText (QString::number (new_errors));
+    }
 }
 
 ProjectCodeLinesDialog::~ProjectCodeLinesDialog ()
@@ -54,5 +67,6 @@ void ProjectCodeLinesDialog::slotSave ()
     setProperty ("code_lines", ui->_editCodeLines->text ());
     setProperty ("errors", ui->_editErrors->text ());
     setProperty ("test_cases", ui->_editTestCases->text ());
+    setProperty ("new_errors", ui->_editNewErrors->text ());
     accept ();
 }

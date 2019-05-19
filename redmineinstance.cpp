@@ -334,6 +334,7 @@ const QList<RedmineProjectCodeMetrics> RedmineInstance::codeMetrics(const QStrin
         metric._code_lines = values[0];
         metric._errors = values[1];
         metric._test_cases = values[2];
+        metric._new_errors = values[3];
 
         code_metrics.append (metric);
     }
