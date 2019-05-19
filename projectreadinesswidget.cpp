@@ -31,7 +31,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             item->setTextAlignment (Qt::AlignCenter);
             QFont f = item->font ();
             f.setBold (true);
-            f.setPixelSize (16);
+            f.setPixelSize (25);
             item->setFont (f);
             _model->appendRow (QList<QStandardItem*> () << item << new QStandardItem ());
             ui->_view->setSpan (0, 0, 1, 2);
@@ -53,7 +53,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Адекватность теста"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -79,7 +79,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Коэффициент отказов"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -105,7 +105,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Предотвращение некорр. действий"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -131,7 +131,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Восстанавливаемость"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -157,7 +157,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Соответствие надежности"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -174,7 +174,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             item->setTextAlignment (Qt::AlignCenter);
             QFont f = item->font ();
             f.setBold (true);
-            f.setPixelSize (16);
+            f.setPixelSize (25);
             item->setFont (f);
             _model->appendRow (QList<QStandardItem*> () << item << new QStandardItem ());
             ui->_view->setSpan (_model->rowCount () - 1, 0, 1, 2);
@@ -195,7 +195,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Обнаружение ошибок"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -221,7 +221,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Устранение ошибок"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -247,7 +247,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Разрешение отказов"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -273,7 +273,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Тестовое покрытие"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -299,7 +299,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Завершенность испытаний"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -325,7 +325,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Коэффициент аварийных отказов"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -351,7 +351,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Коэффициент отказов"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
@@ -377,7 +377,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
 
             QStandardItem *itemName = new QStandardItem (trUtf8 ("Предотвращение некорр. действий"));
             QFont f = itemName->font ();
-            f.setPixelSize (14);
+            f.setPixelSize (18);
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
