@@ -131,11 +131,20 @@ void ProjectCodeMetricsDialog::readSettings ()
     {
         QStringList values = settings.value (lst[i]).toString ().split (";");
 
+        QStandardItem *itemcodelines = new QStandardItem ();
+        QStandardItem *itemerrors = new QStandardItem ();
+        QStandardItem *itemtestcases = new QStandardItem ();
+        QStandardItem *itemnewerrors = new QStandardItem ();
+
         QStandardItem *itemdate = new QStandardItem (lst[i]);
-        QStandardItem *itemcodelines = new QStandardItem (values[0]);
-        QStandardItem *itemerrors = new QStandardItem (values[1]);
-        QStandardItem *itemtestcases = new QStandardItem (values[2]);
-        QStandardItem *itemnewerrors = new QStandardItem (values[3]);
+        if (values.size () > 0)
+            itemcodelines->setText (values[0]);
+        if (values.size () > 1)
+            itemerrors->setText (values[1]);
+        if (values.size () > 2)
+            itemtestcases->setText (values[2]);
+        if (values.size () > 3)
+            itemnewerrors->setText (values[3]);
 
         QList<QStandardItem *> row;
         row << itemdate << itemcodelines << itemerrors << itemtestcases<< itemnewerrors;

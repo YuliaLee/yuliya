@@ -20,11 +20,12 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
     _model = new QStandardItemModel (0, 2);
     ui->_view->setModel (_model);
 
-
     if (RedmineInstance::instance ().projects ().contains (prjid) &&
             RedmineInstance::instance ().loadIssues (prjid) &&
             RedmineInstance::instance ().loadAttachments ())
     {
+        QSharedPointer<RedmineProject> project = RedmineInstance::instance ().projects ()[prjid];
+
         //-------------------------- ВНУТРЕННИЕ МЕТРИКИ
         {
             QStandardItem *item = new QStandardItem (trUtf8 ("Внутренние метрики"));
@@ -57,7 +58,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -83,7 +84,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -109,7 +110,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -135,7 +136,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -161,7 +162,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -199,7 +200,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -225,7 +226,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -251,7 +252,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -277,7 +278,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -303,7 +304,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -329,7 +330,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));
@@ -355,7 +356,7 @@ ProjectReadinessWidget::ProjectReadinessWidget (const QString &prjid, QWidget *p
             itemName->setFont (f);
 
             QStandardItem *itemValue = new QStandardItem ();
-            if (X < 0.9)
+            if (X < project->_threshold)
                 itemValue->setIcon (QIcon (":/images/minus.png"));
             else
                 itemValue->setIcon (QIcon (":/images/plus.png"));

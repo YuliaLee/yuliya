@@ -103,6 +103,7 @@ struct RedmineProject
         _reference_number_of_error = settings.value ("reference_number_of_error", "0").toInt ();
         _required_actions = settings.value ("required_actions", "0").toInt ();
         _need_test_case = settings.value ("need_test_case", "0").toInt ();
+        _threshold =  settings.value ("threshold", "0.0").toDouble ();
 
         settings.endGroup ();
     }
@@ -122,6 +123,7 @@ struct RedmineProject
         settings.setValue ("required_actions", QString::number (_required_actions));
         settings.setValue ("need_test_case", QString::number (_need_test_case));
         settings.setValue ("total_operation_time", QString::number (_total_operation_time));
+        settings.setValue ("threshold", QString::number (_threshold, 'f', 2));
 
         settings.endGroup ();
     }
@@ -150,6 +152,7 @@ struct RedmineProject
     int _required_actions;
     int _need_test_case;                //!< Количество требуемых тест-кейсов
     int _total_operation_time;
+    double _threshold;
 };
 
 struct RedmineIssueStatuses

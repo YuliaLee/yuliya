@@ -3,6 +3,7 @@
 #include "redmineinstance.h"
 
 #include <QSettings>
+#include <QDebug>
 
 ProjectPassportDialog::ProjectPassportDialog (const QString &prjid, QWidget *parent)
     : QDialog (parent)
@@ -24,6 +25,11 @@ ProjectPassportDialog::ProjectPassportDialog (const QString &prjid, QWidget *par
                  SLOT(writeSettings()));
         connect (ui->_editNeedTestCase, SIGNAL(textChanged(QString)),
                  SLOT(writeSettings()));
+        connect (ui->_editThreshold, SIGNAL(textChanged(QString)),
+                 SLOT(writeSettings()));
+
+        auto dv = new QDoubleValidator (0.0, 5.0, 2); // [0, 1] with 2 decimals of precision
+        ui->_editThreshold->setValidator (dv);
     }
 }
 
@@ -95,6 +101,8 @@ void ProjectPassportDialog::readSettings ()
 
 //        ui->_editNeedTestCase->setText (QString::number (_need_test_case));
 //    }
+
+    ui->_editThreshold->setText (QString::number (project->_threshold, 'f', 2));
 }
 
 void ProjectPassportDialog::writeSettings ()
@@ -107,6 +115,7 @@ void ProjectPassportDialog::writeSettings ()
     project->_incorrect_actions = ui->_editIncorrectActions->text ().trimmed ().toInt ();
     project->_reference_number_of_error = ui->_editReferenceNumberOfErrors->text ().trimmed ().toInt ();
     project->_need_test_case = ui->_editNeedTestCase->text ().trimmed ().toInt ();
+    project->_threshold = ui->_editThreshold->text ().trimmed ().toDouble ();
 
     project->writeSettings ();
 }
