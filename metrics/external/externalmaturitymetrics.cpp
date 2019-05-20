@@ -68,7 +68,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
             QList<RedmineProjectCodeMetrics> metrics = RedmineInstance::instance ().codeMetrics (prjid);
             for (int i = 0; i < metrics.size (); ++i)
             {
-                float X = metrics[i]._errors.toFloat () / metrics[i]._test_cases.toFloat ();
+                float X = metrics[i]._new_errors.toFloat () / metrics[i]._test_cases.toFloat ();
                 series->append (QDateTime::fromString (metrics[i]._date).toTime_t (), X);
                 series->setColor(QColor(32, 178, 170));
             }
@@ -94,7 +94,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
             QList<RedmineProjectCodeMetrics> metrics = RedmineInstance::instance ().codeMetrics (prjid);
             for (int i = 0; i < metrics.size (); ++i)
             {
-                float X = (float)metrics[i]._errors.toFloat () / metrics[i]._code_lines.toFloat ();
+                float X = (float)metrics[i]._new_errors.toFloat () / metrics[i]._code_lines.toFloat ();
                 series->append (QDateTime::fromString (metrics[i]._date).toTime_t (), X);
                 series->setColor(QColor(34, 139, 34));
             }
