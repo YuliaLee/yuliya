@@ -211,6 +211,7 @@ ResultingExternalMetricsWidget::ResultingExternalMetricsWidget(const QString &pr
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
+            chart->setToolTip(trUtf8("Чем ближе показатель к 1, тем лучше"));
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);

@@ -80,6 +80,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             _chart0->setAnimationOptions (QChart::AllAnimations);
             _chart0->legend ()->setVisible (true);
             _chart0->legend ()->setAlignment (Qt::AlignBottom);
+            _chart0->setToolTip(trUtf8("Сколько реализовано задач для предотвращения некорректной работы системы?"));
 
             _chart0->legend ()->detachFromChart ();
             _chart0->legend ()->setBackgroundVisible (true);
@@ -143,6 +144,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             _chart1->setAnimationOptions (QChart::AllAnimations);
             _chart1->legend ()->setVisible (true);
             _chart1->legend ()->setAlignment (Qt::AlignBottom);
+            _chart1->setToolTip(trUtf8("Сколько исключений были взяты под контроль для предотвращения серьезных и критических ошибок?"));
 
             _chart1->legend ()->detachFromChart ();
             _chart1->legend ()->setBackgroundVisible (true);

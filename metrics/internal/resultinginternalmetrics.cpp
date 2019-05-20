@@ -124,6 +124,7 @@ ResultingInternalMetricsWidget::ResultingInternalMetricsWidget (const QString &p
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
+            chart->setToolTip(trUtf8("Чем ближе показатель к 1, тем лучше, так как 1 свидетельствует, что все поставленные в требованиях задачи были выполнены."));
 
             QList <QLegendMarker*> markers = chart->legend ()->markers ();
             for (int i = 0; i < markers.size (); ++i)

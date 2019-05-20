@@ -78,6 +78,7 @@ ReliabilityComplianceMetrics::ReliabilityComplianceMetrics (const QString &prjid
             _chart->setAnimationOptions (QChart::AllAnimations);
             _chart->legend ()->setVisible (true);
             _chart->legend ()->setAlignment (Qt::AlignRight);
+            _chart->setToolTip(trUtf8("Насколько способна система соответствовать стандартам, протоколам, документам шифрования и криптографии в отношении надежности?"));
 
             _chart->legend ()->detachFromChart ();
             _chart->legend ()->setBackgroundVisible (true);

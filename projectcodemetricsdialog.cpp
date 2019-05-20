@@ -25,11 +25,12 @@ ProjectCodeMetricsDialog::ProjectCodeMetricsDialog (const QString &prjid, QWidge
     _delAct = _toolBar->addAction (QIcon (":/images/minus-button.png"), trUtf8 ("Удалить"), this, SLOT(slotDelete()));
     layout ()->addWidget (_toolBar);
 
-    _model = new QStandardItemModel (0, 4);
+    _model = new QStandardItemModel (0, 5);
     _model->setHorizontalHeaderItem (0, new QStandardItem (trUtf8 ("Дата")));
     _model->setHorizontalHeaderItem (1, new QStandardItem (trUtf8 ("Количество строк кода")));
-    _model->setHorizontalHeaderItem (2, new QStandardItem (trUtf8 ("Количество ошибок")));
+    _model->setHorizontalHeaderItem (2, new QStandardItem (trUtf8 ("Общее количество обнаруженных ошибок")));
     _model->setHorizontalHeaderItem (3, new QStandardItem (trUtf8 ("Количество тест-кейсов")));
+    _model->setHorizontalHeaderItem (4, new QStandardItem (trUtf8 ("Количество новых обнаруженных ошибок")));
 
     _view = new QTableView;
     _view->setModel (_model);
@@ -76,14 +77,16 @@ void ProjectCodeMetricsDialog::slotAdd ()
         QString code_lines = dlg->property ("code_lines").toString ();
         QString errors = dlg->property ("errors").toString ();
         QString test_cases = dlg->property ("test_cases").toString ();
+        QString new_errors = dlg->property ("new_errors").toString ();
 
         QStandardItem *itemdate = new QStandardItem (QDateTime::currentDateTime ().toString ());
         QStandardItem *itemcodelines = new QStandardItem (code_lines);
         QStandardItem *itemerrors = new QStandardItem (errors);
         QStandardItem *itemtestcases = new QStandardItem (test_cases);
+        QStandardItem *itemnewerrors = new QStandardItem (new_errors);
 
         QList<QStandardItem *> row;
-        row << itemdate << itemcodelines << itemerrors << itemtestcases;
+        row << itemdate << itemcodelines << itemerrors << itemtestcases << itemnewerrors;
         _model->appendRow (row);
 
         writeSettings ();
@@ -105,10 +108,11 @@ void ProjectCodeMetricsDialog::writeSettings ()
     settings.beginGroup (QString ("code_settings_%1").arg (_prjid));
     for (int i = 0; i < _model->rowCount (); ++i)
     {
-        QString value = QString ("%1;%2;%3")
+        QString value = QString ("%1;%2;%3;%4")
                 .arg (_model->item (i, 1)->text ())
                 .arg (_model->item (i, 2)->text ())
-                .arg (_model->item (i, 3)->text ());
+                .arg (_model->item (i, 3)->text ())
+                .arg (_model->item (i, 4)->text ());
         settings.setValue (_model->item (i, 0)->text (), value);
     }
     settings.endGroup ();
@@ -131,9 +135,10 @@ void ProjectCodeMetricsDialog::readSettings ()
         QStandardItem *itemcodelines = new QStandardItem (values[0]);
         QStandardItem *itemerrors = new QStandardItem (values[1]);
         QStandardItem *itemtestcases = new QStandardItem (values[2]);
+        QStandardItem *itemnewerrors = new QStandardItem (values[3]);
 
         QList<QStandardItem *> row;
-        row << itemdate << itemcodelines << itemerrors << itemtestcases;
+        row << itemdate << itemcodelines << itemerrors << itemtestcases<< itemnewerrors;
 
         _model->appendRow (row);
     }

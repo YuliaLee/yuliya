@@ -78,6 +78,7 @@ RecoverabilityMetrics::RecoverabilityMetrics (const QString &prjid, QWidget *par
             _chart->setAnimationOptions (QChart::AllAnimations);
             _chart->legend ()->setVisible (true);
             _chart->legend ()->setAlignment (Qt::AlignRight);
+            _chart->setToolTip(trUtf8("Насколько способна система восстановиться до полной работы после некорректного события или запроса?"));
 
             _chart->legend ()->detachFromChart ();
             _chart->legend ()->setBackgroundVisible (true);
