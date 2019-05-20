@@ -11,6 +11,7 @@ struct RedmineProjectCodeMetrics
     QString _code_lines;
     QString _errors;
     QString _test_cases;
+    QString _new_errors;
 };
 
 //!

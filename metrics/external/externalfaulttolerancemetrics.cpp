@@ -76,6 +76,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             _chart0->addSeries (series);
             _chart0->setTitle (trUtf8 ("<font size=5><b>Коэффициент аварийных отказов</b></font>"));
             _chart0->setAnimationOptions (QChart::AllAnimations);
+            _chart0->setToolTip(trUtf8("Как часто программная продукция вызывает аварийный отказ всей программной среды"));
 
             _chart0->legend ()->setVisible (true);
             _chart0->legend ()->setAlignment (Qt::AlignRight);
@@ -140,6 +141,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             _chart1->legend ()->detachFromChart ();
             _chart1->legend ()->setBackgroundVisible (true);
             _chart1->legend ()->setAlignment (Qt::AlignLeft);
+            _chart1->setToolTip(trUtf8("Сколько типовых отказов было взято под контроль для того, чтобы избежать критических или серьезных отказов?"));
 
             QFont f = _chart1->legend ()->font ();
             f.setPixelSize (14);
@@ -194,6 +196,7 @@ FaultToleranceMetrics::FaultToleranceMetrics (const QString &prjid, QWidget *par
             _chart2->setAnimationOptions (QChart::AllAnimations);
             _chart2->legend ()->setVisible (true);
             _chart2->legend ()->setAlignment (Qt::AlignRight);
+            _chart2->setToolTip(trUtf8("Сколько функций реализовано с возможностью предотвращения некорректных действий или повреждения данных?"));
 
             _chart2->legend ()->detachFromChart ();
             _chart2->legend ()->setBackgroundVisible (true);

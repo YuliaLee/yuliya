@@ -56,6 +56,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
+            chart->setToolTip(trUtf8("Все зависит от стадии испытаний. На поздних стадиях, чем меньше показатель, тем лучше."));
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);
@@ -74,13 +75,14 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             QChart *chart = new QChart ();
             chart->addSeries (series);
-            chart->setTitle (trUtf8 ("<font size=5><b>Плотность отказов по отношению к тест-кейсам</b></font>"));
+            chart->setTitle (trUtf8 ("<font size=5><b>Плотность ошибок по отношению к тест-кейсам</b></font>"));
             chart->setAnimationOptions (QChart::SeriesAnimations);
             chart->createDefaultAxes ();
             chart->axisY ()->setMin (0);
 
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight);
+            chart->setToolTip(trUtf8("Все зависит от стадии испытаний. На поздних стадиях, чем меньше показатель, тем лучше."));
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);
@@ -106,6 +108,7 @@ MaturityMetricsWidget1::MaturityMetricsWidget1 (const QString &prjid, QWidget *p
 
             chart->legend ()->setVisible (true);
             chart->legend ()->setAlignment (Qt::AlignRight );
+            chart->setToolTip(trUtf8("Все зависит от стадии испытаний. На поздних стадиях, чем меньше показатель, тем лучше."));
 
             QChartView *chartView = new QChartView (chart);
             chartView->setRenderHint(QPainter::Antialiasing);
@@ -164,6 +167,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
             _chart0->addSeries (series);
             _chart0->setTitle (trUtf8 ("<font size=5><b>Обнаружение ошибок</b></font>"));
             _chart0->setAnimationOptions (QChart::SeriesAnimations);
+            _chart0->setToolTip(trUtf8("Сколько ошибок было обнаружено в исследуемом программном продукте?"));
 
             _chart0->legend ()->setVisible (true);
             _chart0->legend ()->detachFromChart ();
@@ -228,6 +232,7 @@ MaturityMetricsWidget2::MaturityMetricsWidget2 (const QString &prjid, QWidget *p
             _chart1->setAnimationOptions (QChart::AllAnimations);
             _chart1->legend ()->setVisible (true);
             _chart1->legend ()->setAlignment (Qt::AlignRight);
+            _chart1->setToolTip(trUtf8("Сколько найденных вовремя тестирования ошибок были исправлены? "));
 
             _chart1->legend ()->detachFromChart ();
             _chart1->legend ()->setBackgroundVisible (true);
@@ -439,6 +444,7 @@ MaturityMetricsWidget3::MaturityMetricsWidget3 (const QString &prjid, QWidget *p
             _chart0->setAnimationOptions (QChart::AllAnimations);
             _chart0->legend ()->setVisible (true);
             _chart0->legend ()->setAlignment (Qt::AlignRight);
+            _chart0->setToolTip(trUtf8("Сколько состояний отказа удалось разрешить?"));
 
             _chart0->legend ()->detachFromChart ();
             _chart0->legend ()->setBackgroundVisible (true);
@@ -502,6 +508,7 @@ MaturityMetricsWidget3::MaturityMetricsWidget3 (const QString &prjid, QWidget *p
             _chart1->setAnimationOptions (QChart::AllAnimations);
             _chart1->legend ()->setVisible (true);
             _chart1->legend ()->setAlignment (Qt::AlignRight);
+            _chart1->setToolTip(trUtf8("Сколько требуемых тестов было выполнено во время проверки ПО?"));
 
             _chart1->legend ()->detachFromChart ();
             _chart1->legend ()->setBackgroundVisible (true);
@@ -565,6 +572,8 @@ MaturityMetricsWidget3::MaturityMetricsWidget3 (const QString &prjid, QWidget *p
             _chart2->setAnimationOptions (QChart::AllAnimations);
             _chart2->legend ()->setVisible (true);
             _chart2->legend ()->setAlignment (Qt::AlignRight);
+            _chart2->setToolTip(trUtf8("Хорошо ли проведено тестирование программного обеспечения?"));
+
 
             _chart2->legend ()->detachFromChart ();
             _chart2->legend ()->setBackgroundVisible (true);
